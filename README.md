@@ -1,6 +1,6 @@
 # FeverCoach migration dashboard
 
-Wix → Next.js + Payload + GCP 이전 진행 기록입니다.
+Wix → Next.js(Vercel) + Payload(GCP) 이전 진행 기록입니다.
 
 - `migration-dashboard.html`: 최신 계획의 28개 작업, 완료 1개. 정적 HTML이며 브라우저에서 열 수 있습니다.
 - `migration-dashboard-original.html`: 이전 Claude 원본 보관본. Claude 런타임 의존성이 있으며 현재 계획이 아닙니다.
