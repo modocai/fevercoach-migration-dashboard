@@ -12,3 +12,9 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전 진행 기록입니다.
 ## 티켓 관리
 
 [GitHub Project](https://github.com/orgs/modocai/projects/11)에서 작업 상태를 관리합니다. 연결된 GitHub Issues가 진행 상태의 정본이며 HTML 대시보드는 정적 스냅샷입니다. 담당자와 일정은 아직 배정하지 않았습니다.
+
+## HTML 공유 주소
+
+https://modocai.github.io/fevercoach-migration-pages/
+
+공개 배포 리포는 `modocai/fevercoach-migration-pages`이며 HTML만 게시합니다. 기존 두 작업 리포는 비공개로 유지합니다. 현재 수동 배포 스냅샷이며 GitHub Project와 자동 동기화되지 않습니다. 업데이트 시 `migration-dashboard.html`과 `index.html`, 공개 리포의 `index.html`을 함께 갱신합니다.
