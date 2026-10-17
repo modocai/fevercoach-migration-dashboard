@@ -1,0 +1,361 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>fevercoach.us 이전 현황</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one column. Summary (overall % as a thermometer bar + phase strip) over phase sections with task rows. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #17212b;
+  --muted: #5d6b78;
+  --line: #dde3e8;
+  --accent: #e0562b;      /* mercury */
+  --accent-soft: #fbe3da;
+  --ok: #1f8a5b;  --ok-soft: #dcf1e6;
+  --doing: #2f6fb5; --doing-soft: #dfeaf7;
+  --bad: #c0352b; --bad-soft: #f8dedb;
+  --gate: #8a5a00; --gate-soft: #fbefd2;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171d; --surface: #182029; --ink: #e6ebf0; --muted: #94a3b1; --line: #2a3542;
+  --accent: #f07a4f; --accent-soft: #3a2219;
+  --ok: #4cc28c; --ok-soft: #173326; --doing: #6aa5e8; --doing-soft: #182b40;
+  --bad: #ef7a70; --bad-soft: #3b1d1a; --gate: #e3b357; --gate-soft: #362a12;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11171d; --surface: #182029; --ink: #e6ebf0; --muted: #94a3b1; --line: #2a3542;
+  --accent: #f07a4f; --accent-soft: #3a2219;
+  --ok: #4cc28c; --ok-soft: #173326; --doing: #6aa5e8; --doing-soft: #182b40;
+  --bad: #ef7a70; --bad-soft: #3b1d1a; --gate: #e3b357; --gate-soft: #362a12;
+  color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 880px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 28px; }
+h1 { font-size: 24px; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 0; }
+a { color: var(--doing); }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+
+header { display: grid; gap: 6px; }
+.sub { color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.notice { font-size: 13px; padding: 8px 12px; border-radius: 6px; background: var(--gate-soft); color: var(--gate); }
+
+/* summary */
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 18px; }
+.overall { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; align-items: end; }
+.big { font-family: var(--font-num); font-size: 48px; font-weight: 600; line-height: 1; color: var(--accent); }
+.big small { font-size: 22px; }
+.counts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--muted); }
+.counts b { color: var(--ink); font-family: var(--font-num); font-weight: 600; }
+.thermo { grid-column: 1 / -1; height: 14px; border-radius: 7px; background: var(--line); overflow: hidden; display: flex; }
+.thermo i { display: block; height: 100%; transition: width .4s ease; }
+.thermo .d { background: var(--accent); }
+.thermo .p { background: var(--accent-soft); }
+
+.phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.ph { display: grid; gap: 6px; padding: 10px; border-radius: 8px; border: 1px solid var(--line); text-decoration: none; color: inherit; }
+.ph:hover, .ph:focus-visible { border-color: var(--accent); outline: none; }
+.ph .lbl { font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; gap: 6px; }
+.ph .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.ph .bar i { display: block; height: 100%; background: var(--accent); }
+.ph.done .bar i { background: var(--ok); }
+.ph .meta { font-size: 12px; color: var(--muted); }
+
+/* recent */
+.recent { display: grid; gap: 8px; }
+.recent ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.recent li { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+.recent li span.t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
+
+/* sections */
+section.phase { display: grid; gap: 10px; scroll-margin-top: 12px; }
+.phase-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.phase-head .pct { font-family: var(--font-num); font-size: 14px; color: var(--muted); }
+.rows { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.row { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .title { min-width: 0; overflow-wrap: anywhere; }
+.row.is-done .title { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.row .who { grid-column: 2 / 3; font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.tag-gate { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; background: var(--gate-soft); color: var(--gate); white-space: nowrap; }
+
+.status { appearance: none; border: 0; font: inherit; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; cursor: pointer; white-space: nowrap; min-width: 64px; }
+.status:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.s-todo { background: var(--line); color: var(--ink); }
+.s-doing { background: var(--doing-soft); color: var(--doing); }
+.s-done { background: var(--ok-soft); color: var(--ok); }
+.s-blocked { background: var(--bad-soft); color: var(--bad); }
+.status:disabled { cursor: default; opacity: .8; }
+
+.acts { display: flex; gap: 4px; }
+.lnk { background: none; border: 0; padding: 2px 4px; font: inherit; font-size: 12px; color: var(--muted); cursor: pointer; border-radius: 4px; }
+.lnk:hover { color: var(--ink); background: var(--bg); }
+.lnk.danger { color: var(--bad); }
+.av { width: 16px; height: 16px; border-radius: 50%; vertical-align: -3px; margin-right: 3px; }
+
+.add { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px dashed var(--line); }
+.add input { flex: 1; min-width: 0; font: inherit; font-size: 14px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.add button { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.add button:disabled { opacity: .5; cursor: default; }
+
+.empty { padding: 18px 14px; color: var(--muted); font-size: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--muted); align-items: center; }
+.legend .status { cursor: default; }
+@media (max-width: 520px) {
+  .big { font-size: 40px; }
+  .row { grid-template-columns: 1fr auto; }
+  .row .status { grid-row: 1; grid-column: 2; }
+  .row .title { grid-column: 1; grid-row: 1; }
+  .row .who { grid-column: 1 / -1; }
+  .row .acts { grid-column: 1 / -1; justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) { .thermo i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>fevercoach.us 이전 현황</h1>
+    <div class="sub">
+      <span>Wix → Next.js + Vercel</span>
+      <a href="https://claude.ai/code/artifact/d5f6e516-7ab5-4950-98d0-b5ad7ed43da0" target="_blank" rel="noopener">이전 브리프 보기</a>
+      <span id="sync" class="muted">불러오는 중…</span>
+    </div>
+    <div id="notice" class="notice" hidden></div>
+  </header>
+
+  <div class="summary" aria-label="전체 진행률">
+    <div class="overall">
+      <div class="big num" id="pct">–<small>%</small></div>
+      <div class="counts" id="counts">항목을 불러오는 중입니다.</div>
+      <div class="thermo" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="thermo" aria-label="완료율"><i class="d" style="width:0"></i><i class="p" style="width:0"></i></div>
+    </div>
+    <div class="phases" id="phases"></div>
+    <div class="legend">상태를 누르면 바뀝니다:
+      <span class="status s-todo">할 일</span>→<span class="status s-doing">진행 중</span>→<span class="status s-done">완료</span>
+      · 길게 막히면 <span class="status s-blocked">막힘</span>
+    </div>
+  </div>
+
+  <div class="recent" id="recentWrap" hidden>
+    <h2>최근 변경</h2>
+    <ul id="recent"></ul>
+  </div>
+
+  <div id="sections"></div>
+</div>
+
+<script>
+const PHASES = [
+  { n: 0, name: "준비", note: "기준값 측정, DNS 백업, 페이지 목록 확정" },
+  { n: 1, name: "뼈대", note: "스테이징에 살릴 페이지 구현" },
+  { n: 2, name: "블로그", note: "CMS로 전수 이관, URL 전수 비교" },
+  { n: 3, name: "자동화 전환", note: "blog · reddit · newsletter 봇" },
+  { n: 4, name: "전환", note: "DNS 전환. MC 승인 후에만" },
+  { n: 5, name: "안정화", note: "4주 모니터링 후 Wix 해지" },
+];
+const STATUS = {
+  todo: { label: "할 일", next: "doing" },
+  doing: { label: "진행 중", next: "done" },
+  done: { label: "완료", next: "todo" },
+  blocked: { label: "막힘", next: "doing" },
+};
+
+let db = null, user = null, me = null;
+let tasks = [];             // [{id, ...data}]
+let canWrite = false;
+const pendingDelete = new Set();
+
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+function fmtTime(ms) {
+  if (!ms) return "";
+  const d = new Date(ms), now = Date.now(), diff = (now - ms) / 1000;
+  if (diff < 60) return "방금";
+  if (diff < 3600) return Math.floor(diff / 60) + "분 전";
+  if (diff < 86400) return Math.floor(diff / 3600) + "시간 전";
+  return (d.getMonth() + 1) + "/" + d.getDate();
+}
+
+function sorted() {
+  return tasks.slice().sort((a, b) => (a.phase - b.phase) || ((a.order ?? 0) - (b.order ?? 0)) || String(a.id).localeCompare(String(b.id)));
+}
+
+async function render() {
+  const list = sorted();
+  const total = list.length;
+  const done = list.filter(t => t.status === "done").length;
+  const doing = list.filter(t => t.status === "doing").length;
+  const blocked = list.filter(t => t.status === "blocked").length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  $("pct").innerHTML = "";
+  $("pct").append(document.createTextNode(total ? String(pct) : "–"), el("small", null, "%"));
+  const counts = $("counts");
+  counts.textContent = "";
+  if (total) {
+    for (const [label, n] of [["완료", done], ["진행 중", doing], ["막힘", blocked], ["전체", total]]) {
+      const s = el("span"); s.append(el("b", null, String(n)), document.createTextNode(" " + label)); counts.append(s);
+    }
+  } else {
+    counts.textContent = "아직 항목이 없습니다. 아래 단계에서 첫 항목을 추가하세요.";
+  }
+  const th = $("thermo");
+  th.setAttribute("aria-valuenow", String(pct));
+  th.children[0].style.width = (total ? done / total * 100 : 0) + "%";
+  th.children[1].style.width = (total ? doing / total * 100 : 0) + "%";
+
+  // ids to resolve
+  const ids = [...new Set(list.flatMap(t => [t.updatedBy, t.owner]).filter(Boolean))];
+  const ps = (user && ids.length) ? await user.profiles(ids) : {};
+  const nameOf = (id) => (ps[id] && ps[id].name) || "팀원";
+
+  // phase strip
+  const strip = $("phases"); strip.textContent = "";
+  for (const p of PHASES) {
+    const its = list.filter(t => t.phase === p.n);
+    const d = its.filter(t => t.status === "done").length;
+    const a = el("a", "ph" + (its.length && d === its.length ? " done" : ""));
+    a.href = "#phase-" + p.n;
+    const lbl = el("div", "lbl");
+    lbl.append(el("span", null, p.n + ". " + p.name), el("span", "num muted", its.length ? Math.round(d / its.length * 100) + "%" : "–"));
+    const bar = el("div", "bar"); const fill = el("i"); fill.style.width = (its.length ? d / its.length * 100 : 0) + "%"; bar.append(fill);
+    a.append(lbl, bar, el("div", "meta num", d + " / " + its.length));
+    strip.append(a);
+  }
+
+  // recent
+  const rec = list.filter(t => t.updatedAt).sort((a, b) => b.updatedAt - a.updatedAt).slice(0, 5);
+  $("recentWrap").hidden = rec.length === 0;
+  const ul = $("recent"); ul.textContent = "";
+  for (const t of rec) {
+    const li = el("li");
+    li.append(el("span", "status s-" + (STATUS[t.status] ? t.status : "todo"), STATUS[t.status]?.label || "할 일"),
+      el("span", "t", t.title),
+      el("span", "muted", (t.updatedBy ? nameOf(t.updatedBy) + " · " : "") + fmtTime(t.updatedAt)));
+    ul.append(li);
+  }
+
+  // sections (keep half-typed "add" inputs and focus across live re-renders)
+  const drafts = {}; document.querySelectorAll(".add input").forEach(i => { drafts[i.id] = i.value; });
+  const focused = document.activeElement && document.activeElement.id;
+  const wrap = $("sections"); wrap.textContent = "";
+  wrap.style.display = "grid"; wrap.style.gap = "28px";
+  for (const p of PHASES) {
+    const its = list.filter(t => t.phase === p.n);
+    const d = its.filter(t => t.status === "done").length;
+    const sec = el("section", "phase"); sec.id = "phase-" + p.n;
+    const head = el("div", "phase-head");
+    const h = el("h2", null, p.n + ". " + p.name);
+    const right = el("span", "pct", d + " / " + its.length + " 완료");
+    head.append(h, right);
+    const note = el("div", "muted", p.note); note.style.fontSize = "13px";
+    const rows = el("div", "rows");
+    if (!its.length) rows.append(el("div", "empty", "이 단계에는 아직 항목이 없습니다."));
+    for (const t of its) rows.append(rowEl(t, nameOf));
+    if (canWrite) rows.append(addEl(p.n, its));
+    sec.append(head, note, rows);
+    wrap.append(sec);
+  }
+  for (const [id, v] of Object.entries(drafts)) { const i = document.getElementById(id); if (i) i.value = v; }
+  if (focused && focused.startsWith("add-")) document.getElementById(focused)?.focus();
+}
+
+function rowEl(t, nameOf) {
+  const st = STATUS[t.status] ? t.status : "todo";
+  const row = el("div", "row" + (st === "done" ? " is-done" : ""));
+  const btn = el("button", "status s-" + st, STATUS[st].label);
+  btn.type = "button";
+  btn.disabled = !canWrite;
+  btn.title = canWrite ? "눌러서 '" + STATUS[STATUS[st].next].label + "'(으)로" : "";
+  btn.addEventListener("click", () => setStatus(t, STATUS[st].next));
+  const title = el("div", "title", t.title);
+  const acts = el("div", "acts");
+  if (canWrite) {
+    if (st !== "blocked" && st !== "done") {
+      const b = el("button", "lnk", "막힘"); b.type = "button"; b.addEventListener("click", () => setStatus(t, "blocked")); acts.append(b);
+    }
+    if (me && t.owner !== me) {
+      const b = el("button", "lnk", "내가 맡기"); b.type = "button"; b.addEventListener("click", () => patch(t, { owner: me })); acts.append(b);
+    }
+    const del = el("button", "lnk danger", pendingDelete.has(t.id) ? "정말 삭제" : "삭제"); del.type = "button";
+    del.addEventListener("click", () => {
+      if (pendingDelete.has(t.id)) { pendingDelete.delete(t.id); remove(t); }
+      else { pendingDelete.add(t.id); render(); setTimeout(() => { if (pendingDelete.delete(t.id)) render(); }, 4000); }
+    });
+    acts.append(del);
+  }
+  const who = el("div", "who");
+  if (t.gate) who.append(el("span", "tag-gate", "MC 승인 필요"));
+  if (t.owner) who.append(el("span", null, "담당 " + nameOf(t.owner)));
+  if (t.updatedAt) who.append(el("span", null, (t.updatedBy ? nameOf(t.updatedBy) + " · " : "") + fmtTime(t.updatedAt)));
+  row.append(btn, title, acts);
+  if (who.childNodes.length) row.append(who);
+  return row;
+}
+
+function addEl(phase, its) {
+  const f = el("form", "add");
+  const inp = el("input"); inp.id = "add-" + phase; inp.placeholder = "항목 추가"; inp.maxLength = 200;
+  const b = el("button", null, "추가"); b.type = "submit";
+  f.append(inp, b);
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const title = inp.value.trim(); if (!title) return;
+    b.disabled = true;
+    const order = its.reduce((m, t) => Math.max(m, t.order ?? 0), 0) + 1;
+    try {
+      await db.collection("tasks").add({ phase, order, title, status: "todo", gate: phase === 4, updatedBy: me, updatedAt: Date.now() });
+      inp.value = "";
+    } catch (err) { showErr(err); }
+    b.disabled = false;
+  });
+  return f;
+}
+
+async function patch(t, data) {
+  try { await db.doc("tasks/" + t.id).update({ ...data, updatedBy: me, updatedAt: Date.now() }); }
+  catch (err) { showErr(err); }
+}
+function setStatus(t, status) { return patch(t, { status }); }
+async function remove(t) { try { await db.doc("tasks/" + t.id).delete(); } catch (err) { showErr(err); } }
+
+function showErr(err) {
+  const n = $("notice");
+  const code = err && err.code;
+  n.textContent = code === "quota_exceeded" ? "저장 공간이 가득 찼습니다. 쓰지 않는 항목을 지운 뒤 다시 시도하세요."
+    : code === "resource_exhausted" ? "요청이 너무 잦습니다. 잠시 뒤 다시 눌러 주세요."
+    : "저장하지 못했습니다. 페이지를 새로 고친 뒤 다시 시도하세요.";
+  n.hidden = false;
+  setTimeout(() => { n.hidden = true; }, 6000);
+}
+
+render();
+
+(async () => {
+  const use = (name) => (window.claude && window.claude.use) ? window.claude.use(name) : Promise.resolve(null);
+  [db, user] = await Promise.all([use("db"), use("user")]);
+  if (!db) {
+    $("sync").textContent = "";
+    const n = $("notice"); n.textContent = "이 보기에서는 진행 상황을 불러올 수 없습니다. claude.ai에서 로그인한 상태로 열어 주세요."; n.hidden = false;
+    return;
+  }
+  me = user ? await user.id() : null;
+  canWrite = me !== null;
+  db.collection("tasks").onSnapshot((snap) => {
+    tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    $("sync").textContent = snap.metadata.fromCache ? "동기화 중…" : "실시간";
+    render();
+  }, () => {
+    $("sync").textContent = "연결 끊김 · 새로 고침 필요";
+  });
+  setInterval(render, 60000); // keep relative times fresh
+})();
+</script>
+
+</body></html>

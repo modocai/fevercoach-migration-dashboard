@@ -1,0 +1,268 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>fevercoach.us 이전 현황 — 보관본</title><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>
+/* Layout: one column. Summary (overall % as a thermometer bar + phase strip) over phase sections with task rows. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #17212b;
+  --muted: #5d6b78;
+  --line: #dde3e8;
+  --accent: #e0562b;      /* mercury */
+  --accent-soft: #fbe3da;
+  --ok: #1f8a5b;  --ok-soft: #dcf1e6;
+  --doing: #2f6fb5; --doing-soft: #dfeaf7;
+  --bad: #c0352b; --bad-soft: #f8dedb;
+  --gate: #8a5a00; --gate-soft: #fbefd2;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171d; --surface: #182029; --ink: #e6ebf0; --muted: #94a3b1; --line: #2a3542;
+  --accent: #f07a4f; --accent-soft: #3a2219;
+  --ok: #4cc28c; --ok-soft: #173326; --doing: #6aa5e8; --doing-soft: #182b40;
+  --bad: #ef7a70; --bad-soft: #3b1d1a; --gate: #e3b357; --gate-soft: #362a12;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11171d; --surface: #182029; --ink: #e6ebf0; --muted: #94a3b1; --line: #2a3542;
+  --accent: #f07a4f; --accent-soft: #3a2219;
+  --ok: #4cc28c; --ok-soft: #173326; --doing: #6aa5e8; --doing-soft: #182b40;
+  --bad: #ef7a70; --bad-soft: #3b1d1a; --gate: #e3b357; --gate-soft: #362a12;
+  color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 880px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 28px; }
+h1 { font-size: 24px; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 0; }
+a { color: var(--doing); }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+
+header { display: grid; gap: 6px; }
+.sub { color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.notice { font-size: 13px; padding: 8px 12px; border-radius: 6px; background: var(--gate-soft); color: var(--gate); }
+
+/* summary */
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 18px; }
+.overall { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; align-items: end; }
+.big { font-family: var(--font-num); font-size: 48px; font-weight: 600; line-height: 1; color: var(--accent); }
+.big small { font-size: 22px; }
+.counts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--muted); }
+.counts b { color: var(--ink); font-family: var(--font-num); font-weight: 600; }
+.thermo { grid-column: 1 / -1; height: 14px; border-radius: 7px; background: var(--line); overflow: hidden; display: flex; }
+.thermo i { display: block; height: 100%; transition: width .4s ease; }
+.thermo .d { background: var(--accent); }
+.thermo .p { background: var(--accent-soft); }
+
+.phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.ph { display: grid; gap: 6px; padding: 10px; border-radius: 8px; border: 1px solid var(--line); text-decoration: none; color: inherit; }
+.ph:hover, .ph:focus-visible { border-color: var(--accent); outline: none; }
+.ph .lbl { font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; gap: 6px; }
+.ph .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.ph .bar i { display: block; height: 100%; background: var(--accent); }
+.ph.done .bar i { background: var(--ok); }
+.ph .meta { font-size: 12px; color: var(--muted); }
+
+/* recent */
+.recent { display: grid; gap: 8px; }
+.recent ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.recent li { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+.recent li span.t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
+
+/* sections */
+section.phase { display: grid; gap: 10px; scroll-margin-top: 12px; }
+.phase-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.phase-head .pct { font-family: var(--font-num); font-size: 14px; color: var(--muted); }
+.rows { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.row { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .title { min-width: 0; overflow-wrap: anywhere; }
+.row.is-done .title { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.row .who { grid-column: 2 / 3; font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.tag-gate { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; background: var(--gate-soft); color: var(--gate); white-space: nowrap; }
+
+.status { appearance: none; border: 0; font: inherit; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; cursor: pointer; white-space: nowrap; min-width: 64px; }
+.status:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.s-todo { background: var(--line); color: var(--ink); }
+.s-doing { background: var(--doing-soft); color: var(--doing); }
+.s-done { background: var(--ok-soft); color: var(--ok); }
+.s-blocked { background: var(--bad-soft); color: var(--bad); }
+.status:disabled { cursor: default; opacity: .8; }
+
+.acts { display: flex; gap: 4px; }
+.lnk { background: none; border: 0; padding: 2px 4px; font: inherit; font-size: 12px; color: var(--muted); cursor: pointer; border-radius: 4px; }
+.lnk:hover { color: var(--ink); background: var(--bg); }
+.lnk.danger { color: var(--bad); }
+.av { width: 16px; height: 16px; border-radius: 50%; vertical-align: -3px; margin-right: 3px; }
+
+.add { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px dashed var(--line); }
+.add input { flex: 1; min-width: 0; font: inherit; font-size: 14px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.add button { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.add button:disabled { opacity: .5; cursor: default; }
+
+.empty { padding: 18px 14px; color: var(--muted); font-size: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--muted); align-items: center; }
+.legend .status { cursor: default; }
+@media (max-width: 520px) {
+  .big { font-size: 40px; }
+  .row { grid-template-columns: 1fr auto; }
+  .row .status { grid-row: 1; grid-column: 2; }
+  .row .title { grid-column: 1; grid-row: 1; }
+  .row .who { grid-column: 1 / -1; }
+  .row .acts { grid-column: 1 / -1; justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) { .thermo i { transition: none; } }
+</style></head><body><aside style="padding:16px;background:#fff3ce;color:#332b13">보관용 스냅샷 · 2026-10-16 ET · 22개 항목, 완료 0개. 실시간 동기화 및 수정 기능은 원본 Claude 대시보드에서 사용하세요.</aside>
+<title>fevercoach.us 이전 현황</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<style>
+/* Layout: one column. Summary (overall % as a thermometer bar + phase strip) over phase sections with task rows. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #17212b;
+  --muted: #5d6b78;
+  --line: #dde3e8;
+  --accent: #e0562b;      /* mercury */
+  --accent-soft: #fbe3da;
+  --ok: #1f8a5b;  --ok-soft: #dcf1e6;
+  --doing: #2f6fb5; --doing-soft: #dfeaf7;
+  --bad: #c0352b; --bad-soft: #f8dedb;
+  --gate: #8a5a00; --gate-soft: #fbefd2;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171d; --surface: #182029; --ink: #e6ebf0; --muted: #94a3b1; --line: #2a3542;
+  --accent: #f07a4f; --accent-soft: #3a2219;
+  --ok: #4cc28c; --ok-soft: #173326; --doing: #6aa5e8; --doing-soft: #182b40;
+  --bad: #ef7a70; --bad-soft: #3b1d1a; --gate: #e3b357; --gate-soft: #362a12;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11171d; --surface: #182029; --ink: #e6ebf0; --muted: #94a3b1; --line: #2a3542;
+  --accent: #f07a4f; --accent-soft: #3a2219;
+  --ok: #4cc28c; --ok-soft: #173326; --doing: #6aa5e8; --doing-soft: #182b40;
+  --bad: #ef7a70; --bad-soft: #3b1d1a; --gate: #e3b357; --gate-soft: #362a12;
+  color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 880px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 28px; }
+h1 { font-size: 24px; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 0; }
+a { color: var(--doing); }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+
+header { display: grid; gap: 6px; }
+.sub { color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.notice { font-size: 13px; padding: 8px 12px; border-radius: 6px; background: var(--gate-soft); color: var(--gate); }
+
+/* summary */
+.summary { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 18px; }
+.overall { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; align-items: end; }
+.big { font-family: var(--font-num); font-size: 48px; font-weight: 600; line-height: 1; color: var(--accent); }
+.big small { font-size: 22px; }
+.counts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--muted); }
+.counts b { color: var(--ink); font-family: var(--font-num); font-weight: 600; }
+.thermo { grid-column: 1 / -1; height: 14px; border-radius: 7px; background: var(--line); overflow: hidden; display: flex; }
+.thermo i { display: block; height: 100%; transition: width .4s ease; }
+.thermo .d { background: var(--accent); }
+.thermo .p { background: var(--accent-soft); }
+
+.phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.ph { display: grid; gap: 6px; padding: 10px; border-radius: 8px; border: 1px solid var(--line); text-decoration: none; color: inherit; }
+.ph:hover, .ph:focus-visible { border-color: var(--accent); outline: none; }
+.ph .lbl { font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; gap: 6px; }
+.ph .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.ph .bar i { display: block; height: 100%; background: var(--accent); }
+.ph.done .bar i { background: var(--ok); }
+.ph .meta { font-size: 12px; color: var(--muted); }
+
+/* recent */
+.recent { display: grid; gap: 8px; }
+.recent ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.recent li { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+.recent li span.t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
+
+/* sections */
+section.phase { display: grid; gap: 10px; scroll-margin-top: 12px; }
+.phase-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.phase-head .pct { font-family: var(--font-num); font-size: 14px; color: var(--muted); }
+.rows { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.row { display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .title { min-width: 0; overflow-wrap: anywhere; }
+.row.is-done .title { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.row .who { grid-column: 2 / 3; font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.tag-gate { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 4px; background: var(--gate-soft); color: var(--gate); white-space: nowrap; }
+
+.status { appearance: none; border: 0; font: inherit; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; cursor: pointer; white-space: nowrap; min-width: 64px; }
+.status:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.s-todo { background: var(--line); color: var(--ink); }
+.s-doing { background: var(--doing-soft); color: var(--doing); }
+.s-done { background: var(--ok-soft); color: var(--ok); }
+.s-blocked { background: var(--bad-soft); color: var(--bad); }
+.status:disabled { cursor: default; opacity: .8; }
+
+.acts { display: flex; gap: 4px; }
+.lnk { background: none; border: 0; padding: 2px 4px; font: inherit; font-size: 12px; color: var(--muted); cursor: pointer; border-radius: 4px; }
+.lnk:hover { color: var(--ink); background: var(--bg); }
+.lnk.danger { color: var(--bad); }
+.av { width: 16px; height: 16px; border-radius: 50%; vertical-align: -3px; margin-right: 3px; }
+
+.add { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px dashed var(--line); }
+.add input { flex: 1; min-width: 0; font: inherit; font-size: 14px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.add button { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.add button:disabled { opacity: .5; cursor: default; }
+
+.empty { padding: 18px 14px; color: var(--muted); font-size: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--muted); align-items: center; }
+.legend .status { cursor: default; }
+@media (max-width: 520px) {
+  .big { font-size: 40px; }
+  .row { grid-template-columns: 1fr auto; }
+  .row .status { grid-row: 1; grid-column: 2; }
+  .row .title { grid-column: 1; grid-row: 1; }
+  .row .who { grid-column: 1 / -1; }
+  .row .acts { grid-column: 1 / -1; justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) { .thermo i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>fevercoach.us 이전 현황</h1>
+    <div class="sub">
+      <span>Wix → Next.js + Vercel</span>
+      <a href="https://claude.ai/code/artifact/d5f6e516-7ab5-4950-98d0-b5ad7ed43da0" target="_blank" rel="noopener">이전 브리프 보기</a>
+      <span id="sync" class="muted">실시간</span>
+    </div>
+    <div id="notice" class="notice" hidden=""></div>
+  </header>
+
+  <div class="summary" aria-label="전체 진행률">
+    <div class="overall">
+      <div class="big num" id="pct">0<small>%</small></div>
+      <div class="counts" id="counts"><span><b>0</b> 완료</span><span><b>0</b> 진행 중</span><span><b>0</b> 막힘</span><span><b>22</b> 전체</span></div>
+      <div class="thermo" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="thermo" aria-label="완료율" aria-valuenow="0"><i class="d" style="width: 0%;"></i><i class="p" style="width: 0%;"></i></div>
+    </div>
+    <div class="phases" id="phases"><a class="ph" href="#phase-0"><div class="lbl"><span>0. 준비</span><span class="num muted">0%</span></div><div class="bar"><i style="width: 0%;"></i></div><div class="meta num">0 / 4</div></a><a class="ph" href="#phase-1"><div class="lbl"><span>1. 뼈대</span><span class="num muted">0%</span></div><div class="bar"><i style="width: 0%;"></i></div><div class="meta num">0 / 4</div></a><a class="ph" href="#phase-2"><div class="lbl"><span>2. 블로그</span><span class="num muted">0%</span></div><div class="bar"><i style="width: 0%;"></i></div><div class="meta num">0 / 5</div></a><a class="ph" href="#phase-3"><div class="lbl"><span>3. 자동화 전환</span><span class="num muted">0%</span></div><div class="bar"><i style="width: 0%;"></i></div><div class="meta num">0 / 3</div></a><a class="ph" href="#phase-4"><div class="lbl"><span>4. 전환</span><span class="num muted">0%</span></div><div class="bar"><i style="width: 0%;"></i></div><div class="meta num">0 / 4</div></a><a class="ph" href="#phase-5"><div class="lbl"><span>5. 안정화</span><span class="num muted">0%</span></div><div class="bar"><i style="width: 0%;"></i></div><div class="meta num">0 / 2</div></a></div>
+    <div class="legend">상태를 누르면 바뀝니다:
+      <span class="status s-todo">할 일</span>→<span class="status s-doing">진행 중</span>→<span class="status s-done">완료</span>
+      · 길게 막히면 <span class="status s-blocked">막힘</span>
+    </div>
+  </div>
+
+  <div class="recent" id="recentWrap" hidden="">
+    <h2>최근 변경</h2>
+    <ul id="recent"></ul>
+  </div>
+
+  <div id="sections" style="display: grid; gap: 28px;"><section class="phase" id="phase-0"><div class="phase-head"><h2>0. 준비</h2><span class="pct">0 / 4 완료</span></div><div class="muted" style="font-size: 13px;">기준값 측정, DNS 백업, 페이지 목록 확정</div><div class="rows"><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">modocai-web 리포 구조와 README 읽기 (도메인·canonical·sitemap 결정 근거)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">Wix DNS 패널에서 전체 레코드 내보내 보관</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">기준값 기록: Lighthouse(홈·글 1개), Search Console 클릭·노출 4주치</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">살릴 페이지·버릴 페이지 목록 작성 후 MC 확인</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><form class="add"><input disabled id="add-0" placeholder="항목 추가" maxlength="200"><button disabled type="submit">추가</button></form></div></section><section class="phase" id="phase-1"><div class="phase-head"><h2>1. 뼈대</h2><span class="pct">0 / 4 완료</span></div><div class="muted" style="font-size: 13px;">스테이징에 살릴 페이지 구현</div><div class="rows"><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">Next.js 리포 생성, Vercel 미리보기 배포 연결</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">홈·다운로드·개인정보처리방침 등 살릴 페이지 구현 (영·스·한)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">모든 다운로드 버튼에 OneLink + UTM 달기</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">스테이징 모바일 Lighthouse 90 이상</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><form class="add"><input disabled id="add-1" placeholder="항목 추가" maxlength="200"><button disabled type="submit">추가</button></form></div></section><section class="phase" id="phase-2"><div class="phase-head"><h2>2. 블로그</h2><span class="pct">0 / 5 완료</span></div><div class="muted" style="font-size: 13px;">CMS로 전수 이관, URL 전수 비교</div><div class="rows"><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">CMS 선정과 글 스키마 확정 (제목·본문·이미지·언어·번역 연결·예약 시각·slug·meta)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">Wix Blog API로 전체 글·이미지 내보내 CMS로 이관 (slug 유지)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">글 페이지 ISR 구현 + hreflang·canonical·언어별 사이트맵·RSS</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">이메일 피드백 감사 배너(?vote=up|down) 컴포넌트로 이전</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">URL 전수 비교 스크립트 통과 (모든 Wix URL이 200 또는 의도한 301)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><form class="add"><input disabled id="add-2" placeholder="항목 추가" maxlength="200"><button disabled type="submit">추가</button></form></div></section><section class="phase" id="phase-3"><div class="phase-head"><h2>3. 자동화 전환</h2><span class="pct">0 / 3 완료</span></div><div class="muted" style="font-size: 13px;">blog · reddit · newsletter 봇</div><div class="rows"><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">blog 파이프라인 발행을 CMS API로 전환 (스테이징 초안 1건 성공)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">reddit·newsletter 봇이 새 사이트 글을 읽도록 전환</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">안 선생님과 CMS 글쓰기·예약 한 번 같이 해 보기</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><form class="add"><input disabled id="add-3" placeholder="항목 추가" maxlength="200"><button disabled type="submit">추가</button></form></div></section><section class="phase" id="phase-4"><div class="phase-head"><h2>4. 전환</h2><span class="pct">0 / 4 완료</span></div><div class="muted" style="font-size: 13px;">DNS 전환. MC 승인 후에만</div><div class="rows"><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">새 DNS에 전 레코드 생성, dig로 MX·TXT·DKIM 대조</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">네임서버 변경 (예약 발행 없는 평일 오전)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">전환 직후 확인: 팀 메일 수신, Brevo 테스트 발송, 앱 안 링크, 글 샘플 20개</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">Search Console에 새 사이트맵 제출</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><form class="add"><input disabled id="add-4" placeholder="항목 추가" maxlength="200"><button disabled type="submit">추가</button></form></div></section><section class="phase" id="phase-5"><div class="phase-head"><h2>5. 안정화</h2><span class="pct">0 / 2 완료</span></div><div class="muted" style="font-size: 13px;">4주 모니터링 후 Wix 해지</div><div class="rows"><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">매주 Search Console 클릭·노출·404를 기준값과 비교 (blog 주간 SEO 기록)</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div></div><div class="row"><button disabled class="status s-todo" type="button" title="눌러서 '진행 중'(으)로">할 일</button><div class="title">이미지 전부 새 주소 확인 후 Wix 요금제 해지 요청</div><div class="acts"><button disabled class="lnk" type="button">막힘</button><button disabled class="lnk" type="button">내가 맡기</button><button disabled class="lnk danger" type="button">삭제</button></div><div class="who"><span class="tag-gate">MC 승인 필요</span></div></div><form class="add"><input disabled id="add-5" placeholder="항목 추가" maxlength="200"><button disabled type="submit">추가</button></form></div></section></div>
+</div>
+
+
+
+</body></html>
