@@ -15,6 +15,6 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전 진행 기록입니다.
 
 ## HTML 공유 주소
 
-https://modocai.github.io/fevercoach-migration-pages/
+https://modocai.github.io/fevercoach-migration-dashboard/
 
-공개 배포 리포는 `modocai/fevercoach-migration-pages`이며 HTML만 게시합니다. 기존 두 작업 리포는 비공개로 유지합니다. 현재 수동 배포 스냅샷이며 GitHub Project와 자동 동기화되지 않습니다. 업데이트 시 `migration-dashboard.html`과 `index.html`, 공개 리포의 `index.html`을 함께 갱신합니다.
+이 공개 저장소의 `main` 브랜치 루트를 GitHub Pages로 배포합니다. 웹사이트 저장소는 비공개로 유지합니다. 현재 GitHub Project와 자동 동기화되지 않는 스냅샷입니다. 문서 갱신 시 `migration-dashboard.html`과 `index.html`을 함께 수정합니다. GitHub Project 및 비공개 웹사이트 이슈는 접근 권한이 있는 팀원만 볼 수 있습니다.
