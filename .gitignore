@@ -5,3 +5,7 @@
 node_modules/
 .next/
 .vercel/
+__pycache__/
+*.pyc
+*.tmp
+artifacts/

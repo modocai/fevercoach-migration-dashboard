@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "targets": {
+    "performance": 90,
+    "lcp_seconds": 2.5
+  },
+  "lighthouse": [
+    {
+      "kind": "historical",
+      "page": "home",
+      "status": "measured",
+      "url": "https://www.fevercoach.us/",
+      "measured_on": "2026-10-14",
+      "performance": 61,
+      "lcp_seconds": 10.5,
+      "conditions": "Lighthouse 12.6.1 · 모바일 · 1회 · 기존 계획에 기록된 참고값",
+      "evidence_url": "https://github.com/modocai/fevercoach-website/blob/d0d7cd553443137ed05c975321ede45d23a98a7a/migration-brief.md"
+    },
+    {
+      "kind": "baseline",
+      "page": "home",
+      "status": "measured",
+      "url": "https://www.fevercoach.us/",
+      "measured_on": "2026-10-23",
+      "performance": 72,
+      "lcp_seconds": 5.092,
+      "conditions": "Lighthouse 12.6.1 · 모바일 · simulated throttling · 페이지별 1회 · 실험실 측정",
+      "evidence_url": "https://github.com/modocai/fevercoach-migration-dashboard/blob/dashboard/docs/lighthouse-2026-10-23.json"
+    },
+    {
+      "kind": "baseline",
+      "page": "post",
+      "status": "measured",
+      "url": "https://www.fevercoach.us/post/oral-antibiotics-after-iv-drip",
+      "measured_on": "2026-10-23",
+      "performance": 92,
+      "lcp_seconds": 2.62,
+      "conditions": "Lighthouse 12.6.1 · 모바일 · simulated throttling · 페이지별 1회 · 실험실 측정",
+      "evidence_url": "https://github.com/modocai/fevercoach-migration-dashboard/blob/dashboard/docs/lighthouse-2026-10-23.json"
+    },
+    {
+      "kind": "staging",
+      "page": "home",
+      "status": "pending",
+      "url": null,
+      "measured_on": null,
+      "performance": null,
+      "lcp_seconds": null,
+      "conditions": null,
+      "evidence_url": null
+    },
+    {
+      "kind": "staging",
+      "page": "post",
+      "status": "pending",
+      "url": null,
+      "measured_on": null,
+      "performance": null,
+      "lcp_seconds": null,
+      "conditions": null,
+      "evidence_url": null
+    }
+  ],
+  "search_console": [
+    {
+      "status": "pending",
+      "period_start": null,
+      "period_end": null,
+      "clicks": null,
+      "impressions": null,
+      "evidence_url": null
+    }
+  ],
+  "analytics": {
+    "status": "pending",
+    "owner": null,
+    "criteria_status": "proposal",
+    "criteria": [
+      "GA4 속성·데이터 스트림 연결 확인",
+      "페이지 조회와 주요 CTA 이벤트 수집 확인",
+      "이전 전후 측정 기준과 담당자 확정"
+    ]
+  }
+}

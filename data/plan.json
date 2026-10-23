@@ -1,0 +1,470 @@
+{
+  "schema_version": 1,
+  "repository": "modocai/fevercoach-website",
+  "project": {
+    "owner": "modocai",
+    "number": 11,
+    "status_field": "Status",
+    "due_date_field": null,
+    "status_map": {
+      "Todo": "todo",
+      "Backlog": "todo",
+      "In Progress": "doing",
+      "Done": "done",
+      "Blocked": "blocked"
+    }
+  },
+  "phases": [
+    {
+      "id": 0,
+      "name": "준비",
+      "note": "기준값과 이전 범위 확정",
+      "gates": [
+        {
+          "label": "구조·도메인 기준 검토",
+          "issues": [
+            1
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "전체 DNS 백업 확보",
+          "issues": [
+            2
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "홈·글 성능과 검색 4주 기준값 확보",
+          "issues": [
+            3
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "유지·리다이렉트 페이지 MC 확인",
+          "issues": [
+            4
+          ],
+          "approval": true,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "사이트 뼈대",
+      "note": "Vercel 웹사이트 · GCP CMS",
+      "gates": [
+        {
+          "label": "웹·CMS 스테이징과 저장소·복구 검증",
+          "issues": [
+            5,
+            6,
+            8
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "GCP 비용·예산 확인",
+          "issues": [
+            7
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "주요 페이지·CTA 검증",
+          "issues": [
+            9,
+            10
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "모바일 Lighthouse 90 이상·LCP 2.5초 이하",
+          "issues": [
+            11
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "콘텐츠 이전",
+      "note": "콘텐츠·이미지·검색 주소 보존",
+      "gates": [
+        {
+          "label": "스키마·권한과 AI API 검증",
+          "issues": [
+            12,
+            13
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "캐시·예약 작업·대량 데이터 검증",
+          "issues": [
+            14,
+            15
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "콘텐츠·이미지·SEO 이관 검증",
+          "issues": [
+            16,
+            17,
+            18
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "전체 URL의 200 또는 의도한 301 확인",
+          "issues": [
+            19
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "자동화 연결",
+      "note": "AI API · 예약 발행 · 봇 연결",
+      "gates": [
+        {
+          "label": "blog 발행과 reddit·newsletter 조회 검증",
+          "issues": [
+            20,
+            21
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "CMS 작성·예약 사용자 검증",
+          "issues": [
+            22
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "서비스 전환",
+      "note": "검증 후 MC 승인으로 전환",
+      "gates": [
+        {
+          "label": "DNS 레코드 대조",
+          "issues": [
+            23
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "운영 도메인 전환 MC 승인",
+          "issues": [],
+          "approval": true,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "전환 후 메일·앱 링크·글 점검 및 사이트맵 제출",
+          "issues": [
+            24,
+            25,
+            26
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "안정화",
+      "note": "4주 관찰 후 Wix 정리",
+      "gates": [
+        {
+          "label": "전환 후 4주 검색 클릭·노출·404 비교",
+          "issues": [
+            27
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "모든 이미지의 새 주소 확인",
+          "issues": [
+            28
+          ],
+          "approval": false,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        },
+        {
+          "label": "Wix 해지 MC 승인",
+          "issues": [],
+          "approval": true,
+          "verification": {
+            "status": "pending",
+            "url": null,
+            "checked_at": null,
+            "reviewer": null
+          }
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "number": 1,
+      "phase": 0,
+      "title": "modocai/modocai-web 리포의 구조와 README를 읽는다 (도메인·canonical·sitemap 결정 근거)"
+    },
+    {
+      "number": 2,
+      "phase": 0,
+      "title": "Wix DNS 패널에서 전체 레코드를 내보내 보관한다"
+    },
+    {
+      "number": 3,
+      "phase": 0,
+      "title": "현재 기준값을 재서 기록한다: Lighthouse(홈·글 1개), Search Console 클릭·노출 4주치"
+    },
+    {
+      "number": 4,
+      "phase": 0,
+      "title": "살릴 페이지와 버릴 페이지 목록을 만들고 MC의 확인을 받는다"
+    },
+    {
+      "number": 5,
+      "phase": 1,
+      "title": "웹사이트 및 대시보드 GitHub 비공개 리포 생성"
+    },
+    {
+      "number": 6,
+      "phase": 1,
+      "title": "Next.js 웹사이트 Vercel 배포 + Payload CMS Cloud Run 스테이징 배포"
+    },
+    {
+      "number": 7,
+      "phase": 1,
+      "title": "GCP 크레딧 적용·만료 확인, 비용 산정 및 예산 알림 설정"
+    },
+    {
+      "number": 8,
+      "phase": 1,
+      "title": "Cloud SQL·GCS·Secret Manager 연결, 백업 및 복구 검증"
+    },
+    {
+      "number": 9,
+      "phase": 1,
+      "title": "홈·다운로드·개인정보처리방침 등 살릴 페이지 구현 (영·스·한)"
+    },
+    {
+      "number": 10,
+      "phase": 1,
+      "title": "모든 다운로드 버튼에 OneLink + UTM을 단다"
+    },
+    {
+      "number": 11,
+      "phase": 1,
+      "title": "스테이징에서 모바일 Lighthouse 90 이상"
+    },
+    {
+      "number": 12,
+      "phase": 2,
+      "title": "Payload 글·페이지·블록·공통 설정 스키마와 권한 정의"
+    },
+    {
+      "number": 13,
+      "phase": 2,
+      "title": "AI API로 생성·이미지 업로드·페이지 블록 수정·미리보기·게시·버전 복구 검증"
+    },
+    {
+      "number": 14,
+      "phase": 2,
+      "title": "CMS → Vercel 캐시 갱신과 예약 작업 재시도·중복 방지 검증"
+    },
+    {
+      "number": 15,
+      "phase": 2,
+      "title": "수만 개 대표 데이터로 조회·목록·빌드·관리 화면 성능 검증"
+    },
+    {
+      "number": 16,
+      "phase": 2,
+      "title": "Wix Blog API로 전체 글과 이미지를 내보내 CMS로 옮긴다. slug는 그대로"
+    },
+    {
+      "number": 17,
+      "phase": 2,
+      "title": "글 페이지를 ISR로 구현하고 hreflang, canonical, 언어별 사이트맵, RSS를 만든다"
+    },
+    {
+      "number": 18,
+      "phase": 2,
+      "title": "이메일 피드백 감사 배너를 컴포넌트로 옮긴다"
+    },
+    {
+      "number": 19,
+      "phase": 2,
+      "title": "스크립트로 전수 비교: Wix의 모든 글 URL이 새 사이트에서 200이거나 의도한 301이다"
+    },
+    {
+      "number": 20,
+      "phase": 3,
+      "title": "blog 파이프라인의 발행을 CMS API로 바꾼다 (스테이징 CMS에 초안 1건 성공)"
+    },
+    {
+      "number": 21,
+      "phase": 3,
+      "title": "reddit·newsletter 봇이 새 사이트 글을 읽게 바꾼다"
+    },
+    {
+      "number": 22,
+      "phase": 3,
+      "title": "안 선생님이 CMS에서 글을 쓰고 예약하는 것을 한 번 함께 해 본다"
+    },
+    {
+      "number": 23,
+      "phase": 4,
+      "title": "새 DNS에 모든 레코드를 만들고 dig로 MX·TXT·DKIM이 기존과 같은지 대조한다"
+    },
+    {
+      "number": 24,
+      "phase": 4,
+      "title": "네임서버 변경. 예약 발행이 없는 평일 오전에 한다"
+    },
+    {
+      "number": 25,
+      "phase": 4,
+      "title": "전환 직후: 팀 메일 수신, Brevo 테스트 발송, 앱 안의 링크, 글 샘플 20개 확인"
+    },
+    {
+      "number": 26,
+      "phase": 4,
+      "title": "Search Console에 새 사이트맵 제출"
+    },
+    {
+      "number": 27,
+      "phase": 5,
+      "title": "매주 Search Console 클릭·노출·404를 기준값과 비교 (blog의 주간 SEO 기록에 남긴다)"
+    },
+    {
+      "number": 28,
+      "phase": 5,
+      "title": "이미지가 모두 새 주소인지 확인한 뒤에만 Wix 요금제 해지를 MC에게 요청한다"
+    }
+  ],
+  "gate_policy": "제안 기준 · 팀 검토 필요. 관련 이슈 완료와 검증 근거를 함께 확인하며, 자동으로 다음 단계나 운영 전환을 승인하지 않습니다."
+}
