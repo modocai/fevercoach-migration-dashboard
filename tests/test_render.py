@@ -61,7 +61,9 @@ class RenderTests(unittest.TestCase):
         self.snapshot["issues"]["status"] = "error"
         self.snapshot["issues"]["error"] = "github_request_failed"
         self.snapshot["issues"]["items"][0]["state"] = "open"
-        self.snapshot["project"]["items"] = [{"number": 1, "status": "done", "due_date": None}]
+        self.snapshot["project"].update({"status": "ok", "error": None,
+                                          "last_success_at": "2026-10-23T16:00:00Z",
+                                          "items": [{"number": 1, "status": "done", "due_date": None}]})
         output = self.render()
         self.assertIn('갱신 실패 · 이전 기록 유지', output)
         self.assertIn('class="conflict"', output)

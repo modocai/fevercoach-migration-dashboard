@@ -208,12 +208,14 @@ def validate_baselines(data):
             require(record["clicks"] is None and record["impressions"] is None, "pending counts must be null")
 
 
-def validate_snapshot(snapshot, plan):
+def validate_snapshot(snapshot, plan, *, sources=("issues", "project", "wix")):
+    """Validate a complete snapshot, or one candidate source before replacing its cache."""
     require(snapshot.get("schema_version") == 1, "unsupported snapshot schema")
     require(set(snapshot) <= {"schema_version", "issues", "project", "wix"}, "unexpected snapshot fields")
     expected = {t["number"] for t in plan["tasks"]}
     common = {"status", "attempted_at", "last_success_at", "error"}
-    for name in ["issues", "project", "wix"]:
+    require(bool(sources) and set(sources) <= {"issues", "project", "wix"}, "invalid source selection")
+    for name in sources:
         section = snapshot[name]
         extra = {"items"} if name != "wix" else {"data", "source_sha", "source_url", "review_state", "pr_url"}
         require(set(section) <= common | extra, "unexpected public source fields")
@@ -223,7 +225,16 @@ def validate_snapshot(snapshot, plan):
             timestamp(section["last_success_at"])
         if section["status"] == "ok":
             require(bool(section.get("last_success_at")), "successful source needs timestamp")
+            require(section.get("error") is None, "successful source cannot contain an error")
+        else:
+            require(isinstance(section.get("error"), str) and bool(section["error"]), "failed source needs an error")
+        has_record = section["status"] == "ok" or bool(section.get("last_success_at"))
+        if has_record:
+            require(extra <= set(section), "successful or cached source needs a complete payload")
+        else:
+            require(not section.get("items") and "data" not in section, "source data needs a successful collection record")
         items = section.get("items", [])
+        require(isinstance(items, list) and all(isinstance(item, dict) for item in items), "invalid source items")
         numbers = [i["number"] for i in items]
         require(len(numbers) == len(set(numbers)) and set(numbers) <= expected, "invalid snapshot task IDs")
         if name == "issues":
@@ -243,6 +254,7 @@ def validate_snapshot(snapshot, plan):
                 if item["due_date"]:
                     datetime.strptime(item["due_date"], "%Y-%m-%d")
         elif "data" in section:
+            require(isinstance(section["data"], dict), "invalid Wix payload")
             require(project_wix(section["data"]) == section["data"], "unexpected public Wix fields")
             require(safe_url(section["source_url"]), "invalid Wix source URL")
             require(section["review_state"] in {"main", "open_pr"}, "invalid Wix review state")

@@ -25,6 +25,12 @@ def issue(number, state="open", reason=None):
             "body": "PRIVATE_BODY_MUST_NOT_APPEAR"}
 
 
+def wix_result():
+    return {"data": copy.deepcopy(WIX), "source_sha": "a" * 40, "review_state": "main",
+            "source_url": "https://github.com/modocai/fevercoach-website/blob/" + "a" * 40 + "/docs/wix-export-status.json",
+            "pr_url": None}
+
+
 class DataTests(unittest.TestCase):
     def setUp(self):
         self.plan = read_json(ROOT / "data/plan.json")
@@ -104,16 +110,45 @@ class DataTests(unittest.TestCase):
     def test_failure_keeps_last_success_and_other_sources_refresh(self):
         previous = {"project": {"status": "ok", "last_success_at": NOW,
                                 "items": [{"number": 1, "status": "doing", "due_date": None}]}}
+        raw = self.raw
         class Client:
-            def issues(self, plan): return []
+            def issues(self, plan): return project_issues(raw, plan)
             def project(self, plan): raise FetchError("project_read_permission_required")
-            def wix(self, plan): return {"data": {}}
+            def wix(self, plan): return wix_result()
         result, failures = refresh(self.plan, previous, Client(), "2026-10-24T16:00:00+00:00")
         self.assertEqual(failures, ["project"])
         self.assertEqual(result["project"]["items"], previous["project"]["items"])
         self.assertEqual(result["project"]["last_success_at"], NOW)
         self.assertEqual(result["issues"]["status"], "ok")
         self.assertEqual(previous["project"]["status"], "ok")
+
+    def test_successful_source_requires_payload(self):
+        snapshot = read_json(ROOT / "data/snapshot.json")
+        snapshot["wix"] = {k: v for k, v in snapshot["wix"].items()
+                           if k in {"status", "attempted_at", "last_success_at", "error"}}
+        with self.assertRaises(ValueError):
+            validate_snapshot(snapshot, self.plan)
+
+    def test_invalid_refresh_retains_valid_wix_cache(self):
+        previous = {"wix": {"status": "ok", "attempted_at": NOW,
+                            "last_success_at": NOW, "error": None, **wix_result()}}
+        raw = self.raw
+        class Client:
+            def issues(self, plan): return project_issues(raw, plan)
+            def project(self, plan): return []
+            def wix(self, plan): return {"data": {}}
+        result, failures = refresh(self.plan, previous, Client(), "2026-10-24T16:00:00+00:00")
+        self.assertEqual(failures, ["wix"])
+        self.assertEqual(result["wix"]["data"], previous["wix"]["data"])
+        self.assertEqual(result["wix"]["last_success_at"], NOW)
+        self.assertEqual(result["issues"]["status"], "ok")
+        self.assertEqual(result["project"]["status"], "ok")
+
+    def test_success_cannot_retain_error_message(self):
+        snapshot = read_json(ROOT / "data/snapshot.json")
+        snapshot["issues"]["error"] = "github_request_failed"
+        with self.assertRaises(ValueError):
+            validate_snapshot(snapshot, self.plan)
 
     def test_public_export_is_not_dns_or_authenticated_export_completion(self):
         raw = copy.deepcopy(WIX)

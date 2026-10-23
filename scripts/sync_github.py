@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from dashboard_data import (ROOT, project_issues, project_items, project_wix,
-                            read_json, require, validate_plan, write_json)
+                            read_json, require, validate_plan, validate_snapshot, write_json)
 
 
 class FetchError(Exception):
@@ -98,6 +98,7 @@ def refresh(plan, previous, client, now):
             result = getattr(client, name)(plan)
             new = {"status": "ok", "attempted_at": now, "last_success_at": now, "error": None}
             new.update(result if name == "wix" else {"items": result})
+            validate_snapshot({"schema_version": 1, name: new}, plan, sources=(name,))
             snapshot[name] = new
         except (FetchError, ValueError, KeyError, TypeError, OSError, subprocess.TimeoutExpired) as exc:
             # A partial/failed response never destroys the last successful data.
@@ -118,6 +119,7 @@ def main():
     previous = read_json(args.output) if args.output.exists() else {}
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     snapshot, failures = refresh(plan, previous, GitHub(), now)
+    validate_snapshot(snapshot, plan)
     write_json(args.output, snapshot)
     for name in ["issues", "project", "wix"]:
         source = snapshot[name]
