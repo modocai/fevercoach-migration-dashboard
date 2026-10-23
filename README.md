@@ -78,7 +78,7 @@ PR 검사는 데이터·상태 해석·실패 시 보존·출력 이스케이프
 node tests/browser.cjs
 ```
 
-별도 설치 경로는 `PLAYWRIGHT_MODULE`, 브라우저 실행 경로는 `BROWSER_PATH`로 지정합니다. 1440/390/320px, 키보드 필터, 빈 결과, 단계 바로가기, JavaScript 비활성, 외부 요청·런타임 오류를 확인합니다. 보고서·스크린샷은 커밋하지 않는 `artifacts/`에 저장합니다.
+별도 설치 경로는 `PLAYWRIGHT_MODULE`, 브라우저 실행 경로는 `BROWSER_PATH`로 지정합니다. 1440px 데스크톱·1280px 노트북, 키보드 필터, 빈 결과, 단계 바로가기, JavaScript 비활성, 외부 요청·런타임 오류를 확인합니다. 보고서·스크린샷은 커밋하지 않는 `artifacts/`에 저장합니다.
 
 ## Lighthouse 재측정
 

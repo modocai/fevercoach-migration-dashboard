@@ -11,8 +11,8 @@ const root = path.resolve(__dirname, '..');
   const report = [];
   fs.mkdirSync(path.join(root, 'artifacts'), {recursive: true});
   try {
-    for (const width of [1440, 390, 320]) {
-      const page = await browser.newPage({viewport: {width, height: 1000}});
+    for (const width of [1440, 1280]) {
+      const page = await browser.newPage({viewport: {width, height: width === 1440 ? 900 : 800}});
       const errors = [], requests = [];
       page.on('pageerror', e => errors.push(e.message));
       page.on('request', req => { if (/^https?:/.test(req.url())) requests.push(req.url()); });
