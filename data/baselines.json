@@ -25,7 +25,7 @@
       "performance": 72,
       "lcp_seconds": 5.092,
       "conditions": "Lighthouse 12.6.1 · 모바일 · simulated throttling · 페이지별 1회 · 실험실 측정",
-      "evidence_url": "https://github.com/modocai/fevercoach-migration-dashboard/blob/dashboard/docs/lighthouse-2026-10-23.json"
+      "evidence_url": "https://github.com/modocai/fevercoach-migration-dashboard/blob/ec7499b58da31e475f97ce2f0e07c32ac80c6dd0/docs/lighthouse-2026-10-23.json"
     },
     {
       "kind": "baseline",
@@ -36,7 +36,7 @@
       "performance": 92,
       "lcp_seconds": 2.62,
       "conditions": "Lighthouse 12.6.1 · 모바일 · simulated throttling · 페이지별 1회 · 실험실 측정",
-      "evidence_url": "https://github.com/modocai/fevercoach-migration-dashboard/blob/dashboard/docs/lighthouse-2026-10-23.json"
+      "evidence_url": "https://github.com/modocai/fevercoach-migration-dashboard/blob/ec7499b58da31e475f97ce2f0e07c32ac80c6dd0/docs/lighthouse-2026-10-23.json"
     },
     {
       "kind": "staging",
