@@ -1,4 +1,6 @@
 # Design
+## Content completion metric
+Place one content completion percentage above issue progress. Denominator is the full source sitemap inventory; failed pages remain zero. Show 0% with a deployment-pending caption before the new site is deployed. Keep formula, measurement time, target and per-URL JSON in supporting text/details. Do not round partial completion to 100%.
 ## Source of truth
 Active · 2026-10-23. Surface: GitHub Pages migration dashboard. Evidence: current 28-task plan and public projections of GitHub and Wix sources. Original visual hierarchy is preserved.
 ## Brand

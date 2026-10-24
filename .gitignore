@@ -9,3 +9,5 @@ __pycache__/
 *.pyc
 *.tmp
 artifacts/
+# overkill (added by overkill init)
+.overkill/
