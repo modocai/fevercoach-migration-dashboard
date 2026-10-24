@@ -27,6 +27,12 @@ class MetricTests(unittest.TestCase):
         self.assertIn('미측정', html)
         self.assertNotIn('0<small>%', html)
 
+    def test_not_deployed_is_zero_with_explanation(self):
+        html = render_content({'status': 'not_deployed'})
+        self.assertIn('0<small>%', html)
+        self.assertIn('새 사이트 배포 전', html)
+        self.assertNotIn('미측정', html)
+
     def test_invalid_reports_rejected(self):
         for mutate in [lambda r: r.update(total_urls=2),
                        lambda r: r.update(percentage=100),

@@ -17,7 +17,9 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전의 작업 상태, 추출 범위, �
 사이트맵 일부 조회 실패 시에는 이전 보고서를 덮어쓰지 않습니다.
 
 비교 전 대상이 **main의 정상 배포**인지 확인합니다. 배포 자체가 없거나 인증으로 막혀 있으면
-실행하지 않고 미측정 상태를 유지합니다. 현재 main 배포 URL은 확인 대기입니다.
+실행하지 않고 이전 보고서를 유지합니다. 새 사이트가 아직 배포되지 않은 초기 상태는
+`not_deployed`로 기록하고 **0% · 새 사이트 배포 전**으로 표시합니다.
+이는 실제 URL 비교 결과와 구분됩니다. 현재 main 배포 URL은 확인 대기입니다.
 
 ```sh
 python3 scripts/compare_content.py --source-sitemap https://www.fevercoach.us/sitemap.xml --target-base-url https://MAIN-DEPLOYMENT.vercel.app --output data/content-comparison.json

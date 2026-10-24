@@ -4,7 +4,7 @@ from html import escape
 
 
 def validate_report(report):
-    if report['status'] == 'unmeasured':
+    if report['status'] in ('unmeasured', 'not_deployed'):
         return
     if report['status'] != 'measured':
         raise ValueError('Invalid content report status')
@@ -31,6 +31,8 @@ def validate_report(report):
 def render_content(report):
     validate_report(report)
     intro = '<section class="panel" id="content-completion" aria-label="콘텐츠 이관 완성률"><h2>콘텐츠 이관 완성률</h2>'
+    if report['status'] == 'not_deployed':
+        return intro + '<div class="big content-score">0<small>%</small></div><p class="note">새 사이트 배포 전 · 배포 후 전체 URL의 텍스트·이미지를 비교합니다.</p></section>'
     if report['status'] == 'unmeasured':
         return intro + '<div class="big content-score">미측정</div><p class="note">전체 기존 URL과 새 사이트의 텍스트·이미지 비교를 기다리고 있습니다.</p></section>'
     total = report['total_urls']
