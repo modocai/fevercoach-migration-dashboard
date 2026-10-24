@@ -8,6 +8,7 @@ from urllib.error import HTTPError, URLError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from notify_discord import NotificationError, make_message, send_notice
+from dashboard_data import ROOT, read_json
 
 URL = 'https://discord.com/api/webhooks/123/fake_secret'
 
@@ -28,27 +29,53 @@ def report(score=.5):
 
 
 class NoticeTests(unittest.TestCase):
+    def setUp(self):
+        self.plan = read_json(ROOT / 'data/plan.json')
+        self.snapshot = read_json(ROOT / 'data/snapshot.json')
+
+    def message(self, report):
+        return make_message(report, self.plan, self.snapshot)
+
+    def test_issue_percentage_uses_completed_issues_not_project_or_not_planned(self):
+        for item in self.snapshot['issues']['items']:
+            item.update(state='open', state_reason=None)
+        self.snapshot['issues']['items'][0].update(state='closed', state_reason='completed')
+        self.snapshot['issues']['items'][1].update(state='closed', state_reason='not_planned')
+        self.assertIn('이슈 완료율: 4% (1/28)', self.message({'status': 'not_deployed'}))
+
+    def test_missing_issue_data_is_unknown_and_cached_failure_disclosed(self):
+        self.snapshot['issues']['status'] = 'error'
+        self.snapshot['issues']['error'] = 'github_request_failed'
+        self.assertIn('갱신 실패, 이전 기록 기준', self.message({'status': 'not_deployed'}))
+        self.snapshot['issues'].update(last_success_at=None, items=[])
+        self.assertIn('이슈 완료율: 미확인', self.message({'status': 'not_deployed'}))
+
+    def test_incomplete_issue_snapshot_is_rejected(self):
+        self.snapshot['issues']['items'].pop()
+        with self.assertRaises(ValueError):
+            self.message({'status': 'not_deployed'})
+
     def test_predeployment_is_explicit_zero(self):
-        message = make_message({'status': 'not_deployed'})
+        message = self.message({'status': 'not_deployed'})
         self.assertIn('0%', message)
         self.assertIn('새 사이트 배포 전', message)
-        self.assertEqual(message.count('%'), 1)
+        self.assertEqual(message.count('%'), 2)
 
     def test_measured_snapshot_includes_date_and_matches_dashboard_rounding(self):
-        message = make_message(report(.99999))
+        message = self.message(report(.99999))
         self.assertIn('99.9%', message)
         self.assertIn('저장된 측정 기준: 2026-10-24T01:00:00+00:00', message)
         self.assertNotIn('100', message)
-        self.assertIn('100.0%', make_message(report(1)))
+        self.assertIn('100.0%', self.message(report(1)))
 
     def test_no_invented_zero_for_unknown_or_invalid_report(self):
         for item in ({'status': 'unmeasured'}, {}, dict(report(), percentage=100)):
             with self.assertRaises((ValueError, KeyError)):
-                make_message(item)
+                self.message(item)
 
     def test_requires_timezone(self):
         with self.assertRaises(ValueError):
-            make_message(dict(report(), generated_at='2026-10-24T01:00:00'))
+            self.message(dict(report(), generated_at='2026-10-24T01:00:00'))
 
     def test_posts_wait_true_and_no_mentions(self):
         opener = Mock(return_value=response())

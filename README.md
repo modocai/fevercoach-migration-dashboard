@@ -44,9 +44,11 @@ python3 scripts/build_dashboard.py --check
 ## Discord 일일 알림
 
 GitHub Actions `Daily engineering completion notice`가 매일 **한국 시간 오전 9시**
-(UTC 00:00)에 엔지니어링 채널로 저장된 콘텐츠 이관 완성률 하나를 보냅니다.
+(UTC 00:00)에 엔지니어링 채널로 저장된 콘텐츠 이관 완성률과 이슈 완료율을 보냅니다.
 `DISCORD_ENGINEERING_WEBHOOK_URL` 저장소 Secret에 해당 채널의 웹훅을 설정합니다.
 알림 내용은 `data/content-comparison.json`과 동일하며, 비교 작업을 새로 실행하지 않습니다.
+이슈 완료율은 대시보드와 같은 `data/plan.json`, `data/snapshot.json`에서 계산합니다.
+예: `이슈 완료율: 4% (1/28)`. 완료 처리된 이슈만 세며, 조회 실패 시 이전 기록임을 표시합니다.
 측정 결과가 있으면 저장된 측정 시각을 함께 표시하고, 배포 전에는 0%를 표시합니다.
 수치가 갱신되려면 전체 비교 결과를 main에 반영해야 합니다.
 
