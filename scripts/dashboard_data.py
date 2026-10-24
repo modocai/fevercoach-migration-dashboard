@@ -157,7 +157,7 @@ def task_states(plan, snapshot):
                 state = board_state if board_state in {"todo", "doing", "blocked"} else "unknown"
                 conflict = board_state in {"done", "excluded"}
         rows.append({**task, "status": state, "conflict": conflict,
-                     "assignees": issue["assignees"] if issue else None,
+                     "assignees": issue.get("assignees") if issue else None,
                      "due_date": item.get("due_date"),
                      "issue_known": issue is not None})
     return rows
@@ -241,12 +241,15 @@ def validate_snapshot(snapshot, plan, *, sources=("issues", "project", "wix")):
             if section["status"] == "ok" or section.get("last_success_at"):
                 require(set(numbers) == expected, "incomplete issue snapshot")
             for item in items:
-                require(set(item) == {"number", "state", "state_reason", "assignees", "updated_at"},
+                require({"number", "state", "state_reason"} <= set(item)
+                        and set(item) <= {"number", "state", "state_reason", "assignees", "updated_at"},
                         "unexpected public issue fields")
                 require(item["state"] in {"open", "closed"}, "invalid issue state")
-                require(isinstance(item["assignees"], list) and all(isinstance(a, str) for a in item["assignees"]),
-                        "invalid assignees")
-                timestamp(item["updated_at"])
+                if "assignees" in item:
+                    require(isinstance(item["assignees"], list) and all(isinstance(a, str) for a in item["assignees"]),
+                            "invalid assignees")
+                if "updated_at" in item:
+                    timestamp(item["updated_at"])
         elif name == "project":
             for item in items:
                 require(set(item) == {"number", "status", "due_date"}, "unexpected public Project fields")

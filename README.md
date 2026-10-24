@@ -6,6 +6,8 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전의 작업 상태, 추출 범위, �
 - [Project #11](https://github.com/orgs/modocai/projects/11)
 - [웹사이트 계획·Issues](https://github.com/modocai/fevercoach-website)
 
+[자동 갱신 도입안·활성화·복구 절차](docs/autonomous-updates.md): 별도 환경 인증과 관리자 설정 후 켜는 Pages 자동 발행 경로입니다. 기본값은 비활성입니다. 아래 수동 갱신 경로와 달리 자동 발행은 웹사이트 main에 승인된 자료만 사용합니다.
+
 ## 구성
 
 사이트는 서버나 패키지 없이 동작하는 정적 HTML/CSS/JavaScript입니다. Python 3.9 이상 표준 라이브러리로 데이터를 검증하고 두 HTML을 생성합니다. 브라우저는 GitHub API를 호출하지 않습니다.
