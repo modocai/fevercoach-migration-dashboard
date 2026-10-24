@@ -7,7 +7,7 @@ from unittest.mock import patch
 from urllib.error import HTTPError
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from compare_content import Comparator, compare_inventory, main, parse_page, preflight_target, sitemap_urls, target_url, write_report
+from compare_content import Comparator, compare_inventory, main, parse_page, preflight_target, sitemap_urls, srcset_urls, target_url, write_report
 
 
 OLD = 'https://old.example'
@@ -51,6 +51,64 @@ class ContentTests(unittest.TestCase):
             result = self.compare(page('Hello world'), page(text))
             self.assertGreater(result['score'], 0)
             self.assertLess(result['score'], 1)
+
+    def test_inline_markup_preserves_adjacent_text(self):
+        for markup in ['<p>fever<strong>coach</strong></p>',
+                       '<p><span>fever</span><a href="/">coach</a></p>',
+                       '<p>fever<!-- comment -->coach</p>']:
+            with self.subTest(markup=markup):
+                result = self.compare(page('<p>fevercoach</p>'), page(markup))
+                self.assertEqual(result['text_score'], 1)
+                self.assertEqual(result['score'], 1)
+
+    def test_block_boundaries_preserve_word_separation(self):
+        for markup in ['<p>fever</p><p>coach</p>', '<div>fever</div><div>coach</div>',
+                       '<p>fever<br>coach</p>', '<ul><li>fever</li><li>coach</li></ul>']:
+            with self.subTest(markup=markup):
+                text, _ = parse_page(page(markup), OLD)
+                self.assertEqual(text, 'fever coach')
+                self.assertLess(self.compare(page('<p>fevercoach</p>'), page(markup))['score'], 1)
+
+    def test_srcset_candidates_are_compared_even_with_same_fallback(self):
+        old_image = '<img src="/fallback.jpg" srcset="/small.jpg 1x, /large.jpg 2x">'
+        new_image = '<img src="/fallback.jpg" srcset="/small.jpg 1x, /changed.jpg 2x">'
+        values = {}
+        for origin in [OLD, NEW]:
+            for path, body in [('/fallback.jpg', b'fallback'), ('/small.jpg', b'small'),
+                               ('/large.jpg', b'large'), ('/changed.jpg', b'changed')]:
+                values[origin + path] = (body, 'image/jpeg', origin + path)
+        result = self.compare(page('Hello', old_image), page('Hello', new_image), values)
+        self.assertLess(result['score'], 1)
+        self.assertAlmostEqual(result['image_score'], 2 / 3)
+        values[NEW + '/changed.jpg'] = (b'large', 'image/jpeg', NEW + '/changed.jpg')
+        self.assertEqual(self.compare(page('Hello', old_image), page('Hello', new_image), values)['score'], 1)
+
+    def test_picture_source_candidates_contribute_to_image_score(self):
+        markup = '<picture><source media="(min-width: 800px)" srcset="/wide.webp 1x, /wide-2.webp 2x"><img src="/fallback.jpg"></picture>'
+        values = {}
+        for origin in [OLD, NEW]:
+            for path in ['/wide.webp', '/wide-2.webp', '/fallback.jpg']:
+                values[origin + path] = (path.encode(), 'image/webp', origin + path)
+        self.assertEqual(self.compare(page('Hello', markup), page('Hello', markup), values)['score'], 1)
+        values[NEW + '/wide-2.webp'] = (b'different-wide', 'image/webp', NEW + '/wide-2.webp')
+        self.assertLess(self.compare(page('Hello', markup), page('Hello', markup), values)['score'], 1)
+
+    def test_srcset_data_url_comma_is_not_misread_as_an_image_url(self):
+        value = 'data:image/png;base64,YWJj 1x, /large.jpg 2x'
+        self.assertEqual(srcset_urls(value), ['data:image/png;base64,YWJj', '/large.jpg'])
+        markup = f'<img src="/fallback.jpg" srcset="{value}">'
+        values = {}
+        for origin in [OLD, NEW]:
+            for path in ['/fallback.jpg', '/large.jpg']:
+                values[origin + path] = (b'image', 'image/jpeg', origin + path)
+        result = self.compare(page('Hello', markup), page('Hello', markup), values)
+        self.assertLess(result['score'], 1)
+        self.assertEqual(srcset_urls('/image?crop=1,2 400w, /large 800w'), ['/image?crop=1,2', '/large'])
+
+    def test_responsive_fallback_duplicates_deduped_but_video_sources_ignored(self):
+        markup = '<img src="/image.jpg" srcset="/image.jpg 1x, /large.jpg 2x"><video><source srcset="/video.mp4 1x"></video>'
+        _, images = parse_page(page('Hello', markup), OLD)
+        self.assertEqual(images, [OLD + '/image.jpg', OLD + '/large.jpg'])
 
     def test_missing_and_broken_images_penalize_even_equal_urls(self):
         image = '<img src="https://cdn.example/image.png">'

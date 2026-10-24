@@ -26,6 +26,62 @@ import xml.etree.ElementTree as ET
 MAX_BYTES = 20 * 1024 * 1024
 VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
 EXCLUDED = {'script', 'style', 'noscript', 'template', 'nav', 'header', 'footer', 'svg'}
+TEXT_BOUNDARIES = {'address', 'article', 'aside', 'blockquote', 'body', 'br', 'caption',
+                   'dd', 'details', 'dialog', 'div', 'dl', 'dt', 'fieldset', 'figcaption',
+                   'figure', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'legend',
+                   'li', 'main', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody',
+                   'td', 'tfoot', 'th', 'thead', 'tr', 'ul'}
+
+
+def srcset_urls(value):
+    """Collect every candidate without treating commas inside URLs as separators.
+
+    Follow the srcset URL/descriptor token boundaries. Unsupported descriptors
+    produce an unresolved image slot rather than silently earning a full match.
+    Data URLs are kept intact; the HTTP-only fetcher conservatively fails them.
+    """
+    candidates = []
+    position = 0
+    while position < len(value):
+        while position < len(value) and (value[position].isspace() or value[position] == ','):
+            position += 1
+        if position == len(value):
+            break
+        start = position
+        while position < len(value) and not value[position].isspace():
+            position += 1
+        url = value[start:position]
+        if url.endswith(','):
+            candidates.append(url.rstrip(',') or '')
+            continue
+        start = position
+        parentheses = 0
+        while position < len(value):
+            char = value[position]
+            if char == ',' and parentheses == 0:
+                break
+            if char == '(':
+                parentheses += 1
+            elif char == ')' and parentheses:
+                parentheses -= 1
+            position += 1
+        descriptors = value[start:position].split()
+        position += 1
+        valid = not descriptors or (len(descriptors) == 1 and bool(
+            re.fullmatch(r'(?:[1-9][0-9]*w|(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)x)', descriptors[0])))
+        candidates.append(url if valid else '')
+    return candidates
+
+
+def image_candidates(attrs, source=False):
+    candidates = []
+    if not source:
+        candidates.extend(attrs[key] for key in ('src', 'data-src') if attrs.get(key))
+    for key in ('srcset', 'data-srcset'):
+        if attrs.get(key):
+            candidates.extend(srcset_urls(attrs[key]))
+    # Count a URL once per element while preserving repeated images on the page.
+    return list(dict.fromkeys(candidates)) or ['']
 
 
 def require_url(url):
@@ -101,14 +157,12 @@ class ContentParser(HTMLParser):
         self.stack.append((tag, excluded))
         if not self.is_excluded():
             self.seen.update({tag} & {'body', 'main', 'article'})
-            if tag == 'img':
-                src = attrs.get('data-src') or attrs.get('src')
-                if not src:
-                    srcset = attrs.get('srcset', '').split(',')
-                    src = srcset[-1].strip().split(' ')[0] if srcset else ''
+            if tag in TEXT_BOUNDARIES:
+                self.text_boundary()
+            if tag == 'img' or (tag == 'source' and any(parent == 'picture' for parent, _ in self.stack)):
                 # Missing/inline image sources remain failures, never silently disappear.
                 for scope in self.scopes():
-                    self.images[scope].append(src or '')
+                    self.images[scope].extend(image_candidates(attrs, source=tag == 'source'))
         if tag in VOID:
             self.stack.pop()
 
@@ -118,6 +172,8 @@ class ContentParser(HTMLParser):
             self.handle_endtag(tag)
 
     def handle_endtag(self, tag):
+        if tag in TEXT_BOUNDARIES and not self.is_excluded():
+            self.text_boundary()
         for index in range(len(self.stack) - 1, -1, -1):
             if self.stack[index][0] == tag:
                 del self.stack[index:]
@@ -130,6 +186,10 @@ class ContentParser(HTMLParser):
         tags = {tag for tag, _ in self.stack}
         return tags & self.text.keys()
 
+    def text_boundary(self):
+        for scope in self.scopes():
+            self.text[scope].append(' ')
+
     def handle_data(self, data):
         if any(tag == 'title' for tag, _ in self.stack):
             self.title.append(data)
@@ -139,7 +199,7 @@ class ContentParser(HTMLParser):
 
     def result(self, url):
         scope = next((key for key in ('article', 'main', 'body') if key in self.seen), 'body')
-        text = ' '.join(unicodedata.normalize('NFC', ' '.join(self.text[scope])).split())
+        text = ' '.join(unicodedata.normalize('NFC', ''.join(self.text[scope])).split())
         title = ' '.join(self.title).lower()
         if re.search(r'\b404\b|page not found|페이지를 찾을 수 없', title):
             raise ValueError('soft_404')

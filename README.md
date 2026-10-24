@@ -6,8 +6,6 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전의 작업 상태, 추출 범위, �
 - [Project #11](https://github.com/orgs/modocai/projects/11)
 - [웹사이트 계획·Issues](https://github.com/modocai/fevercoach-website)
 
-## 구성
-
 ## 콘텐츠 이관 완성률
 
 대시보드 상단 숫자는 `각 기존 URL의 비교 점수 합 / 전체 기존 URL 수 × 100`입니다.
@@ -43,7 +41,24 @@ python3 scripts/build_dashboard.py --check
 새 사이트가 200으로 오류 화면을 반환하면 제목 기반 일부 soft-404 탐지 외에는 부분 점수가 생길 수 있습니다.
 실제 렌더링 전체의 동등성을 보장하는 지표는 아닙니다.
 
-## 파일 구성
+## Discord 일일 알림
+
+GitHub Actions `Daily engineering completion notice`가 매일 **한국 시간 오전 9시**
+(UTC 00:00)에 엔지니어링 채널로 저장된 콘텐츠 이관 완성률 하나를 보냅니다.
+`DISCORD_ENGINEERING_WEBHOOK_URL` 저장소 Secret에 해당 채널의 웹훅을 설정합니다.
+알림 내용은 `data/content-comparison.json`과 동일하며, 비교 작업을 새로 실행하지 않습니다.
+측정 결과가 있으면 저장된 측정 시각을 함께 표시하고, 배포 전에는 0%를 표시합니다.
+수치가 갱신되려면 전체 비교 결과를 main에 반영해야 합니다.
+
+```sh
+python3 scripts/notify_discord.py --dry-run
+```
+
+워크플로는 main에서만 실행하며 수동 실행도 가능합니다. Discord 응답으로 전송을 확인하고,
+알림에 전체 멘션을 포함하지 않습니다. 인증 오류나 알 수 없는 측정 상태는 전송 실패로 처리합니다.
+GitHub 예약 실행은 지연될 수 있고 공개 저장소는 60일간 활동이 없으면 예약이 비활성화될 수 있습니다.
+
+## 파일 목록
 
 사이트는 서버나 패키지 없이 동작하는 정적 HTML/CSS/JavaScript입니다. Python 3.9 이상 표준 라이브러리로 데이터를 검증하고 두 HTML을 생성합니다. 브라우저는 GitHub API를 호출하지 않습니다.
 

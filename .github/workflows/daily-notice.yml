@@ -1,0 +1,25 @@
+name: Daily engineering completion notice
+on:
+  schedule:
+    # 00:00 UTC = 09:00 Asia/Seoul (Korea has no DST).
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: daily-engineering-completion-notice
+  cancel-in-progress: false
+jobs:
+  notify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Send saved dashboard completion to engineering
+        env:
+          DISCORD_ENGINEERING_WEBHOOK_URL: ${{ secrets.DISCORD_ENGINEERING_WEBHOOK_URL }}
+        run: python3 scripts/notify_discord.py
