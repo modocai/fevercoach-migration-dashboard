@@ -51,6 +51,8 @@ const server = http.createServer((req, res) => {
   try {
     await page.goto(base);
     await idle();
+    // Prove manifest polling omits cookies even when this origin has one.
+    await page.evaluate(() => { document.cookie = 'dashboard_test_canary=synthetic; path=/'; });
     assert.equal(await page.locator('.row:visible').count(), 28); checks++;
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false); checks++;
     await page.locator('[data-filter="doing"]').click();
@@ -109,7 +111,8 @@ const server = http.createServer((req, res) => {
     assert.deepEqual(external, []); checks++;
     await local.close();
     assert.deepEqual(errors, []); checks++;
-    assert.equal(requests.some(req => req.authorization || req.cookie), false); checks++;
+    assert.equal(requests.some(req => req.authorization), false); checks++;
+    assert.equal(requests.filter(req => req.path.endsWith('manifest.json')).some(req => req.cookie), false); checks++;
     console.log(`Automatic update browser checks passed: ${checks} assertions (1440px / 1280px, synthetic sources).`);
   } finally {
     await browser.close();
