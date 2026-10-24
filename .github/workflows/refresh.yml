@@ -1,0 +1,45 @@
+name: Collect dashboard snapshot
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collect:
+    # Credentials are used only by the reviewed default-branch workflow.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require source-read credentials
+        env:
+          GH_TOKEN: ${{ secrets.DASHBOARD_SOURCE_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo 'Configure DASHBOARD_SOURCE_TOKEN with private repository and Project read access.'
+            exit 1
+          fi
+      - name: Collect sources independently
+        id: sync
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.DASHBOARD_SOURCE_TOKEN }}
+        run: python3 scripts/sync_github.py
+      - name: Validate and generate
+        run: |
+          python3 -m unittest discover -s tests -v
+          python3 scripts/build_dashboard.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-snapshot
+          path: |
+            data/snapshot.json
+            index.html
+            migration-dashboard.html
+      - name: Report incomplete collection
+        if: steps.sync.outcome == 'failure'
+        run: |
+          echo 'Some sources could not be refreshed. The artifact marks failures and retains last successful records.'
+          exit 1

@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "issues": {
+    "status": "ok",
+    "attempted_at": "2026-10-23T06:14:44+00:00",
+    "last_success_at": "2026-10-23T06:14:44+00:00",
+    "error": null,
+    "items": [
+      {
+        "number": 1,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:23Z"
+      },
+      {
+        "number": 2,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:27Z"
+      },
+      {
+        "number": 3,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:31Z"
+      },
+      {
+        "number": 4,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:36Z"
+      },
+      {
+        "number": 5,
+        "state": "closed",
+        "state_reason": "completed",
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:44Z"
+      },
+      {
+        "number": 6,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:32Z"
+      },
+      {
+        "number": 7,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:49Z"
+      },
+      {
+        "number": 8,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:54Z"
+      },
+      {
+        "number": 9,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:58Z"
+      },
+      {
+        "number": 10,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:03Z"
+      },
+      {
+        "number": 11,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:07Z"
+      },
+      {
+        "number": 12,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:11Z"
+      },
+      {
+        "number": 13,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:15Z"
+      },
+      {
+        "number": 14,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:20Z"
+      },
+      {
+        "number": 15,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:26Z"
+      },
+      {
+        "number": 16,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:32Z"
+      },
+      {
+        "number": 17,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:36Z"
+      },
+      {
+        "number": 18,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:40Z"
+      },
+      {
+        "number": 19,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:45Z"
+      },
+      {
+        "number": 20,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:49Z"
+      },
+      {
+        "number": 21,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:52Z"
+      },
+      {
+        "number": 22,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:57Z"
+      },
+      {
+        "number": 23,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:01Z"
+      },
+      {
+        "number": 24,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:05Z"
+      },
+      {
+        "number": 25,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:09Z"
+      },
+      {
+        "number": 26,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:12Z"
+      },
+      {
+        "number": 27,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:16Z"
+      },
+      {
+        "number": 28,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:21Z"
+      }
+    ]
+  },
+  "project": {
+    "status": "error",
+    "attempted_at": "2026-10-23T06:14:44+00:00",
+    "last_success_at": null,
+    "error": "project_read_permission_required"
+  },
+  "wix": {
+    "status": "ok",
+    "attempted_at": "2026-10-23T06:14:44+00:00",
+    "last_success_at": "2026-10-23T06:14:44+00:00",
+    "error": null,
+    "data": {
+      "discovered_urls": 3589,
+      "exported_urls": 3589,
+      "unique_referenced_images": 6771,
+      "downloaded_images": 1092,
+      "images_not_downloaded_count": 5679,
+      "failed_url_count": 0,
+      "missing_url_count": 0,
+      "media_error_count": 0,
+      "all_discovered_urls_exported": true,
+      "all_referenced_images_downloaded": false,
+      "authoritative_wix_export_complete": false,
+      "dns_zone_export_complete": false,
+      "schema_version": 1,
+      "scope": "public_sitemap_snapshot",
+      "source": "https://www.fevercoach.us",
+      "generated_at": "2026-10-21T22:36:41.576173+00:00",
+      "media_download_scope": "sample"
+    },
+    "source_sha": "531eaa6aa08c6abb1320d403b2fe68c6ec7425da",
+    "review_state": "open_pr",
+    "source_url": "https://github.com/modocai/fevercoach-website/blob/531eaa6aa08c6abb1320d403b2fe68c6ec7425da/docs/wix-export-status.json",
+    "pr_url": "https://github.com/modocai/fevercoach-website/pull/29"
+  }
+}

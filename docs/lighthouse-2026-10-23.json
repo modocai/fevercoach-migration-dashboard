@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "note": "Each page was measured once, sequentially. Lab measurements are not field data or proof of migration impact.",
+  "reports": [
+    {
+      "page": "home",
+      "url": "https://www.fevercoach.us/",
+      "measured_at": "2026-10-23T06:22:59.320Z",
+      "lighthouse_version": "12.6.1",
+      "performance": 72,
+      "lcp_seconds": 5.092,
+      "form_factor": "mobile",
+      "throttling_method": "simulate",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "runs": 1,
+      "http_status": 200,
+      "warnings": [],
+      "raw_report_sha256": "4c9b1d42992af4dd1c31fed974f624df34ad790b5e4a033f205f88e39b261b70"
+    },
+    {
+      "page": "post",
+      "url": "https://www.fevercoach.us/post/oral-antibiotics-after-iv-drip",
+      "measured_at": "2026-10-23T06:24:00.341Z",
+      "lighthouse_version": "12.6.1",
+      "performance": 92,
+      "lcp_seconds": 2.62,
+      "form_factor": "mobile",
+      "throttling_method": "simulate",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "runs": 1,
+      "http_status": 200,
+      "warnings": [],
+      "raw_report_sha256": "b86dd53a215ad59d8fd46c5c0f910445534e6aa0b71257a15ac24aa99ab231a0"
+    }
+  ]
+}
