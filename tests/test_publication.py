@@ -84,14 +84,14 @@ class PublicationTests(unittest.TestCase):
         class Failed(SyntheticGitHub):
             def project(self, plan): raise FetchError("project_read_permission_required")
         with self.assertRaises(ValueError):
-            prepare(PLAN, None, Failed(), REVISION, 1, NOW)
+            prepare(PLAN, None, Failed(), REVISION, 1, NOW, {"status": "not_deployed"})
 
     def test_failed_refresh_preserves_published_cache_not_repository_seed(self):
         class Failed(SyntheticGitHub):
             def issues(self, plan): raise FetchError("PRIVATE_CANARY")
             def project(self, plan): return [{"number": 1, "status": "blocked", "due_date": None}]
         later = "2026-10-23T17:00:00+00:00"
-        state, failures = prepare(PLAN, self.state, Failed(), REVISION, 2, later)
+        state, failures = prepare(PLAN, self.state, Failed(), REVISION, 2, later, {"status": "not_deployed"})
         self.assertEqual(failures, ["issues"])
         self.assertEqual(state["snapshot"]["issues"]["last_success_at"], NOW)
         self.assertEqual(state["snapshot"]["issues"]["items"], self.state["snapshot"]["issues"]["items"])
@@ -105,7 +105,7 @@ class PublicationTests(unittest.TestCase):
             def __getattr__(self, name):
                 def fail(plan): raise FetchError("github_request_failed")
                 return fail
-        state, failures = prepare(PLAN, self.state, Failed(), REVISION, 2, NOW)
+        state, failures = prepare(PLAN, self.state, Failed(), REVISION, 2, NOW, {"status": "not_deployed"})
         self.assertEqual(len(failures), 3)
         validate_state(state, PLAN)
         self.assertEqual(state["snapshot"]["wix"]["data"], self.state["snapshot"]["wix"]["data"])
@@ -113,7 +113,7 @@ class PublicationTests(unittest.TestCase):
     def test_incomplete_issue_response_does_not_replace_cache(self):
         class Partial(SyntheticGitHub):
             def issues(self, plan): return super().issues(plan)[:-1]
-        state, failures = prepare(PLAN, self.state, Partial(), REVISION, 2, NOW)
+        state, failures = prepare(PLAN, self.state, Partial(), REVISION, 2, NOW, {"status": "not_deployed"})
         self.assertEqual(failures, ["issues"])
         self.assertEqual(len(state["snapshot"]["issues"]["items"]), 28)
 
@@ -125,7 +125,7 @@ class PublicationTests(unittest.TestCase):
                 guard(revision, generation, "1", fetch=fetch, api=lambda: REVISION)
         guard(REVISION, 1, "1", fetch=missing, api=lambda: REVISION)
         with self.assertRaises(ValueError):
-            prepare(PLAN, self.state, SyntheticGitHub(), REVISION, 1, NOW)
+            prepare(PLAN, self.state, SyntheticGitHub(), REVISION, 1, NOW, {"status": "not_deployed"})
 
     def test_issue_query_requests_only_approved_ids_and_minimal_fields(self):
         class Client(PublicGitHub):
@@ -243,6 +243,7 @@ class PublicationTests(unittest.TestCase):
                 root = Path(temporary)
                 (root / 'data').mkdir()
                 (root / 'data/plan.json').write_text(json.dumps(PLAN))
+                (root / 'data/content-comparison.json').write_text('{"status":"not_deployed"}')
                 (root / 'data/baselines.json').write_text((ROOT / 'data/baselines.json').read_text())
                 output = root / 'job-output'
                 environment = {'GITHUB_REPOSITORY': 'modocai/fevercoach-migration-dashboard', 'GITHUB_REF': 'refs/heads/main',

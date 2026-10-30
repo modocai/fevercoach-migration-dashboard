@@ -7,12 +7,13 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from dashboard_data import (ROOT, require, timestamp, validate_snapshot, project_wix)
 from sync_github import FetchError, GitHub
+from public_content import public_content
 
 BASE = "https://modocai.github.io/fevercoach-migration-dashboard/"
 MAX_STATE_BYTES = 512 * 1024
 ERRORS = {None, "project_read_permission_required", "not_found", "github_request_failed",
           "invalid_github_response", "invalid_or_unavailable_source", "approved_wix_source_unavailable"}
-FILES = {"index.html", "migration-dashboard.html", "state.json", "manifest.json", "assets/auto-refresh.js", ".nojekyll"}
+FILES = {"index.html", "migration-dashboard.html", "state.json", "manifest.json", "assets/auto-refresh.js", ".nojekyll", "data/content-comparison.json"}
 
 
 def canonical(value):
@@ -103,21 +104,21 @@ def validate_public_snapshot(snapshot, plan):
     require(public_snapshot(snapshot, plan) == snapshot, "non-public fields in publication")
 
 
-def make_state(snapshot, plan, revision, generation, now):
+def make_state(snapshot, plan, revision, generation, now, content_report):
     require(re.fullmatch(r"[0-9a-f]{40}", revision) is not None, "invalid build revision")
     require(type(generation) is int and generation > 0, "invalid generation")
     timestamp(now)
-    state = {"schema_version": 1, "catalog_id": catalog_id(plan), "revision": revision,
-             "generation": generation, "generated_at": now, "snapshot": public_snapshot(snapshot, plan)}
+    state = {"schema_version": 2, "catalog_id": catalog_id(plan), "revision": revision,
+             "generation": generation, "generated_at": now, "snapshot": public_snapshot(snapshot, plan), "content_report": public_content(content_report)}
     return {**state, "build_id": digest(state)}
 
 
 def validate_state(state, plan):
-    require(set(state) == {"schema_version", "catalog_id", "revision", "generation", "generated_at", "snapshot", "build_id"},
+    require(set(state) == {"schema_version", "catalog_id", "revision", "generation", "generated_at", "snapshot", "content_report", "build_id"},
             "unexpected state fields")
-    require(state["schema_version"] == 1 and state["catalog_id"] == catalog_id(plan), "incompatible publication")
+    require(state["schema_version"] == 2 and state["catalog_id"] == catalog_id(plan), "incompatible publication")
     validate_public_snapshot(state["snapshot"], plan)
-    expected = make_state(state["snapshot"], plan, state["revision"], state["generation"], state["generated_at"])
+    expected = make_state(state["snapshot"], plan, state["revision"], state["generation"], state["generated_at"], state["content_report"])
     require(expected == state, "publication digest mismatch")
     require(len(canonical(state)) <= MAX_STATE_BYTES, "publication too large")
 
@@ -167,7 +168,7 @@ def audit_tree(output):
     for path in output.rglob("*"):
         require(not path.is_symlink(), "symlinks cannot be published")
         if path.is_dir():
-            require(path.relative_to(output).as_posix() == "assets", "unexpected publication directory")
+            require(path.relative_to(output).as_posix() in {"assets", "data"}, "unexpected publication directory")
         if path.is_file():
             require(path.stat().st_nlink == 1, "hard links cannot be published")
             actual.add(path.relative_to(output).as_posix())
@@ -182,7 +183,7 @@ def write_site(output, state, plan, baselines):
     require(not output.is_symlink(), "output cannot be a symlink")
     require(not output.exists() or not any(output.iterdir()), "output must be a new empty directory")
     output.mkdir(parents=True, exist_ok=True)
-    html = render(plan, state["snapshot"], baselines)
+    html = render(plan, state["snapshot"], baselines, state["content_report"])
     require(html.count("</head>") == 1 and html.count("</main>") == 1 and html.count("</body>") == 1,
             "unsupported template structure")
     html = html.replace("</head>", f'<meta name="dashboard-version" content="{state["build_id"]}">'
@@ -193,6 +194,8 @@ def write_site(output, state, plan, baselines):
         (output / name).write_text(html, encoding="utf-8")
     (output / "state.json").write_bytes(canonical(state))
     (output / "manifest.json").write_bytes(canonical(manifest(state)))
+    (output / "data").mkdir()
+    (output / "data/content-comparison.json").write_bytes(canonical(state["content_report"]))
     (output / ".nojekyll").write_text("")
     (output / "assets").mkdir()
     (output / "assets/auto-refresh.js").write_bytes((ROOT / "assets/auto-refresh.js").read_bytes())

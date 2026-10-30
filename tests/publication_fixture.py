@@ -33,12 +33,23 @@ class SyntheticGitHub:
                 "review_state": "main", "pr_url": None}
 
 
-def fixture(now=NOW, generation=1):
+def fixture(now=NOW, generation=1, content_report=None):
     snapshot, failures = refresh(PLAN, {}, SyntheticGitHub(), now)
     assert not failures
-    return make_state(snapshot, PLAN, REVISION, generation, now)
+    return make_state(snapshot, PLAN, REVISION, generation, now,
+                      content_report if content_report is not None else {"status": "not_deployed"})
 
 
 if __name__ == "__main__":
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    write_site(Path(sys.argv[1]), fixture(now, int(sys.argv[2])), PLAN, read_json(ROOT / "data/baselines.json"))
+    generation = int(sys.argv[2])
+    report = {"status": "not_deployed"}
+    if generation == 2:
+        report = {"status": "measured", "generated_at": now,
+                  "source_sitemap": "https://www.fevercoach.us/sitemap.xml",
+                  "target_base_url": "https://example.invalid", "total_urls": 1,
+                  "score_sum": 0.5, "percentage": 50.0,
+                  "results": [{"source_url": "https://www.fevercoach.us/one",
+                               "target_url": "https://example.invalid/one", "status": "ok",
+                               "score": 0.5, "text_score": 0.5, "image_score": 0.5}]}
+    write_site(Path(sys.argv[1]), fixture(now, generation, report), PLAN, read_json(ROOT / "data/baselines.json"))

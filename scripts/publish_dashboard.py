@@ -37,14 +37,14 @@ def previous_state(plan, nonce, fetch=fetch_public):
     return state
 
 
-def prepare(plan, previous, client, revision, generation, now):
+def prepare(plan, previous, client, revision, generation, now, content_report):
     if previous is not None:
         validate_state(previous, plan)
         require(generation > previous["generation"], "outdated publication attempt")
     snapshot, failures = refresh(plan, previous["snapshot"] if previous else {}, client, now)
     # A failed first collection must never replace the existing site with blanks.
     require(previous is not None or not failures, "first publication needs all approved sources")
-    return make_state(snapshot, plan, revision, generation, now), failures
+    return make_state(snapshot, plan, revision, generation, now, content_report), failures
 
 
 def guard(revision, generation, nonce, fetch=fetch_public, api=None):
@@ -86,7 +86,8 @@ def main():
         validate_plan(plan)
         previous = previous_state(plan, nonce)
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        state, failures = prepare(plan, previous, PublicGitHub(), revision, generation, now)
+        content_report = read_json(ROOT / "data/content-comparison.json")
+        state, failures = prepare(plan, previous, PublicGitHub(), revision, generation, now, content_report)
         write_site(ROOT / "_site", state, plan, read_json(ROOT / "data/baselines.json"))
         with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as output:
             output.write("degraded=" + str(bool(failures)).lower() + "\n")

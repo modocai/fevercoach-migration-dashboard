@@ -26,6 +26,11 @@ const server = http.createServer((req, res) => {
     res.end(manifestMode === 'invalid' ? '{bad' : manifestMode === 'oversize' ? 'x'.repeat(5000) : JSON.stringify(value));
     return;
   }
+  if (url.pathname === '/data/content-comparison.json') {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(fs.readFileSync(path.join(sites[published], 'data/content-comparison.json')));
+    return;
+  }
   const filename = url.pathname.endsWith('auto-refresh.js') ? 'assets/auto-refresh.js' :
     url.pathname.endsWith('migration-dashboard.html') ? 'migration-dashboard.html' : 'index.html';
   res.setHeader('Content-Type', filename.endsWith('.js') ? 'application/javascript' : 'text/html');
@@ -51,6 +56,7 @@ const server = http.createServer((req, res) => {
   try {
     await page.goto(base);
     await idle();
+    assert.equal(await page.locator('.content-score').innerText(), '0%'); checks++;
     // Prove manifest polling omits cookies even when this origin has one.
     await page.evaluate(() => { document.cookie = 'dashboard_test_canary=synthetic; path=/'; });
     assert.equal(await page.locator('.row:visible').count(), 28); checks++;
@@ -63,6 +69,11 @@ const server = http.createServer((req, res) => {
     await page.waitForURL(url => url.searchParams.get('v') === manifests[2].build_id);
     await page.waitForFunction(() => document.querySelector('[data-filter="doing"]').getAttribute('aria-pressed') === 'true');
     assert.equal(await page.locator('.row:visible').count(), 1); checks++;
+    assert.equal(await page.locator('.content-score').innerText(), '50.0%'); checks++;
+    const reportLink = await page.locator('#content-completion a').getAttribute('href');
+    const reportResponse = await page.request.get(new URL(reportLink, base).href);
+    assert.equal(reportResponse.status(), 200); checks++;
+    assert.equal((await reportResponse.json()).percentage, 50); checks++;
     assert.equal(await page.locator('#phase-0 details').evaluate(node => node.open), true); checks++;
     assert.ok(await page.evaluate(() => scrollY > 0)); checks++;
     for (const [mode, message] of [['offline', '확인하지 못했습니다'], ['invalid', '확인하지 못했습니다'],
