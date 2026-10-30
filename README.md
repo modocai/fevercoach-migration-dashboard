@@ -8,7 +8,61 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전의 작업 상태, 추출 범위, �
 
 [자동 갱신 도입안·활성화·복구 절차](docs/autonomous-updates.md): 별도 환경 인증과 관리자 설정 후 켜는 Pages 자동 발행 경로입니다. 기본값은 비활성입니다. 아래 수동 갱신 경로와 달리 자동 발행은 웹사이트 main에 승인된 자료만 사용합니다.
 
-## 구성
+## 콘텐츠 이관 완성률
+
+대시보드 상단 숫자는 `각 기존 URL의 비교 점수 합 / 전체 기존 URL 수 × 100`입니다.
+이슈 완료율과 독립적이며, 1, 0.5, 0점인 세 페이지는 50%입니다.
+사이트맵 전체를 먼저 확정하고 같은 경로·쿼리를 새 배포 도메인에 1:1 매핑합니다.
+404, 네트워크 오류, 빈 본문, 원본 조회 실패도 0점으로 남겨 분모에서 제외하지 않습니다.
+사이트맵 일부 조회 실패 시에는 이전 보고서를 덮어쓰지 않습니다.
+
+비교 전 대상이 **main의 정상 배포**인지 확인합니다. 배포 자체가 없거나 인증으로 막혀 있으면
+실행하지 않고 이전 보고서를 유지합니다. 새 사이트가 아직 배포되지 않은 초기 상태는
+`not_deployed`로 기록하고 **0% · 새 사이트 배포 전**으로 표시합니다.
+이는 실제 URL 비교 결과와 구분됩니다. 현재 main 배포 URL은 확인 대기입니다.
+
+```sh
+python3 scripts/compare_content.py --source-sitemap https://www.fevercoach.us/sitemap.xml --target-base-url https://MAIN-DEPLOYMENT.vercel.app --output data/content-comparison.json
+python3 scripts/build_dashboard.py
+python3 -m unittest discover -s tests -v
+python3 scripts/build_dashboard.py --check
+```
+
+전체 결과 JSON에는 각 원본/대상 URL, 텍스트·이미지 점수와 오류가 남습니다.
+보고서와 HTML을 함께 검토·배포해야 공개 숫자가 갱신됩니다. 자동 갱신은 하지 않습니다.
+
+점수 정의:
+- HTML의 article → main → body 순서로 본문을 선택하고 script/style/nav/header/footer 및 명시적 숨김 요소를 제외합니다.
+- 텍스트는 Unicode와 공백을 정규화한 뒤 단어 순서 유사도를 계산합니다.
+- 이미지는 다운로드한 파일의 SHA-256과 출현 횟수로 비교합니다. URL이 달라도 파일이 같으면 일치합니다.
+- 어느 한쪽에 이미지가 있으면 텍스트/이미지 각 50%, 양쪽 모두 없으면 텍스트 100%입니다.
+- 완전 일치만 1점이며, 100%는 모든 페이지가 1점일 때만 표시합니다.
+
+한계: 서버 HTML 기준입니다. JavaScript 전용 콘텐츠, CSS 배경 이미지, 화면 배치, SEO는 별도 검증이 필요합니다.
+이미지 재인코딩·크기 변경은 시각적으로 같아도 파일 불일치로 계산합니다.
+새 사이트가 200으로 오류 화면을 반환하면 제목 기반 일부 soft-404 탐지 외에는 부분 점수가 생길 수 있습니다.
+실제 렌더링 전체의 동등성을 보장하는 지표는 아닙니다.
+
+## Discord 일일 알림
+
+GitHub Actions `Daily engineering completion notice`가 매일 **한국 시간 오전 9시**
+(UTC 00:00)에 엔지니어링 채널로 저장된 콘텐츠 이관 완성률과 이슈 완료율을 보냅니다.
+`DISCORD_ENGINEERING_WEBHOOK_URL` 저장소 Secret에 해당 채널의 웹훅을 설정합니다.
+알림 내용은 `data/content-comparison.json`과 동일하며, 비교 작업을 새로 실행하지 않습니다.
+이슈 완료율은 대시보드와 같은 `data/plan.json`, `data/snapshot.json`에서 계산합니다.
+예: `이슈 완료율: 4% (1/28)`. 완료 처리된 이슈만 세며, 조회 실패 시 이전 기록임을 표시합니다.
+측정 결과가 있으면 저장된 측정 시각을 함께 표시하고, 배포 전에는 0%를 표시합니다.
+수치가 갱신되려면 전체 비교 결과를 main에 반영해야 합니다.
+
+```sh
+python3 scripts/notify_discord.py --dry-run
+```
+
+워크플로는 main에서만 실행하며 수동 실행도 가능합니다. Discord 응답으로 전송을 확인하고,
+알림에 전체 멘션을 포함하지 않습니다. 인증 오류나 알 수 없는 측정 상태는 전송 실패로 처리합니다.
+GitHub 예약 실행은 지연될 수 있고 공개 저장소는 60일간 활동이 없으면 예약이 비활성화될 수 있습니다.
+
+## 파일 목록
 
 사이트는 서버나 패키지 없이 동작하는 정적 HTML/CSS/JavaScript입니다. Python 3.9 이상 표준 라이브러리로 데이터를 검증하고 두 HTML을 생성합니다. 브라우저는 GitHub API를 호출하지 않습니다.
 

@@ -11,12 +11,14 @@ const root = path.resolve(__dirname, '..');
   const report = [];
   fs.mkdirSync(path.join(root, 'artifacts'), {recursive: true});
   try {
-    for (const width of [1440, 1280]) {
+    for (const width of [1440, 1280, 390]) {
       const page = await browser.newPage({viewport: {width, height: width === 1440 ? 900 : 800}});
       const errors = [], requests = [];
       page.on('pageerror', e => errors.push(e.message));
       page.on('request', req => { if (/^https?:/.test(req.url())) requests.push(req.url()); });
       await page.goto(pathToFileURL(path.join(root, 'index.html')).href);
+      assert.equal(await page.locator('#content-completion').count(), 1);
+      assert.equal(await page.locator('.content-score').isVisible(), true);
       const expected = JSON.parse(fs.readFileSync(path.join(root, 'data/plan.json'), 'utf8')).tasks.length;
       assert.equal(await page.locator('.row:visible').count(), expected);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `overflow at ${width}`);
