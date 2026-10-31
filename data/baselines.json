@@ -63,12 +63,12 @@
   ],
   "search_console": [
     {
-      "status": "pending",
-      "period_start": null,
-      "period_end": null,
-      "clicks": null,
-      "impressions": null,
-      "evidence_url": null
+      "status": "measured",
+      "period_start": "2026-10-01",
+      "period_end": "2026-10-28",
+      "clicks": 5638,
+      "impressions": 595016,
+      "evidence_url": "https://github.com/modocai/fevercoach-website/blob/1cc3036048ea8cdde713cf3addd0b2c03d6c733b/docs/pre-migration-baseline.md"
     }
   ],
   "analytics": {

@@ -2,8 +2,8 @@
   "schema_version": 1,
   "issues": {
     "status": "ok",
-    "attempted_at": "2026-10-31T05:23:22+00:00",
-    "last_success_at": "2026-10-31T05:23:22+00:00",
+    "attempted_at": "2026-10-31T06:38:00Z",
+    "last_success_at": "2026-10-31T06:38:00Z",
     "error": null,
     "items": [
       {
@@ -22,10 +22,10 @@
       },
       {
         "number": 3,
-        "state": "open",
-        "state_reason": null,
+        "state": "closed",
+        "state_reason": "completed",
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:31Z"
+        "updated_at": "2026-10-31T06:35:52Z"
       },
       {
         "number": 4,
@@ -206,8 +206,8 @@
   },
   "project": {
     "status": "ok",
-    "attempted_at": "2026-10-31T05:22:58.901Z",
-    "last_success_at": "2026-10-31T05:22:58.903Z",
+    "attempted_at": "2026-10-31T06:36:30Z",
+    "last_success_at": "2026-10-31T06:36:30Z",
     "error": null,
     "items": [
       {
@@ -222,7 +222,7 @@
       },
       {
         "number": 3,
-        "status": "todo",
+        "status": "done",
         "due_date": null
       },
       {
