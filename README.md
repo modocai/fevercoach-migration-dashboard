@@ -115,7 +115,7 @@ gh project view 11 --owner modocai --format json
 
 실제 `Status` 선택지에 맞게 `data/plan.json`의 `project.status_map`을 조정합니다. 알 수 없는 값은 미확인으로 유지합니다. 마감일은 실제 날짜 필드를 확인해 `due_date_field`에 설정한 경우만 사용합니다. 보드 필드를 임의로 만들거나 변경하지 않습니다.
 
-첫 실제 조회에서는 Issues·Wix 수집이 성공하고 Project는 `read:project` 권한 부족으로 실패했습니다. 실제 보드 변경 반영 검증은 권한 확보 후 진행해야 하며 페이지에 이 한계가 표시됩니다.
+첫 API 조회에서는 Issues·Wix 수집이 성공하고 Project는 `read:project` 권한 부족으로 실패했습니다. 2026-10-31 스냅샷은 연결된 GitHub 브라우저에서 Project #11의 28개 행과 실제 Status를 모두 확인해 보완했습니다. #15가 닫힌 뒤 보드에서도 Done인 것을 확인했으며 완료 7개·Todo 21개, 이슈와 보드의 불일치 0개입니다. 이 수동 확인은 API 토큰의 `read:project` 권한을 변경하거나 정기 수집이 복구됐다는 뜻이 아닙니다. 다음 자동 수집이 실패하면 기존 값과 실패 상태를 함께 유지합니다.
 
 `Collect dashboard snapshot` 워크플로는 `main`에서 수동 실행합니다. `DASHBOARD_SOURCE_TOKEN` secret에 비공개 원본 저장소와 Project를 읽을 수 있는 토큰이 필요합니다. 검증한 JSON·HTML을 다운로드 가능한 artifact로 제공하며 커밋·PR·배포는 생성하지 않습니다. 일부 수집 실패는 artifact와 별개로 실행 실패로 보고합니다. 토큰을 코드·HTML·JSON에 넣지 않습니다.
 
@@ -170,4 +170,3 @@ python3 scripts/build_dashboard.py
 이슈 #2(DNS), #12(스키마) 검증 근거에 따라 3/28개 완료로 갱신했습니다. 미디어 6,771개 참조를 이미지 6,761·폰트 9·잘못된 참조 1로 분리하고, 인증 Blog 게시/초안/예약 집계와 전체 Wix 자산 확인을 구분합니다. 원문·계정·개인 경로 없이 공개용 숫자만 읽습니다. 데이터 원본은 PR #29의 정확한 SHA이며 미병합 표시를 유지합니다.
 
 콘텐츠 완성률은 배포 전 0%를 유지합니다. 로컬 CMS 900개 적재 결과를 배포된 사이트의 전수 비교 결과로 대체하지 않습니다. Project 읽기 권한 제한도 그대로 표시합니다. 자동 발행은 기존 main 전용/기본 비활성 조건을 유지합니다.
-
