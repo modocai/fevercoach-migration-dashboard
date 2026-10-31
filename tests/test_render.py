@@ -36,6 +36,17 @@ class RenderTests(unittest.TestCase):
         self.assertEqual({attrs["href"] for attrs in titles},
                          {f'https://github.com/{self.plan["repository"]}/issues/{t["number"]}' for t in self.plan["tasks"]})
 
+    def test_open_filter_uses_issue_state_even_when_project_is_unknown(self):
+        self.snapshot["project"]["items"] = []
+        doc = Document(self.render())
+        rows = [a for tag, a in doc.tags if tag == "article" and "data-issue-state" in a]
+        expected = sum(i["state"] == "open" for i in self.snapshot["issues"]["items"])
+        self.assertEqual(sum(a["data-issue-state"] == "open" for a in rows), expected)
+        self.assertTrue(all(a["data-status"] == "unknown" for a in rows if a["data-issue-state"] == "open"))
+        buttons = [a for tag, a in doc.tags if tag == "button" and a.get("aria-pressed") == "true"]
+        self.assertEqual([a["data-filter"] for a in buttons], ["open"])
+        self.assertIn(f"<b>{expected}</b>미완료 (Open)", self.render())
+
     def test_output_deterministic_and_both_entrypoints_identical(self):
         self.assertEqual(self.render(), self.render())
         self.assertEqual((ROOT / "index.html").read_bytes(), (ROOT / "migration-dashboard.html").read_bytes())

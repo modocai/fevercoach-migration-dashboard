@@ -39,11 +39,12 @@ def render_summary(plan, rows, snapshot):
     total, done = len(rows), counts["done"]
     pct = done / total * 100 if total else 0
     # Unknown Project state is visible rather than represented by a false zero.
-    blocks = f'<span><b>{done}</b>이슈 완료</span>'
+    opened = sum(row["issue_state"] == "open" for row in rows)
+    blocks = f'<span><b>{total}</b>전체 이슈</span><span><b>{done}</b>이슈 완료</span><span><b>{opened}</b>미완료 (Open)</span>'
     for status in ["doing", "todo", "blocked", "unknown", "excluded"]:
         if counts[status]:
             blocks += f'<span><b>{counts[status]}</b>{LABELS[status]}</span>'
-    blocks += f'<span><b>{total}</b>전체 작업</span>'
+
     nav = []
     for phase in plan["phases"]:
         items = [r for r in rows if r["phase"] == phase["id"]]
@@ -144,7 +145,7 @@ def render_phases(plan, rows):
             conflict = '<span class="conflict">이슈·보드 상태 불일치</span>' if row["conflict"] else ""
             state = row["status"]
             issue_link = link(f'https://github.com/{plan["repository"]}/issues/{row["number"]}', row["title"], "title")
-            articles.append(f'<article class="row {"is-done" if state == "done" else ""}" data-status="{state}">'
+            articles.append(f'<article class="row {"is-done" if state == "done" else ""}" data-status="{state}" data-issue-state="{row["issue_state"]}">'
                             f'<span class="check" aria-hidden="true">{"✓" if state == "done" else "○"}</span>'
                             f'{issue_link}'
                             f'<span class="status s-{state}">{LABELS[state]}</span>'
@@ -174,7 +175,7 @@ SCRIPT = """
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   const filter = button.dataset.filter;
   document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-  document.querySelectorAll('.row').forEach(row => { row.hidden = filter !== 'all' && row.dataset.status !== filter; });
+  document.querySelectorAll('.row').forEach(row => { row.hidden = filter === 'open' ? row.dataset.issueState !== 'open' : filter !== 'all' && row.dataset.status !== filter; });
   document.querySelectorAll('.phase').forEach(section => {
     section.hidden = ![...section.querySelectorAll('.row')].some(row => !row.hidden);
   });
@@ -182,6 +183,7 @@ document.querySelectorAll('[data-filter]').forEach(button => button.addEventList
   document.querySelector('#filter-result').textContent = `${count}개 작업 표시`;
   document.querySelector('#empty-filter').hidden = count !== 0;
 }));
+document.querySelector('[data-filter="open"]').click();
 // A phase link must still work after a filter has hidden that phase.
 document.querySelectorAll('.phases a').forEach(anchor => anchor.addEventListener('click', () => {
   document.querySelector('[data-filter="all"]').click();
@@ -198,10 +200,11 @@ def render(plan, snapshot, baselines, content_report=None):
               '<h1>새로운 웹사이트로, 한 단계씩.</h1></div><span class="pill">출처와 근거로 확인하는 진행 현황</span></div>'
               '<div class="sub">Wix에서 Next.js + Payload로 이전하는 팀의 작업 공간</div><nav class="links" aria-label="프로젝트 링크">'
               + link('https://github.com/orgs/modocai/projects/11', '프로젝트 보드 ↗', 'btn primary')
+              + link('https://github.com/modocai/fevercoach-website/issues?q=is%3Aissue+state%3Aopen', 'GitHub 미완료 이슈 ↗', 'btn')
               + link('https://github.com/modocai/fevercoach-website/blob/main/migration-brief.md', '이전 계획 ↗', 'btn')
               + '<a class="btn" href="#export">추출 현황</a><a class="btn" href="#baselines">기준값·분석</a></nav></header>')
-    filters = ''.join(f'<button class="filter" data-filter="{state}" aria-pressed="{str(state == "all").lower()}">{label}</button>'
-                      for state, label in [("all", "전체"), *LABELS.items()])
+    filters = ''.join(f'<button class="filter" data-filter="{state}" aria-pressed="{str(state == "open").lower()}">{label}</button>'
+                      for state, label in [("open", "미완료"), ("all", "전체"), *LABELS.items()])
     content = (header + render_content(content_report or {"status": "unmeasured"}) + render_summary(plan, rows, snapshot) + render_wix(snapshot["wix"]) + render_baselines(baselines)
                + '<div class="toolbar"><div><h2>단계별 작업</h2><p class="note">콘텐츠·기능·분석의 이전 근거를 각 단계에서 확인합니다.</p></div>'
                f'<div class="filters" aria-label="작업 상태 필터">{filters}</div></div>'

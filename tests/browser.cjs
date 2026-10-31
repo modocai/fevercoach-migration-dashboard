@@ -20,7 +20,7 @@ const root = path.resolve(__dirname, '..');
       assert.equal(await page.locator('#content-completion').count(), 1);
       assert.equal(await page.locator('.content-score').isVisible(), true);
       const expected = JSON.parse(fs.readFileSync(path.join(root, 'data/plan.json'), 'utf8')).tasks.length;
-      assert.equal(await page.locator('.row:visible').count(), expected);
+      assert.equal(await page.locator('.row:visible').count(), await page.locator('.row[data-issue-state="open"]').count());
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `overflow at ${width}`);
       const counts = await page.locator('.row').evaluateAll(rows => rows.reduce((out, row) => {
         out[row.dataset.status] = (out[row.dataset.status] || 0) + 1; return out;

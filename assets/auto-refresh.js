@@ -6,7 +6,7 @@
   const notice = document.getElementById('auto-update-status');
   if (!/^[a-f0-9]{64}$/.test(current || '') || !notice) return;
   const key = 'dashboard-view-v1';
-  const filters = new Set(['all', 'todo', 'doing', 'done', 'blocked', 'unknown', 'excluded']);
+  const filters = new Set(['open', 'all', 'todo', 'doing', 'done', 'blocked', 'unknown', 'excluded']);
   let busy = false;
   let highest = Number(document.querySelector('meta[name="dashboard-generation"]')?.content) || 0;
   let attempted = null;

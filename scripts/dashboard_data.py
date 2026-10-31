@@ -177,7 +177,7 @@ def task_states(plan, snapshot):
         rows.append({**task, "status": state, "conflict": conflict,
                      "assignees": issue.get("assignees") if issue else None,
                      "due_date": item.get("due_date"),
-                     "issue_known": issue is not None})
+                     "issue_known": issue is not None, "issue_state": issue["state"] if issue else "unknown"})
     return rows
 
 

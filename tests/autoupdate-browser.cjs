@@ -73,7 +73,7 @@ const server = http.createServer((req, res) => {
     assert.equal(await page.locator('.content-score').innerText(), '0%'); checks++;
     // Prove manifest polling omits cookies even when this origin has one.
     await page.evaluate(() => { document.cookie = 'dashboard_test_canary=synthetic; path=/'; });
-    assert.equal(await page.locator('.row:visible').count(), 28); checks++;
+    assert.equal(await page.locator('.row:visible').count(), await page.locator('.row[data-issue-state="open"]').count()); checks++;
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false); checks++;
     await page.locator('[data-filter="doing"]').click();
     await page.locator('#phase-0 details').evaluate(node => { node.open = true; });
@@ -135,7 +135,7 @@ const server = http.createServer((req, res) => {
     const external = [];
     local.on('request', req => { if (/^https?:/.test(req.url())) external.push(req.url()); });
     await local.goto(pathToFileURL(path.join(sites[1], 'index.html')).href);
-    assert.equal(await local.locator('.row:visible').count(), 28); checks++;
+    assert.equal(await local.locator('.row:visible').count(), await local.locator('.row[data-issue-state="open"]').count()); checks++;
     assert.deepEqual(external, []); checks++;
     await local.close();
     assert.deepEqual(errors, []); checks++;
