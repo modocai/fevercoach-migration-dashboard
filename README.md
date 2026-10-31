@@ -57,22 +57,26 @@ python3 scripts/build_dashboard.py --check
 
 ## Discord 일일 알림
 
-GitHub Actions `Daily engineering completion notice`가 매일 **한국 시간 오전 9시**
-(UTC 00:00)에 엔지니어링 채널로 저장된 콘텐츠 이관 완성률과 이슈 완료율을 보냅니다.
-`DISCORD_ENGINEERING_WEBHOOK_URL` 저장소 Secret에 해당 채널의 웹훅을 설정합니다.
-알림 내용은 `data/content-comparison.json`과 동일하며, 비교 작업을 새로 실행하지 않습니다.
-이슈 완료율은 대시보드와 같은 `data/plan.json`, `data/snapshot.json`에서 계산합니다.
-예: `이슈 완료율: 4% (1/28)`. 완료 처리된 이슈만 세며, 조회 실패 시 이전 기록임을 표시합니다.
-측정 결과가 있으면 저장된 측정 시각을 함께 표시하고, 배포 전에는 0%를 표시합니다.
-수치가 갱신되려면 전체 비교 결과를 main에 반영해야 합니다.
+`Daily engineering completion notice`는 한국 시간 오전 9시(UTC 00:00) 예약입니다. GitHub 실행은 지연될 수 있습니다. 새 워크플로는 발송 직전에 GitHub Issues와 Project #11을 조회하고, 공개 승인된 `data/plan.json`의 28개 이슈만 집계합니다. 완료 여부는 Issues, 진행 상태는 Project를 사용하며 Project 상태를 변경하지 않습니다.
+
+- 지난 정상 알림 이후 새로 완료된 이슈와 링크, 현재 완료·미완료 수를 표시합니다. 첫 실행은 기존 완료 목록을 초기 기준으로 명시합니다.
+- 조회 실패 시 오래된 숫자로 대체하지 않고 미확인 경고를 보냅니다. Issues 조회 실패 시 이전 완료 기준을 보존합니다.
+- 콘텐츠 이관율은 저장된 유효한 측정 결과와 측정 시각을 표시합니다. `not_deployed` 기록은 현재 0%나 미배포 상태로 단정하지 않습니다. 실제 콘텐츠 비교는 별도 실행해야 합니다.
+- Discord의 메시지 ID를 확인한 뒤에만 영수증을 저장합니다. 동일 UTC 날짜에 확인된 알림은 다시 보내지 않습니다.
+
+### 활성화 전 필요한 인증
+
+`dashboard-source` environment에 `DASHBOARD_SOURCE_TOKEN`을 설정합니다. 소스 저장소 `modocai/fevercoach-website` Issues 읽기와 조직 Project 읽기만 허용하는 전용 인증을 사용합니다. 로컬 개인 CLI 토큰을 복사하지 않습니다. environment는 main만 허용하고 main 및 워크플로 변경을 보호한 뒤 비밀값을 등록합니다. `DISCORD_ENGINEERING_WEBHOOK_URL`은 기존 저장소 Secret을 사용합니다. Actions의 기본 토큰은 영수증 artifact 조회에만 사용합니다.
+
+현재 인증 설정과 실제 Actions 발송 검증이 완료되기 전에는 새 자동화를 운영 완료로 간주하지 않습니다. 인증 없이 새 워크플로를 활성화하면 안전하게 실패하며 오래된 알림을 대신 보내지 않습니다.
 
 ```sh
-python3 scripts/notify_discord.py --dry-run
+python3 scripts/daily_notice.py --dry-run
 ```
 
-워크플로는 main에서만 실행하며 수동 실행도 가능합니다. Discord 응답으로 전송을 확인하고,
-알림에 전체 멘션을 포함하지 않습니다. 인증 오류나 알 수 없는 측정 상태는 전송 실패로 처리합니다.
-GitHub 예약 실행은 지연될 수 있고 공개 저장소는 60일간 활동이 없으면 예약이 비활성화될 수 있습니다.
+수동 Actions 실행은 기본 dry-run이며 `dry_run: false`에서만 발송합니다. 영수증은 `engineering-daily-notice-receipt` artifact에 90일 보존합니다. main의 예약/수동 daily-notice 실행에서 생성된 영수증만 신뢰합니다. 웹훅과 API 오류 원문은 출력하지 않고 멘션은 차단합니다.
+
+Discord 전송 후 artifact 업로드가 실패하거나 전송 응답이 유실되면 전달 여부를 자동으로 확정할 수 없습니다. 이 경우 Discord 기록을 먼저 확인하고 영수증을 복구한 뒤 재실행해야 합니다. artifact가 모두 삭제되면 새 완료라고 주장하지 않고 초기 기준 목록으로 시작합니다. 정확히 한 번 전달을 보장하지 않습니다.
 
 ## 파일 목록
 
