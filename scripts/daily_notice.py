@@ -12,7 +12,7 @@ import zipfile
 
 from dashboard_data import ROOT, read_json, validate_plan, validate_snapshot, task_states
 from content_metric import validate_report
-from notify_discord import DASHBOARD_URL, send_notice
+from notify_discord import DASHBOARD_URL, NotificationError, send_notice
 from sync_github import GitHub
 
 RECEIPT = 'engineering-daily-notice-receipt'
@@ -30,23 +30,30 @@ def already_reported_today(previous, now):
 
 def restore_receipt(repository):
     """Artifacts contain only public issue IDs, timestamps and delivery confirmation."""
+    # List receipt artifacts (so dry-runs and failed runs cannot crowd the window), then
+    # skip untrusted ones: any pull_request run (including forks) can upload this name.
     result = subprocess.run(['gh', 'api', f'repos/{repository}/actions/artifacts?name={RECEIPT}&per_page=100'],
                             capture_output=True, check=True, timeout=60)
     artifacts = json.loads(result.stdout)['artifacts']
-    if not artifacts:
+    latest = None
+    for artifact in sorted(artifacts, key=lambda a: a['id'], reverse=True):
+        source = artifact.get('workflow_run') or {}
+        if (not source.get('id') or source.get('head_branch') != 'main' or
+                source.get('head_repository_id') != source.get('repository_id')):
+            continue
+        run = json.loads(subprocess.run(
+            ['gh', 'api', f"repos/{repository}/actions/runs/{source['id']}"],
+            capture_output=True, check=True, timeout=60).stdout)
+        if (run.get('path') == '.github/workflows/daily-notice.yml' and
+                run.get('head_branch') == 'main' and
+                run.get('event') in ('schedule', 'workflow_dispatch') and
+                (run.get('head_repository') or {}).get('full_name') == repository):
+            latest = artifact
+            break
+    if latest is None and len(artifacts) >= 100:
+        raise ValueError('No trusted receipt among the newest artifacts; restore baseline before sending')
+    if latest is None:
         return None
-    latest = max(artifacts, key=lambda a: a['id'])
-    run_id = latest.get('workflow_run', {}).get('id')
-    if not run_id:
-        raise ValueError('Receipt workflow provenance missing')
-    run = json.loads(subprocess.run(
-        ['gh', 'api', f'repos/{repository}/actions/runs/{run_id}'],
-        capture_output=True, check=True, timeout=60).stdout)
-    if (run.get('path') != '.github/workflows/daily-notice.yml' or
-            run.get('head_branch') != 'main' or
-            run.get('event') not in ('schedule', 'workflow_dispatch') or
-            run.get('head_repository', {}).get('full_name') != repository):
-        raise ValueError('Untrusted receipt workflow')
     if latest['expired']:
         raise ValueError('Previous receipt expired; restore baseline before sending')
     archive = subprocess.run(['gh', 'api', f"repos/{repository}/actions/artifacts/{latest['id']}/zip"],
@@ -90,6 +97,9 @@ def content_line(report):
     try:
         validate_report(report)
         if report['status'] == 'measured':
+            date = datetime.fromisoformat(report['generated_at'].replace('Z', '+00:00'))
+            if date.tzinfo is None:
+                raise ValueError('Measurement timestamp must include timezone')
             from math import floor
             value = 100 if all(r['score'] == 1 for r in report['results']) else floor(report['percentage'] * 10) / 10
             return f"콘텐츠 이관율: {value:g}% · 측정 시각 {report['generated_at']} (저장된 측정값)"
@@ -196,6 +206,10 @@ def main():
         return 0
     except ReceiptPersistenceError:
         print('Discord delivery was confirmed, but receipt persistence failed. Check Discord and restore the receipt before retrying.', file=sys.stderr)
+        return 1
+    except NotificationError as error:
+        # Safe by design (no webhook or response body); may mean delivery is ambiguous.
+        print(f'{error}. Check Discord before rerunning; a retry may duplicate the notice.', file=sys.stderr)
         return 1
     except Exception:
         print('Daily notice failed; no success checkpoint advanced. Check source access and receipt storage.', file=sys.stderr)

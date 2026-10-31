@@ -1,12 +1,15 @@
 import copy
+import io
 import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
+import zipfile
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from daily_notice import collect, compose, deliver, restore_receipt, already_reported_today, ReceiptPersistenceError
+from daily_notice import collect, compose, content_line, deliver, main, restore_receipt, already_reported_today, ReceiptPersistenceError
+from notify_discord import NotificationError
 from dashboard_data import ROOT, read_json
 
 NOW = '2026-10-31T15:00:00+00:00'
@@ -24,21 +27,61 @@ class DailyTests(unittest.TestCase):
         return compose(self.plan, self.snapshot, {'status':'not_deployed'}, previous, NOW)
 
     @patch('daily_notice.subprocess.run')
-    def test_receipt_from_other_workflow_is_rejected(self, run):
+    def test_receipt_only_from_trusted_runs(self, run):
+        trusted = {'path': '.github/workflows/daily-notice.yml', 'head_branch': 'main',
+                   'event': 'schedule', 'head_repository': {'full_name': 'org/repo'}}
+        receipt = {'schema_version': 1, 'completed': [1], 'message_id': '9', 'last_sent_at': NOW}
+        archive = io.BytesIO()
+        with zipfile.ZipFile(archive, 'w') as z:
+            z.writestr('receipt.json', json.dumps(receipt))
+        def artifact(id, run_id, **source):
+            return {'id': id, 'expired': False, 'workflow_run': dict(
+                {'id': run_id, 'head_branch': 'main', 'repository_id': 1, 'head_repository_id': 1}, **source)}
         run.side_effect = [
-            Mock(stdout=json.dumps({'artifacts': [{'id': 1, 'expired': False,
-                'workflow_run': {'id': 2}}]}).encode()),
-            Mock(stdout=json.dumps({'path': '.github/workflows/other.yml',
-                'head_branch': 'main', 'event': 'workflow_dispatch',
-                'head_repository': {'full_name': 'org/repo'}}).encode())]
+            Mock(stdout=json.dumps({'artifacts': [
+                artifact(6, 2), artifact(9, 5, head_repository_id=99), artifact(8, 4, head_branch='x'),
+                artifact(7, 3)]}).encode()),
+            Mock(stdout=json.dumps(dict(trusted, event='pull_request')).encode()),
+            Mock(stdout=json.dumps(dict(trusted, id=2)).encode()),
+            Mock(stdout=archive.getvalue())]
+        self.assertEqual(restore_receipt('org/repo'), receipt)
+        urls = [c.args[0][2] for c in run.call_args_list]
+        self.assertEqual(urls[1:], ['repos/org/repo/actions/runs/3',
+                                    'repos/org/repo/actions/runs/2',
+                                    'repos/org/repo/actions/artifacts/6/zip'])
+
+    @patch('daily_notice.subprocess.run')
+    def test_full_page_without_trusted_receipt_is_error(self, run):
+        run.return_value.stdout = json.dumps({'artifacts': [
+            {'id': i, 'expired': False, 'workflow_run': {'id': i, 'head_branch': 'x'}} for i in range(100)]}).encode()
         with self.assertRaises(ValueError):
             restore_receipt('org/repo')
-        self.assertEqual(run.call_count, 2)
 
     @patch('daily_notice.subprocess.run')
     def test_no_receipt_starts_baseline(self, run):
         run.return_value.stdout = b'{"artifacts": []}'
         self.assertIsNone(restore_receipt('org/repo'))
+
+    def test_invalid_measurement_timestamp_is_not_displayed(self):
+        report = {'status': 'measured', 'total_urls': 1, 'score_sum': 1, 'percentage': 100,
+                  'results': [{'source_url': 'a', 'target_url': 'b', 'score': 1, 'status': 'ok'}]}
+        self.assertIn('측정 시각', content_line(dict(report, generated_at='2026-10-24T01:00:00Z')))
+        for value in ('not-a-timestamp', '2026-10-24T01:00:00'):
+            self.assertIn('최신 측정 없음', content_line(dict(report, generated_at=value)))
+
+    @patch.dict('os.environ', {}, clear=True)
+    @patch('daily_notice.collect')
+    @patch('daily_notice.restore_receipt', return_value=None)
+    @patch('daily_notice.send_notice', side_effect=NotificationError('Discord delivery was not confirmed; not retried to avoid duplicates'))
+    def test_ambiguous_delivery_says_check_discord(self, send, restore, collect_):
+        collect_.return_value = self.snapshot
+        err = io.StringIO()
+        with tempfile.TemporaryDirectory() as d, patch('sys.argv', ['daily_notice', '--receipt', f'{d}/r.json']), \
+                patch('sys.stderr', err):
+            self.assertEqual(main(), 1)
+            self.assertFalse(Path(d, 'r.json').exists())
+        self.assertIn('not confirmed', err.getvalue())
+        self.assertIn('Check Discord before rerunning', err.getvalue())
 
     def test_failed_query_notice_allows_same_day_recovery(self):
         previous = {'last_sent_at': NOW, 'last_successful_snapshot_at': '2026-10-30T00:00:00Z'}
