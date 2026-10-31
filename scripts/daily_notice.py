@@ -18,6 +18,16 @@ from sync_github import GitHub
 RECEIPT = 'engineering-daily-notice-receipt'
 
 
+class ReceiptPersistenceError(Exception):
+    """Discord confirmed delivery, but a durable receipt was not prepared."""
+
+
+def already_reported_today(previous, now):
+    return bool(previous and previous.get('last_successful_snapshot_at') and
+                previous['last_successful_snapshot_at'][:10] == now[:10] and
+                previous['last_sent_at'][:10] == now[:10])
+
+
 def restore_receipt(repository):
     """Artifacts contain only public issue IDs, timestamps and delivery confirmation."""
     result = subprocess.run(['gh', 'api', f'repos/{repository}/actions/artifacts?name={RECEIPT}&per_page=100'],
@@ -140,11 +150,14 @@ def deliver(message, completed, previous, snapshot, now, receipt_path, sender):
                'completed': completed,
                'last_successful_snapshot_at': now if snapshot['issues']['status'] == 'ok' else
                     (previous or {}).get('last_successful_snapshot_at')}
-    validate_receipt(receipt)
-    receipt_path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = receipt_path.with_suffix('.tmp')
-    temporary.write_text(json.dumps(receipt, indent=2) + '\n')
-    temporary.replace(receipt_path)
+    try:
+        validate_receipt(receipt)
+        receipt_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = receipt_path.with_suffix('.tmp')
+        temporary.write_text(json.dumps(receipt, indent=2) + '\n')
+        temporary.replace(receipt_path)
+    except Exception as exc:
+        raise ReceiptPersistenceError('Confirmed delivery needs receipt recovery') from exc
 
 
 def main():
@@ -157,7 +170,7 @@ def main():
         validate_plan(plan)
         now = datetime.now(timezone.utc).isoformat(timespec='seconds')
         previous = restore_receipt(os.environ.get('GITHUB_REPOSITORY', 'modocai/fevercoach-migration-dashboard'))
-        if previous and previous['last_sent_at'][:10] == now[:10] and not args.dry_run:
+        if already_reported_today(previous, now) and not args.dry_run:
             print('Already confirmed a notice today; skipped.')
             return 0
         workflow_token = os.environ.get('GH_TOKEN')
@@ -181,6 +194,9 @@ def main():
                 lambda msg: send_notice(os.environ.get('DISCORD_ENGINEERING_WEBHOOK_URL'), msg))
         print('Discord delivery confirmed; receipt ready for persistent artifact upload.')
         return 0
+    except ReceiptPersistenceError:
+        print('Discord delivery was confirmed, but receipt persistence failed. Check Discord and restore the receipt before retrying.', file=sys.stderr)
+        return 1
     except Exception:
         print('Daily notice failed; no success checkpoint advanced. Check source access and receipt storage.', file=sys.stderr)
         return 1

@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import Mock, patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from daily_notice import collect, compose, deliver, restore_receipt
+from daily_notice import collect, compose, deliver, restore_receipt, already_reported_today, ReceiptPersistenceError
 from dashboard_data import ROOT, read_json
 
 NOW = '2026-10-31T15:00:00+00:00'
@@ -39,6 +39,21 @@ class DailyTests(unittest.TestCase):
     def test_no_receipt_starts_baseline(self, run):
         run.return_value.stdout = b'{"artifacts": []}'
         self.assertIsNone(restore_receipt('org/repo'))
+
+    def test_failed_query_notice_allows_same_day_recovery(self):
+        previous = {'last_sent_at': NOW, 'last_successful_snapshot_at': '2026-10-30T00:00:00Z'}
+        self.assertFalse(already_reported_today(previous, NOW))
+        previous['last_successful_snapshot_at'] = NOW
+        self.assertTrue(already_reported_today(previous, NOW))
+
+    def test_confirmed_send_with_receipt_failure_is_distinct(self):
+        sender = Mock(return_value='123')
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'not-a-directory'
+            p.write_text('block directory creation')
+            with self.assertRaises(ReceiptPersistenceError):
+                deliver('message', [1], None, self.snapshot, NOW, p / 'receipt.json', sender)
+        sender.assert_called_once()
 
     def test_first_message_is_baseline_not_new_today(self):
         msg, completed = self.compose()

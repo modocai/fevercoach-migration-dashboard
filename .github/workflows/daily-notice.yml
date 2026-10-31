@@ -39,6 +39,7 @@ jobs:
             python3 scripts/daily_notice.py
           fi
       - name: Persist confirmed Discord delivery
+        id: receipt
         if: ${{ always() && hashFiles('_notice/receipt.json') != '' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -46,3 +47,8 @@ jobs:
           path: _notice/receipt.json
           retention-days: 90
           if-no-files-found: error
+      - name: Explain receipt upload recovery
+        if: ${{ failure() && steps.receipt.outcome == 'failure' }}
+        run: |
+          echo '::error::Discord delivery was confirmed but receipt upload failed. Check Discord and recover the receipt before rerunning; a retry may duplicate the notice.'
+          echo 'Discord delivery confirmed, receipt upload failed. Recover the receipt before rerunning.' >> "$GITHUB_STEP_SUMMARY"
