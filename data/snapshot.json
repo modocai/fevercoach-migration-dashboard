@@ -2,8 +2,8 @@
   "schema_version": 1,
   "issues": {
     "status": "ok",
-    "attempted_at": "2026-10-31T06:38:00Z",
-    "last_success_at": "2026-10-31T06:38:00Z",
+    "attempted_at": "2026-10-31T10:45:50.175Z",
+    "last_success_at": "2026-10-31T10:45:50.175Z",
     "error": null,
     "items": [
       {
@@ -11,7 +11,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:23Z"
+        "updated_at": "2026-10-31T07:59:01Z"
       },
       {
         "number": 2,
@@ -32,7 +32,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:36Z"
+        "updated_at": "2026-10-31T06:54:37Z"
       },
       {
         "number": 5,
@@ -43,38 +43,38 @@
       },
       {
         "number": 6,
-        "state": "open",
-        "state_reason": null,
+        "state": "closed",
+        "state_reason": "completed",
         "assignees": [],
-        "updated_at": "2026-10-31T04:37:01Z"
+        "updated_at": "2026-10-31T10:44:06Z"
       },
       {
         "number": 7,
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:49Z"
+        "updated_at": "2026-10-31T06:55:36Z"
       },
       {
         "number": 8,
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:54Z"
+        "updated_at": "2026-10-31T10:44:08Z"
       },
       {
         "number": 9,
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:58Z"
+        "updated_at": "2026-10-31T07:42:52Z"
       },
       {
         "number": 10,
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:03Z"
+        "updated_at": "2026-10-31T07:58:52Z"
       },
       {
         "number": 11,
@@ -102,7 +102,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-31T04:53:24Z"
+        "updated_at": "2026-10-31T06:38:04Z"
       },
       {
         "number": 15,
@@ -116,7 +116,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:32Z"
+        "updated_at": "2026-10-31T08:51:14Z"
       },
       {
         "number": 17,
@@ -137,7 +137,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:45Z"
+        "updated_at": "2026-10-31T08:51:17Z"
       },
       {
         "number": 20,
@@ -206,8 +206,8 @@
   },
   "project": {
     "status": "ok",
-    "attempted_at": "2026-10-31T06:36:30Z",
-    "last_success_at": "2026-10-31T06:36:30Z",
+    "attempted_at": "2026-10-31T10:45:31.352Z",
+    "last_success_at": "2026-10-31T10:45:31.352Z",
     "error": null,
     "items": [
       {
@@ -237,7 +237,7 @@
       },
       {
         "number": 6,
-        "status": "todo",
+        "status": "done",
         "due_date": null
       },
       {
