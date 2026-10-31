@@ -9,5 +9,6 @@ __pycache__/
 *.pyc
 *.tmp
 artifacts/
+_site/
 # overkill (added by overkill init)
 .overkill/

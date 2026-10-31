@@ -6,6 +6,20 @@ Wix → Next.js(Vercel) + Payload(GCP) 이전의 작업 상태, 추출 범위, �
 - [Project #11](https://github.com/orgs/modocai/projects/11)
 - [웹사이트 계획·Issues](https://github.com/modocai/fevercoach-website)
 
+[자동 갱신 도입안·활성화·복구 절차](docs/autonomous-updates.md): 별도 환경 인증과 관리자 설정 후 켜는 Pages 자동 발행 경로입니다. 기본값은 비활성입니다. 아래 수동 갱신 경로와 달리 자동 발행은 웹사이트 main에 승인된 자료만 사용합니다.
+
+## 자동 갱신 PR 업데이트 · 2026-10-30
+
+`dashboard-autoupdate` 브랜치에서 최신 main을 일반 병합했습니다. 대표님이 추가한 콘텐츠 완성률, URL별 비교, Discord 일일 알림을 유지하면서 자동 배포 경로를 연결했습니다. `.gitignore`와 이 문서의 충돌은 양쪽 내용을 보존해 해결했습니다.
+
+- 자동 배포가 검토된 `data/content-comparison.json`을 읽어 화면과 URL별 결과 JSON에 함께 반영합니다. 콘텐츠만 바뀌어도 배포 버전이 바뀌므로 열린 화면이 갱신됩니다.
+- 자동 갱신이 켜져 있으면 Discord도 실제 배포된 `state.json`과 `manifest.json`을 검증한 뒤 같은 콘텐츠·이슈 수치를 사용합니다. 조회 시각, 45분 이상 지난 자료, 원본 갱신 실패를 표시합니다. 공개 데이터가 없거나 서로 맞지 않으면 오래된 리포 자료로 대신 보내지 않고 실패를 알립니다.
+- 자동 갱신이 꺼져 있으면 기존 저장 자료 기반 알림을 그대로 사용합니다. 기존 알림 워크플로에서 바뀐 것은 활성화 변수 전달과 실행 스크립트 연결뿐입니다. 시간표·웹훅·전송 확인·재시도·멘션 차단은 유지합니다.
+- 대표님의 HTML, 템플릿, 화면 생성기, 콘텐츠 비교·점수 계산기, Discord 메시지·전송 스크립트, 계획·기준값·저장 데이터는 최신 main과 동일합니다.
+- 로컬 검증: Python 3.12에서 테스트 104개, Chromium 데스크톱·노트북 검사 30개, HTML 재현성 검사와 actionlint 통과. 실제 GitHub CI 결과는 PR의 Checks에서 확인합니다. 테스트 알림은 실제 Discord로 보내지 않습니다.
+
+**이 PR은 기본 비활성이며 병합만으로 자동 운영이 시작되지 않습니다.** 승인된 Wix 상태 파일, main 전용 원본 인증 환경, 보호 규칙과 Pages 설정이 필요합니다. 콘텐츠 비교 크롤링·Lighthouse·Search Console·GA4 수집은 자동화 대상이 아닙니다. 아래의 콘텐츠 비교·수동 갱신 절차는 그대로 사용하고, 자동 운영 시 달라지는 데이터 경로는 [운영 문서](docs/autonomous-updates.md)를 따릅니다. 오전 9시는 예약 시각이며 GitHub Actions의 실제 시작 시각은 보장되지 않습니다.
+
 ## 콘텐츠 이관 완성률
 
 대시보드 상단 숫자는 `각 기존 URL의 비교 점수 합 / 전체 기존 URL 수 × 100`입니다.
