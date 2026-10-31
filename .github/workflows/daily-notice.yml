@@ -1,26 +1,48 @@
 name: Daily engineering completion notice
 on:
   schedule:
-    # 00:00 UTC = 09:00 Asia/Seoul (Korea has no DST).
+    # 00:00 UTC = 09:00 Asia/Seoul. GitHub scheduling may be delayed.
     - cron: '0 0 * * *'
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Preview without sending or changing receipt
+        type: boolean
+        default: true
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: daily-engineering-completion-notice
   cancel-in-progress: false
 jobs:
   notify:
     if: github.ref == 'refs/heads/main'
+    environment: dashboard-source
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
-      - name: Send saved dashboard completion to engineering
+      - name: Query current GitHub state and send daily notice
         env:
-          DASHBOARD_AUTOUPDATE_ENABLED: ${{ vars.DASHBOARD_AUTOUPDATE_ENABLED }}
+          GH_TOKEN: ${{ github.token }}
+          DASHBOARD_SOURCE_TOKEN: ${{ secrets.DASHBOARD_SOURCE_TOKEN }}
           DISCORD_ENGINEERING_WEBHOOK_URL: ${{ secrets.DISCORD_ENGINEERING_WEBHOOK_URL }}
-        run: python3 scripts/notify_published.py
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            python3 scripts/daily_notice.py --dry-run
+          else
+            python3 scripts/daily_notice.py
+          fi
+      - name: Persist confirmed Discord delivery
+        if: ${{ always() && hashFiles('_notice/receipt.json') != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: engineering-daily-notice-receipt
+          path: _notice/receipt.json
+          retention-days: 90
+          if-no-files-found: error
