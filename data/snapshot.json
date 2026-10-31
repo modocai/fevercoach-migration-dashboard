@@ -2,191 +2,16 @@
   "schema_version": 1,
   "issues": {
     "status": "ok",
-    "attempted_at": "2026-10-31T04:26:23.457Z",
-    "last_success_at": "2026-10-31T04:26:23.457Z",
+    "attempted_at": "2026-10-31T04:51:54.646563Z",
+    "last_success_at": "2026-10-31T04:51:54.646563Z",
     "error": null,
     "items": [
       {
-        "number": 28,
+        "number": 1,
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:05:21Z"
-      },
-      {
-        "number": 27,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:05:16Z"
-      },
-      {
-        "number": 26,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:05:12Z"
-      },
-      {
-        "number": 25,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:05:09Z"
-      },
-      {
-        "number": 24,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:05:05Z"
-      },
-      {
-        "number": 23,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:05:01Z"
-      },
-      {
-        "number": 22,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:57Z"
-      },
-      {
-        "number": 21,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:52Z"
-      },
-      {
-        "number": 20,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:49Z"
-      },
-      {
-        "number": 19,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:45Z"
-      },
-      {
-        "number": 18,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:40Z"
-      },
-      {
-        "number": 17,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:36Z"
-      },
-      {
-        "number": 16,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:32Z"
-      },
-      {
-        "number": 15,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:26Z"
-      },
-      {
-        "number": 14,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:20Z"
-      },
-      {
-        "number": 13,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:15Z"
-      },
-      {
-        "number": 12,
-        "state": "closed",
-        "state_reason": "completed",
-        "assignees": [],
-        "updated_at": "2026-10-31T04:23:15Z"
-      },
-      {
-        "number": 11,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:07Z"
-      },
-      {
-        "number": 10,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:04:03Z"
-      },
-      {
-        "number": 9,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:03:58Z"
-      },
-      {
-        "number": 8,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:03:54Z"
-      },
-      {
-        "number": 7,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:03:49Z"
-      },
-      {
-        "number": 6,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:05:32Z"
-      },
-      {
-        "number": 5,
-        "state": "closed",
-        "state_reason": "completed",
-        "assignees": [],
-        "updated_at": "2026-10-17T04:03:44Z"
-      },
-      {
-        "number": 4,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:03:36Z"
-      },
-      {
-        "number": 3,
-        "state": "open",
-        "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-17T04:03:31Z"
+        "updated_at": "2026-10-17T04:03:23Z"
       },
       {
         "number": 2,
@@ -196,11 +21,186 @@
         "updated_at": "2026-10-31T04:23:09Z"
       },
       {
-        "number": 1,
+        "number": 3,
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:03:23Z"
+        "updated_at": "2026-10-17T04:03:31Z"
+      },
+      {
+        "number": 4,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:36Z"
+      },
+      {
+        "number": 5,
+        "state": "closed",
+        "state_reason": "completed",
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:44Z"
+      },
+      {
+        "number": 6,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-31T04:37:01Z"
+      },
+      {
+        "number": 7,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:49Z"
+      },
+      {
+        "number": 8,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:54Z"
+      },
+      {
+        "number": 9,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:03:58Z"
+      },
+      {
+        "number": 10,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:03Z"
+      },
+      {
+        "number": 11,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:07Z"
+      },
+      {
+        "number": 12,
+        "state": "closed",
+        "state_reason": "completed",
+        "assignees": [],
+        "updated_at": "2026-10-31T04:23:15Z"
+      },
+      {
+        "number": 13,
+        "state": "closed",
+        "state_reason": "completed",
+        "assignees": [],
+        "updated_at": "2026-10-31T04:51:28Z"
+      },
+      {
+        "number": 14,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:20Z"
+      },
+      {
+        "number": 15,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:26Z"
+      },
+      {
+        "number": 16,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:32Z"
+      },
+      {
+        "number": 17,
+        "state": "closed",
+        "state_reason": "completed",
+        "assignees": [],
+        "updated_at": "2026-10-31T04:51:31Z"
+      },
+      {
+        "number": 18,
+        "state": "closed",
+        "state_reason": "completed",
+        "assignees": [],
+        "updated_at": "2026-10-31T04:51:33Z"
+      },
+      {
+        "number": 19,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:45Z"
+      },
+      {
+        "number": 20,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:49Z"
+      },
+      {
+        "number": 21,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:52Z"
+      },
+      {
+        "number": 22,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:04:57Z"
+      },
+      {
+        "number": 23,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:01Z"
+      },
+      {
+        "number": 24,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:05Z"
+      },
+      {
+        "number": 25,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:09Z"
+      },
+      {
+        "number": 26,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:12Z"
+      },
+      {
+        "number": 27,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:16Z"
+      },
+      {
+        "number": 28,
+        "state": "open",
+        "state_reason": null,
+        "assignees": [],
+        "updated_at": "2026-10-17T04:05:21Z"
       }
     ]
   },
@@ -248,5 +248,3 @@
     "pr_url": "https://github.com/modocai/fevercoach-website/pull/29"
   }
 }
-
-
