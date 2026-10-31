@@ -2,8 +2,8 @@
   "schema_version": 1,
   "issues": {
     "status": "ok",
-    "attempted_at": "2026-10-31T04:51:54.646563Z",
-    "last_success_at": "2026-10-31T04:51:54.646563Z",
+    "attempted_at": "2026-10-31T05:23:22+00:00",
+    "last_success_at": "2026-10-31T05:23:22+00:00",
     "error": null,
     "items": [
       {
@@ -102,14 +102,14 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:20Z"
+        "updated_at": "2026-10-31T04:53:24Z"
       },
       {
         "number": 15,
-        "state": "open",
-        "state_reason": null,
+        "state": "closed",
+        "state_reason": "completed",
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:26Z"
+        "updated_at": "2026-10-31T05:22:32Z"
       },
       {
         "number": 16,
@@ -205,10 +205,152 @@
     ]
   },
   "project": {
-    "status": "error",
-    "attempted_at": "2026-10-23T06:14:44+00:00",
-    "last_success_at": null,
-    "error": "project_read_permission_required"
+    "status": "ok",
+    "attempted_at": "2026-10-31T05:22:58.901Z",
+    "last_success_at": "2026-10-31T05:22:58.903Z",
+    "error": null,
+    "items": [
+      {
+        "number": 1,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 2,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 3,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 4,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 5,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 6,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 7,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 8,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 9,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 10,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 11,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 12,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 13,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 14,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 15,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 16,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 17,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 18,
+        "status": "done",
+        "due_date": null
+      },
+      {
+        "number": 19,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 20,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 21,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 22,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 23,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 24,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 25,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 26,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 27,
+        "status": "todo",
+        "due_date": null
+      },
+      {
+        "number": 28,
+        "status": "todo",
+        "due_date": null
+      }
+    ]
   },
   "wix": {
     "status": "ok",
