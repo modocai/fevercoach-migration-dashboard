@@ -134,7 +134,25 @@ def project_wix(raw):
     require(raw.get("media_download_scope") in {"sample", "full"}, "unknown media scope")
     # Explicit allowlist: no local paths, DNS answers, raw inventories, or private content.
     keys = counts + flags + ["schema_version", "scope", "source", "generated_at", "media_download_scope"]
-    return {key: raw[key] for key in keys}
+    result = {key: raw[key] for key in keys}
+    extras = ["legacy_reference_entries", "downloaded_font_assets", "invalid_reference_count",
+              "authenticated_published_posts", "authenticated_unpublished_drafts", "authenticated_scheduled_posts"]
+    for key in extras:
+        if key in raw:
+            require(type(raw[key]) is int and raw[key] >= 0, f"invalid count: {key}")
+            result[key] = raw[key]
+    if "legacy_reference_entries" in result:
+        require(result["legacy_reference_entries"] == result["unique_referenced_images"] +
+                result.get("downloaded_font_assets", 0) + result.get("invalid_reference_count", 0),
+                "media classification counts disagree")
+    if "authenticated_blog_export_complete" in raw:
+        require(type(raw["authenticated_blog_export_complete"]) is bool, "invalid blog flag")
+        result["authenticated_blog_export_complete"] = raw["authenticated_blog_export_complete"]
+        require(all(k in result for k in extras[3:]), "missing Blog counts")
+    if "status_updated_at" in raw:
+        timestamp(raw["status_updated_at"])
+        result["status_updated_at"] = raw["status_updated_at"]
+    return result
 
 
 def task_states(plan, snapshot):
@@ -266,3 +284,5 @@ def validate_snapshot(snapshot, plan, *, sources=("issues", "project", "wix")):
                         "unmerged Wix evidence must identify PR #29")
             require(len(section["source_sha"]) == 40 and all(c in '0123456789abcdef' for c in section["source_sha"]),
                     "invalid Wix source commit")
+
+

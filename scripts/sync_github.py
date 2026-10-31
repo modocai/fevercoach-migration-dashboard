@@ -71,7 +71,7 @@ class GitHub:
         repo = plan["repository"]
         sha = self.api(f"repos/{repo}/commits/main")["sha"]
         review_state, pr_url = "main", None
-        path = "docs/wix-export-status.json"
+        path = "docs/wix-export-dashboard-status.json"
         try:
             file = self.api(f"repos/{repo}/contents/{path}?ref={sha}")
         except FetchError as exc:
@@ -129,3 +129,5 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+

@@ -54,7 +54,7 @@ class PublicGitHub(GitHub):
         import base64
         repo = plan["repository"]
         sha = self.api(f"repos/{repo}/commits/main")["sha"]
-        path = "docs/wix-export-status.json"
+        path = "docs/wix-export-dashboard-status.json"
         try:
             file = self.api(f"repos/{repo}/contents/{path}?ref={sha}")
         except FetchError as exc:
@@ -93,7 +93,7 @@ def public_snapshot(snapshot, plan):
             require(source["review_state"] == "main" and source.get("pr_url") is None,
                     "unreviewed source cannot be published automatically")
             section.update({"data": project_wix(source["data"]), "source_sha": sha,
-                            "source_url": f'https://github.com/{plan["repository"]}/blob/{sha}/docs/wix-export-status.json',
+                            "source_url": f'https://github.com/{plan["repository"]}/blob/{sha}/docs/wix-export-dashboard-status.json',
                             "review_state": "main", "pr_url": None})
         result[name] = section
     validate_snapshot(result, plan)
@@ -200,3 +200,5 @@ def write_site(output, state, plan, baselines):
     (output / "assets").mkdir()
     (output / "assets/auto-refresh.js").write_bytes((ROOT / "assets/auto-refresh.js").read_bytes())
     audit_tree(output)
+
+

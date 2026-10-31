@@ -73,17 +73,22 @@ def render_wix(source):
     media_scope = "원본 샘플 확보" if data["media_download_scope"] == "sample" else "전체 원본 수집"
     dns = "백업 완료 보고" if data["dns_zone_export_complete"] else "미완료 · 관리자 패널 백업 필요"
     cms = "추출 완료 보고" if data["authoritative_wix_export_complete"] else "미완료 · 초안·예약 글·번역 연결 확인 필요"
+    media_detail = (f' · 폰트 {data.get("downloaded_font_assets", 0):,}개 · 잘못된 참조 {data.get("invalid_reference_count", 0):,}개 별도'
+                    if "legacy_reference_entries" in data else "")
+    blog_detail = (f'인증 Blog 원본 확보: 게시 {data["authenticated_published_posts"]:,} · 미게시 초안 {data["authenticated_unpublished_drafts"]:,} · 예약 {data["authenticated_scheduled_posts"]:,}'
+                   if data.get("authenticated_blog_export_complete") else cms)
+    full_scope = "미사용 미디어·비공개 페이지 등 전체 Wix 자산 확인은 별도" if data.get("authenticated_blog_export_complete") else "CMS 이관·SEO 검증과 별도"
     return (f'<section class="panel" id="export"><div class="phase-head"><h2>Wix 추출 현황</h2><span class="pill">{review}</span></div>'
             f'<p class="note">수집 기준: {date_label(data["generated_at"])} · '
-            f'{link(source["source_url"], "원본 상태 자료 ↗")} · 커밋 {e(source["source_sha"][:7])}</p>'
+            f'{link(source["source_url"], "원본 상태 자료 ↗")} · 커밋 {e(source["source_sha"][:7])} · 상태 검증: {date_label(data.get("status_updated_at", data["generated_at"]))}</p>'
             '<div class="metric-grid">'
             f'<article class="metric"><h3>공개 URL</h3><strong class="num">{data["exported_urls"]:,} / {data["discovered_urls"]:,}</strong>'
             f'<p>{url_status}</p><small>공개 사이트맵에서 발견된 주소 기준</small></article>'
             f'<article class="metric"><h3>이미지 원본</h3><strong class="num">{data["downloaded_images"]:,} / {data["unique_referenced_images"]:,}</strong>'
-            f'<p>{media_scope}</p><small>미수집 {data["images_not_downloaded_count"]:,}개 · 오류 {data["media_error_count"]:,}개</small></article>'
+            f'<p>{media_scope}</p><small>미수집 {data["images_not_downloaded_count"]:,}개 · 오류 {data["media_error_count"]:,}개{media_detail}</small></article>'
             f'<article class="metric"><h3>전체 DNS 백업</h3><p>{dns}</p><small>공개 DNS 조회 결과와 별도</small></article>'
-            f'<article class="metric"><h3>관리자 API 기준 전체 콘텐츠</h3><p>{cms}</p><small>CMS 이관·SEO 검증과 별도</small></article></div>'
-            '<p class="notice">공개 페이지 수집 완료는 CMS 이관 완료를 뜻하지 않습니다. 이미지 샘플 수집도 전체 원본 이전 완료와 구분합니다.</p></section>')
+            f'<article class="metric"><h3>인증 Blog / 전체 Wix 자산</h3><p>{blog_detail}</p><small>{full_scope}</small></article></div>'
+            '<p class="notice">공개 페이지 수집 완료는 CMS 이관 완료를 뜻하지 않습니다. 이미지 원본 백업과 GCS 복사·사이트 표시 검증은 별도입니다.</p></section>')
 
 
 def render_baselines(data):
@@ -229,3 +234,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
