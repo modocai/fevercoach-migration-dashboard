@@ -60,7 +60,10 @@ const server = http.createServer((req, res) => {
   async function poll() {
     const response = page.waitForResponse(response => response.url().includes('/manifest.json?'));
     await page.evaluate(() => dispatchEvent(new Event('focus')));
-    await (await response).finished();
+    // A new manifest deliberately navigates the page. Waiting for the old
+    // response's finished event can hang when its browsing context is replaced.
+    // The caller verifies the resulting URL/notice, not just the HTTP headers.
+    await response;
   }
   async function idle() { await page.waitForTimeout(250); }
   try {
