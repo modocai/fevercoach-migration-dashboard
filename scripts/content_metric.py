@@ -1,6 +1,7 @@
 """Validate and render the full-inventory content completion metric."""
 import math
 from html import escape
+from dashboard_data import safe_url
 
 
 def validate_report(report):
@@ -40,10 +41,13 @@ def render_content(report):
     # Never round an incomplete migration up to 100%.
     label = '100.0' if all(row['score'] == 1 for row in report['results']) else f'{math.floor(pct * 10) / 10:.1f}'
     errors = sum(row['status'] == 'error' for row in report['results'])
+    target = escape(report['target_base_url'], quote=True)
+    if safe_url(report['target_base_url']):
+        target = f'<a href="{target}" target="_blank" rel="noopener noreferrer" style="overflow-wrap:anywhere">{target}</a>'
     return (intro + f'<div class="big content-score">{label}<small>%</small></div>'
             f'<p class="progress-caption">{report["score_sum"]:,.2f} / {total:,}점 · 전체 {total:,}개 URL 기준</p>'
             f'<p class="note">텍스트·이미지 완전 일치 1점 · 일부 일치 부분 점수 · 오류 {errors:,}개는 0점</p>'
-            f'<p class="note">측정: {escape(report["generated_at"])} · 대상: {escape(report["target_base_url"])}</p>'
+            f'<p class="note">측정: {escape(report["generated_at"])} · 대상: {target}</p>'
             '<p class="note">이미지 크기·인코딩이 달라지면 표시되어도 파일 일치 점수가 낮아질 수 있습니다. 이 점수는 이관된 페이지 개수 비율이나 운영 전환 완료율이 아닙니다.</p>'
             '<details><summary>계산 기준과 URL별 결과</summary><p class="note">페이지별 점수의 합 ÷ 전체 기존 URL 수 × 100. '
             '본문 텍스트와 이미지 파일 내용을 비교하며 화면 배치와 SEO는 별도 검증합니다. 어느 한쪽에 이미지가 있으면 텍스트·이미지 각 50%, 양쪽 모두 없으면 텍스트 100%입니다.</p>'
