@@ -102,7 +102,10 @@ def content_line(report):
                 raise ValueError('Measurement timestamp must include timezone')
             from math import floor
             value = 100 if all(r['score'] == 1 for r in report['results']) else floor(report['percentage'] * 10) / 10
-            return f"콘텐츠 이관율: {value:g}% · 측정 시각 {report['generated_at']} (저장된 측정값)"
+            line = f"콘텐츠 이관율: {value:g}% · 측정 시각 {report['generated_at']} (저장된 측정값)"
+            if 'git-wix-cms-integration' in report.get('target_base_url', ''):
+                line += '\nCMS 연결 Preview 기준 · 운영 전환 완료율과 별도'
+            return line
     except Exception:
         pass
     return '콘텐츠 이관율: 최신 측정 없음 (기존 배포 전 0% 기록을 현재 진척으로 사용하지 않음)'

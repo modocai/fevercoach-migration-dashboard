@@ -69,6 +69,22 @@ class DailyTests(unittest.TestCase):
         for value in ('not-a-timestamp', '2026-10-24T01:00:00'):
             self.assertIn('최신 측정 없음', content_line(dict(report, generated_at=value)))
 
+    def test_preview_measurement_keeps_scope_in_final_notice(self):
+        report = {'status': 'measured', 'total_urls': 1, 'score_sum': .466,
+                  'percentage': 46.6, 'generated_at': NOW,
+                  'target_base_url': 'https://fevercoach-website-git-wix-cms-integration-fevecoach-team.vercel.app',
+                  'results': [{'source_url': 'a', 'target_url': 'b', 'score': .466, 'status': 'ok'}]}
+        for item in self.snapshot['issues']['items']:
+            item.update(state='closed', state_reason='completed')
+        message, completed = compose(self.plan, self.snapshot, report, None, NOW)
+        self.assertIn('콘텐츠 이관율: 46.6%', message)
+        self.assertIn('CMS 연결 Preview 기준 · 운영 전환 완료율과 별도', message)
+        self.assertIn(NOW, message)
+        self.assertLessEqual(len(message), 1950)
+        self.assertEqual(len(completed), 28)
+        report['target_base_url'] = 'https://www.fevercoach.us'
+        self.assertNotIn('Preview', content_line(report))
+
     @patch.dict('os.environ', {}, clear=True)
     @patch('daily_notice.collect')
     @patch('daily_notice.restore_receipt', return_value=None)
