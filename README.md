@@ -180,3 +180,7 @@ python3 scripts/build_dashboard.py
 완료 여부와 미완료(Open) 수는 웹사이트 GitHub Issues, 진행 중·할 일·막힘은 Project #11을 기준으로 표시합니다. 기본 목록은 미완료이며 완료·전체 필터로 전환할 수 있습니다. Project 상태가 없으면 상태 미확인으로 남기고, 조회 실패 때는 마지막 성공 시각과 경고를 표시합니다. 콘텐츠 이전율은 이슈 완료율과 별도입니다.
 
 현재 공개 대상은 `data/plan.json`에 등록된 이슈 28개입니다. 새 이슈가 추가되면 공개 범위와 계획을 검토해 이 목록에도 반영해야 합니다. 자동 발행이 활성화되지 않은 환경에서는 `python3 scripts/sync_github.py` → `python3 scripts/build_dashboard.py` → 검증·main 반영으로 갱신합니다. 브라우저에서 GitHub를 직접 조회하지 않습니다.
+
+## 2026-11-01 Preview 측정
+
+MC가 지정한 CMS 연결 Preview를 전체 URL 비교 대상으로 사용합니다. 기존 `not_deployed` 기록을 실제 비교 결과로 교체하며, 운영 전환 완료율과는 구분합니다. [측정 조건과 한계](docs/preview-measurement-2026-11-01.md)를 확인해 주세요. 위 초기의 main 배포 대기 설명은 이번 Preview 측정에 적용하지 않습니다.

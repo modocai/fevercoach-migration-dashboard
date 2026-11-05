@@ -85,7 +85,7 @@ const server = http.createServer((req, res) => {
     await page.waitForFunction(() => document.querySelector('[data-filter="doing"]').getAttribute('aria-pressed') === 'true');
     assert.equal(await page.locator('.row:visible').count(), 1); checks++;
     assert.equal(await page.locator('.content-score').innerText(), '50.0%'); checks++;
-    const reportLink = await page.locator('#content-completion a').getAttribute('href');
+    const reportLink = await page.locator('#content-completion a[href="data/content-comparison.json"]').getAttribute('href');
     const reportResponse = await page.request.get(new URL(reportLink, base).href);
     assert.equal(reportResponse.status(), 200); checks++;
     assert.equal((await reportResponse.json()).percentage, 50); checks++;
