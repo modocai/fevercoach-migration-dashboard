@@ -2,16 +2,16 @@
   "schema_version": 1,
   "issues": {
     "status": "ok",
-    "attempted_at": "2026-10-31T14:52:17+00:00",
-    "last_success_at": "2026-10-31T14:52:17+00:00",
+    "attempted_at": "2026-11-06T04:37:22.629Z",
+    "last_success_at": "2026-11-06T04:37:22.630Z",
     "error": null,
     "items": [
       {
         "number": 1,
-        "state": "open",
-        "state_reason": null,
+        "state": "closed",
+        "state_reason": "completed",
         "assignees": [],
-        "updated_at": "2026-10-31T07:59:01Z"
+        "updated_at": "2026-11-06T03:57:35Z"
       },
       {
         "number": 2,
@@ -32,7 +32,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-31T06:54:37Z"
+        "updated_at": "2026-11-05T19:09:36Z"
       },
       {
         "number": 5,
@@ -53,14 +53,16 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-31T06:55:36Z"
+        "updated_at": "2026-11-05T20:10:10Z"
       },
       {
         "number": 8,
         "state": "open",
         "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-31T10:44:08Z"
+        "assignees": [
+          "DARKXIGN"
+        ],
+        "updated_at": "2026-11-05T20:10:08Z"
       },
       {
         "number": 9,
@@ -74,14 +76,14 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-31T07:58:52Z"
+        "updated_at": "2026-11-06T03:32:21Z"
       },
       {
         "number": 11,
-        "state": "open",
-        "state_reason": null,
+        "state": "closed",
+        "state_reason": "completed",
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:07Z"
+        "updated_at": "2026-10-31T17:46:37Z"
       },
       {
         "number": 12,
@@ -101,8 +103,10 @@
         "number": 14,
         "state": "open",
         "state_reason": null,
-        "assignees": [],
-        "updated_at": "2026-10-31T06:38:04Z"
+        "assignees": [
+          "ys06146"
+        ],
+        "updated_at": "2026-11-06T03:28:02Z"
       },
       {
         "number": 15,
@@ -137,7 +141,7 @@
         "state": "open",
         "state_reason": null,
         "assignees": [],
-        "updated_at": "2026-10-31T08:51:17Z"
+        "updated_at": "2026-11-06T04:23:25Z"
       },
       {
         "number": 20,
@@ -206,13 +210,13 @@
   },
   "project": {
     "status": "ok",
-    "attempted_at": "2026-10-31T14:52:17+00:00",
-    "last_success_at": "2026-10-31T14:52:17+00:00",
+    "attempted_at": "2026-11-06T04:35:40Z",
+    "last_success_at": "2026-11-06T04:35:40Z",
     "error": null,
     "items": [
       {
         "number": 1,
-        "status": "todo",
+        "status": "done",
         "due_date": null
       },
       {
@@ -262,7 +266,7 @@
       },
       {
         "number": 11,
-        "status": "todo",
+        "status": "done",
         "due_date": null
       },
       {
@@ -302,7 +306,7 @@
       },
       {
         "number": 19,
-        "status": "todo",
+        "status": "doing",
         "due_date": null
       },
       {
