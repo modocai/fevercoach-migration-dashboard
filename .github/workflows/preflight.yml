@@ -1,0 +1,38 @@
+name: Check automation readiness (no delivery or deployment)
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: Check notice, publication, or both independently
+        type: choice
+        options: [both, notice, publication]
+        default: both
+permissions:
+  contents: read
+  actions: read
+jobs:
+  check:
+    if: github.repository == 'modocai/fevercoach-migration-dashboard' && github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [notice, publication]
+    environment: dashboard-source
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        if: inputs.scope == 'both' || inputs.scope == matrix.mode
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        if: inputs.scope == 'both' || inputs.scope == matrix.mode
+        with:
+          python-version: '3.11'
+      - name: Check live sources without side effects
+        if: inputs.scope == 'both' || inputs.scope == matrix.mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DASHBOARD_SOURCE_TOKEN: ${{ secrets.DASHBOARD_SOURCE_TOKEN }}
+          CHECK_MODE: ${{ matrix.mode }}
+        run: python3 scripts/check_readiness.py --mode "$CHECK_MODE"
