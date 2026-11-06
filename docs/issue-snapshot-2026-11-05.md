@@ -1,13 +1,14 @@
 # Issue snapshot refresh — November 5, 2026 (Chicago)
 
-The published dashboard was displaying nine completed issues from the October 31 snapshot. GitHub Issues now confirms eleven completed issues out of the same approved twenty-eight: **39%** when rounded for the display.
+The published dashboard was displaying nine completed issues from the October 31 snapshot. After the live staging draft milestone (#20), GitHub Issues confirms twelve completed issues out of the same approved twenty-eight: **43%** when rounded for the display.
 
 ## Sources and scope
 
 - Website issue states were read through the connected GitHub API on November 6 UTC. Only the existing public allowlist (number, state/reason, assignee login and update time) was retained.
-- Project #11's twenty-eight rows and actual Status values were read through its authenticated browser UI at 2026-11-06 04:35:40 UTC. This is a manual observation; it does not verify an automation credential or change its scope.
-- Completed: #1, #2, #3, #5, #6, #11, #12, #13, #15, #17, #18.
-- Open: seventeen. The observed Project statuses are two In Progress (#16 and #19) and fifteen Todo. No statuses were inferred from issue text or edited to increase progress.
+- Project #11's twenty-eight rows and actual Status values were rechecked through its authenticated browser UI on 2026-11-06 at approximately 05:33 UTC, including #20 Done after its issue closure. This is a manual observation; it does not verify an automation credential or change its scope.
+- Completed: #1, #2, #3, #5, #6, #11, #12, #13, #15, #17, #18, #20.
+- Open: sixteen. The observed Project statuses are two In Progress (#16 and #19) and fourteen Todo. No statuses were inferred from issue text or edited to increase progress.
+- #20 evidence: https://github.com/modocai/fevercoach-website/issues/20#issuecomment-6677711910. The CMS draft was created, read back, excluded from anonymous reads, and reused on repeat input. This milestone does not indicate production publishing cutover.
 - Wix export measurements, their timestamps and source review state remain unchanged. The separate content comparison remains the November 1 CMS-connected Preview measurement (46.6%), not production cutover completion.
 
 The generated HTML uses the existing calculation and template. This refresh does not activate the scheduled publisher or change the separate daily-notice PR #10. Automatic publishing is still waiting for the reviewed website-main summary and the activation/Actions checks being coordinated by the dashboard owner.

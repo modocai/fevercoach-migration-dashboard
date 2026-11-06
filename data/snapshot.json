@@ -2,8 +2,8 @@
   "schema_version": 1,
   "issues": {
     "status": "ok",
-    "attempted_at": "2026-11-06T04:37:22.629Z",
-    "last_success_at": "2026-11-06T04:37:22.630Z",
+    "attempted_at": "2026-11-06T05:36:01.301550+00:00",
+    "last_success_at": "2026-11-06T05:36:01.301550+00:00",
     "error": null,
     "items": [
       {
@@ -62,7 +62,7 @@
         "assignees": [
           "DARKXIGN"
         ],
-        "updated_at": "2026-11-05T20:10:08Z"
+        "updated_at": "2026-11-06T05:04:19Z"
       },
       {
         "number": 9,
@@ -106,7 +106,7 @@
         "assignees": [
           "ys06146"
         ],
-        "updated_at": "2026-11-06T03:28:02Z"
+        "updated_at": "2026-11-06T04:59:50Z"
       },
       {
         "number": 15,
@@ -145,10 +145,10 @@
       },
       {
         "number": 20,
-        "state": "open",
-        "state_reason": null,
+        "state": "closed",
+        "state_reason": "completed",
         "assignees": [],
-        "updated_at": "2026-10-17T04:04:49Z"
+        "updated_at": "2026-11-06T05:27:33Z"
       },
       {
         "number": 21,
@@ -210,8 +210,8 @@
   },
   "project": {
     "status": "ok",
-    "attempted_at": "2026-11-06T04:35:40Z",
-    "last_success_at": "2026-11-06T04:35:40Z",
+    "attempted_at": "2026-11-06T05:36:01.301550+00:00",
+    "last_success_at": "2026-11-06T05:36:01.301550+00:00",
     "error": null,
     "items": [
       {
@@ -311,7 +311,7 @@
       },
       {
         "number": 20,
-        "status": "todo",
+        "status": "done",
         "due_date": null
       },
       {
