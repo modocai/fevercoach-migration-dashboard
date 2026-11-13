@@ -1,0 +1,214 @@
+{
+  "checked_at": "2026-11-13T23:17:49.601441+00:00",
+  "repository": "modocai/fevercoach-migration-dashboard",
+  "workflow": "publish.yml",
+  "configured_cron": "7,22,37,52 * * * *",
+  "configured_interval_minutes": 15,
+  "workflow_enabled": true,
+  "activation_variable": "true",
+  "main_revision": "d40964e56cf17d6a91961e45177d9e44c4725016",
+  "returned_runs": 69,
+  "api_total_count": 69,
+  "scheduled_runs_since_activation": 27,
+  "successful_scheduled_runs": 27,
+  "observed_gap_seconds_min": 11827.0,
+  "observed_gap_seconds_max": 37886.0,
+  "max_created_to_run_started_seconds": 0.0,
+  "runs": [
+    {
+      "id": 42347315154,
+      "number": 43,
+      "created_at": "2026-11-07T06:30:30Z",
+      "started_at": "2026-11-07T06:30:30Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42377138456,
+      "number": 44,
+      "created_at": "2026-11-07T13:28:48Z",
+      "started_at": "2026-11-07T13:28:48Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42400360757,
+      "number": 45,
+      "created_at": "2026-11-07T18:15:21Z",
+      "started_at": "2026-11-07T18:15:21Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42418426480,
+      "number": 46,
+      "created_at": "2026-11-07T21:59:14Z",
+      "started_at": "2026-11-07T21:59:14Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42433665426,
+      "number": 47,
+      "created_at": "2026-11-08T01:18:16Z",
+      "started_at": "2026-11-08T01:18:16Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42459027715,
+      "number": 48,
+      "created_at": "2026-11-08T07:29:58Z",
+      "started_at": "2026-11-08T07:29:58Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42489996459,
+      "number": 49,
+      "created_at": "2026-11-08T14:28:45Z",
+      "started_at": "2026-11-08T14:28:45Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42513004322,
+      "number": 50,
+      "created_at": "2026-11-08T19:02:47Z",
+      "started_at": "2026-11-08T19:02:47Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42532003001,
+      "number": 51,
+      "created_at": "2026-11-08T22:47:47Z",
+      "started_at": "2026-11-08T22:47:47Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42548924426,
+      "number": 52,
+      "created_at": "2026-11-09T02:04:54Z",
+      "started_at": "2026-11-09T02:04:54Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42595214637,
+      "number": 53,
+      "created_at": "2026-11-09T09:40:27Z",
+      "started_at": "2026-11-09T09:40:27Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42690619257,
+      "number": 54,
+      "created_at": "2026-11-09T20:11:53Z",
+      "started_at": "2026-11-09T20:11:53Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42745190149,
+      "number": 55,
+      "created_at": "2026-11-10T02:47:52Z",
+      "started_at": "2026-11-10T02:47:52Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42799637555,
+      "number": 56,
+      "created_at": "2026-11-10T10:29:56Z",
+      "started_at": "2026-11-10T10:29:56Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42872504102,
+      "number": 57,
+      "created_at": "2026-11-10T18:10:40Z",
+      "started_at": "2026-11-10T18:10:40Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42924074182,
+      "number": 58,
+      "created_at": "2026-11-10T23:31:30Z",
+      "started_at": "2026-11-10T23:31:30Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 42949522611,
+      "number": 59,
+      "created_at": "2026-11-11T02:57:45Z",
+      "started_at": "2026-11-11T02:57:45Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43005985521,
+      "number": 60,
+      "created_at": "2026-11-11T10:43:23Z",
+      "started_at": "2026-11-11T10:43:23Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43074875296,
+      "number": 61,
+      "created_at": "2026-11-11T18:08:22Z",
+      "started_at": "2026-11-11T18:08:22Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43130186999,
+      "number": 62,
+      "created_at": "2026-11-12T00:50:07Z",
+      "started_at": "2026-11-12T00:50:07Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43177992129,
+      "number": 63,
+      "created_at": "2026-11-12T07:48:32Z",
+      "started_at": "2026-11-12T07:48:32Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43257708807,
+      "number": 64,
+      "created_at": "2026-11-12T16:21:11Z",
+      "started_at": "2026-11-12T16:21:11Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43318862062,
+      "number": 65,
+      "created_at": "2026-11-12T22:19:54Z",
+      "started_at": "2026-11-12T22:19:54Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43353978734,
+      "number": 66,
+      "created_at": "2026-11-13T02:42:04Z",
+      "started_at": "2026-11-13T02:42:04Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43406438293,
+      "number": 67,
+      "created_at": "2026-11-13T10:05:30Z",
+      "started_at": "2026-11-13T10:05:30Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43475083797,
+      "number": 68,
+      "created_at": "2026-11-13T17:40:17Z",
+      "started_at": "2026-11-13T17:40:17Z",
+      "conclusion": "success"
+    },
+    {
+      "id": 43523189798,
+      "number": 69,
+      "created_at": "2026-11-13T22:55:36Z",
+      "started_at": "2026-11-13T22:55:36Z",
+      "conclusion": "success"
+    }
+  ],
+  "finding": "Long gaps precede creation of the recorded workflow runs; successful jobs are not proof of 15-minute trigger cadence. Exact GitHub-side cause remains unverified.",
+  "limitations": [
+    "Read of repository Actions policy returned HTTP 403.",
+    "Platform incidents overlap some dates but do not prove the cause of all gaps.",
+    "No external scheduler, credential change, cron change, or delivery action performed."
+  ]
+}

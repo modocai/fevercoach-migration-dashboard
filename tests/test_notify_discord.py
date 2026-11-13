@@ -73,6 +73,17 @@ class NoticeTests(unittest.TestCase):
             with self.assertRaises((ValueError, KeyError)):
                 self.message(item)
 
+    def test_measurement_target_change_preserves_cutover_scope(self):
+        for target, scope in [
+            ('https://fevercoach-website-git-wix-cms-integration-fevecoach-team.vercel.app',
+             'CMS 연결 Preview 기준'),
+            ('https://fevercoach-website.vercel.app', '콘텐츠 비교 기준'),
+        ]:
+            message = self.message(dict(report(.5), target_base_url=target))
+            self.assertIn(scope + ' · 운영 전환 완료율과 별도', message)
+            self.assertIn('50.0%', message)
+            self.assertIn('2026-10-24T01:00:00+00:00', message)
+
     def test_requires_timezone(self):
         with self.assertRaises(ValueError):
             self.message(dict(report(), generated_at='2026-10-24T01:00:00'))
