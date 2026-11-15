@@ -54,6 +54,8 @@ def make_message(report, plan, snapshot):
         detail = f'저장된 측정 기준: {date.isoformat()}'
         if 'git-wix-cms-integration' in report.get('target_base_url', ''):
             detail += '\nCMS 연결 Preview 기준 · 운영 전환 완료율과 별도'
+        else:
+            detail += '\n콘텐츠 비교 기준 · 운영 전환 완료율과 별도'
     else:
         raise ValueError('No completion measurement or explicit pre-deployment baseline')
     return f'**FeverCoach 이관 완성률: {label}%**\n{issue_line}\n{detail}\n{DASHBOARD_URL}'

@@ -1,0 +1,366 @@
+{
+  "started_at": "2026-11-13T23:12:35.627968+00:00",
+  "finished_at": "2026-11-13T23:40:02.530564+00:00",
+  "target": "https://fevercoach-website.vercel.app",
+  "target_web_commit": "b853ef132923ea9ad021a64e83ff8ffccc2313f0",
+  "source_inventory_before": 1357,
+  "source_inventory_after": 1357,
+  "source_inventory_unchanged": true,
+  "source_added_during_run": [],
+  "source_removed_during_run": [],
+  "stats": {
+    "completed": 1357,
+    "retried_requests": 0,
+    "http_errors": {
+      "404": 20,
+      "403": 1,
+      "410": 1
+    },
+    "transport_errors": 0
+  },
+  "errors": 22,
+  "percentage": 47.25107514407258,
+  "measurement_script_sha256": "1f4a092ab079bcb4c53221487ed6d299d9ebfe8bf4003994fa27f7e25087458e",
+  "method": "Existing scoring unchanged; percent-encoded HTTP request paths; max 3 attempts for transient failures; 4 workers; all inventory URLs retained.",
+  "target_deployment_id": "dpl_V8dNfPJoKBKapNk3Sr5FjYf8Ea55",
+  "target_revision_confirmed_after_measurement": true,
+  "error_recheck": {
+    "checked_at": "2026-11-13T23:40:25.333898+00:00",
+    "error_rows": 22,
+    "results": [
+      {
+        "source_url": "https://www.fevercoach.us/blank-1",
+        "target_url": "https://fevercoach-website.vercel.app/blank-1",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/category/all-products",
+        "target_url": "https://fevercoach-website.vercel.app/category/all-products",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/copy-of-fevercoach-download-v1-9",
+        "target_url": "https://fevercoach-website.vercel.app/copy-of-fevercoach-download-v1-9",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/copy-of-fevercoach-download-v2-1",
+        "target_url": "https://fevercoach-website.vercel.app/copy-of-fevercoach-download-v2-1",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/inquiry-services-page",
+        "target_url": "https://fevercoach-website.vercel.app/inquiry-services-page",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/landing",
+        "target_url": "https://fevercoach-website.vercel.app/landing",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "empty_content"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/post/child-low-grade-fever-flu-test",
+        "target_url": "https://fevercoach-website.vercel.app/post/child-low-grade-fever-flu-test",
+        "original_error": "empty_content",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "empty_content"
+        },
+        "target": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/pre-order",
+        "target_url": "https://fevercoach-website.vercel.app/pre-order",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/product-page/inp",
+        "target_url": "https://fevercoach-website.vercel.app/product-page/inp",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 410
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/0316shmin90795/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/0316shmin90795/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/31157443-ac22-41f7-8426-9fec74c088f757443/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/31157443-ac22-41f7-8426-9fec74c088f757443/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/admin/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/admin/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/an0108644702062882/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/an0108644702062882/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/ckwak731890/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/ckwak731890/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/geumbyeol72102/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/geumbyeol72102/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/hkwon6636852/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/hkwon6636852/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/john/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/john/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/kjh2009956722791/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/kjh2009956722791/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/myeongchan/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/myeongchan/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/sam-ahn48413/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/sam-ahn48413/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/sbae5658306/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/sbae5658306/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      },
+      {
+        "source_url": "https://www.fevercoach.us/profile/shcho155143614/profile",
+        "target_url": "https://fevercoach-website.vercel.app/profile/shcho155143614/profile",
+        "original_error": "HTTPError",
+        "source": {
+          "http_status": 200,
+          "content_type": "text/html",
+          "parse_status": "ok"
+        },
+        "target": {
+          "http_status": 404
+        }
+      }
+    ]
+  },
+  "inventory_delta": {
+    "old_total": 1321,
+    "new_total": 1357,
+    "added": [
+      "https://www.fevercoach.us/post/baby-fever-vaccine-wake-medicine",
+      "https://www.fevercoach.us/post/baby-low-grade-fever-4-days",
+      "https://www.fevercoach.us/post/cefprozil-left-out-overnight",
+      "https://www.fevercoach.us/post/child-concussion-return-to-school-support",
+      "https://www.fevercoach.us/post/child-ear-pain-traveling-relief-clinic",
+      "https://www.fevercoach.us/post/child-fever-dropped-to-375",
+      "https://www.fevercoach.us/post/child-fever-low-wbc-count-4500",
+      "https://www.fevercoach.us/post/child-fever-vomiting-after-flu-shot",
+      "https://www.fevercoach.us/post/child-headache-when-to-call-pediatrician",
+      "https://www.fevercoach.us/post/child-high-wbc-no-fever-normal-crp",
+      "https://www.fevercoach.us/post/child-inhaled-doll-hair-sore-throat",
+      "https://www.fevercoach.us/post/child-phlegmy-cough-two-weeks-specialist",
+      "https://www.fevercoach.us/post/child-toe-red-after-picking-nail",
+      "https://www.fevercoach.us/post/child-watery-diarrhea-when-to-go-er",
+      "https://www.fevercoach.us/post/dehydration-vomiting-diarrhea-kids-fluids-by-age",
+      "https://www.fevercoach.us/post/dexibuprofen-twice-4-hours-child",
+      "https://www.fevercoach.us/post/fever-after-flu-shot-child-urgent-care",
+      "https://www.fevercoach.us/post/fever-reducer-after-baekcho-digestive-syrup",
+      "https://www.fevercoach.us/post/fever-two-days-after-vaccine-child",
+      "https://www.fevercoach.us/post/head-lice-treatment-school-return-kids",
+      "https://www.fevercoach.us/post/high-fever-after-flu-shot-child",
+      "https://www.fevercoach.us/post/holiday-toy-safety-age-labels-small-parts",
+      "https://www.fevercoach.us/post/missed-antibiotic-dose-child-schedule",
+      "https://www.fevercoach.us/post/mosquito-bites-cause-fever-child",
+      "https://www.fevercoach.us/post/mycoplasma-pneumonia-fever-first",
+      "https://www.fevercoach.us/post/mycoplasma-pneumonia-runny-nose-children",
+      "https://www.fevercoach.us/post/newborn-umbilical-cord-care-warning-signs",
+      "https://www.fevercoach.us/post/normal-otoscopy-abnormal-tympanometry-child",
+      "https://www.fevercoach.us/post/recurring-fever-flu-shot-child",
+      "https://www.fevercoach.us/post/runny-nose-sudden-fever-child",
+      "https://www.fevercoach.us/post/sore-throat-after-flu-shot-ibuprofen",
+      "https://www.fevercoach.us/post/sudden-fever-after-cold-child",
+      "https://www.fevercoach.us/post/toddler-vomited-sleep-no-fever",
+      "https://www.fevercoach.us/post/uti-symptoms-children-age-when-to-seek-care",
+      "https://www.fevercoach.us/post/wake-child-antibiotic-dose",
+      "https://www.fevercoach.us/post/winter-nosebleeds-kids-dry-air-first-aid"
+    ],
+    "removed": [],
+    "old_blog_urls": 1292,
+    "new_blog_urls": 1328
+  }
+}
