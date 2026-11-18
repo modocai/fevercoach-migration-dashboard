@@ -1,9 +1,9 @@
 {
   "status": "measured",
-  "generated_at": "2026-11-13T23:40:00.743466+00:00",
+  "generated_at": "2026-11-18T03:00:33.620233+00:00",
   "source_sitemap": "https://www.fevercoach.us/sitemap.xml",
   "target_base_url": "https://fevercoach-website.vercel.app",
-  "total_urls": 1357,
+  "total_urls": 1359,
   "results": [
     {
       "source_url": "https://www.fevercoach.us",
@@ -26,8 +26,8 @@
       "source_url": "https://www.fevercoach.us/blog",
       "target_url": "https://fevercoach-website.vercel.app/blog",
       "status": "ok",
-      "score": 0.029545454545454545,
-      "text_score": 0.05909090909090909,
+      "score": 0.03579676674364896,
+      "text_score": 0.07159353348729793,
       "image_score": 0.0
     },
     {
@@ -2126,11 +2126,10 @@
     {
       "source_url": "https://www.fevercoach.us/post/child-low-grade-fever-flu-test",
       "target_url": "https://fevercoach-website.vercel.app/post/child-low-grade-fever-flu-test",
-      "status": "error",
-      "score": 0.0,
-      "text_score": 0.0,
-      "image_score": 0.0,
-      "error": "empty_content"
+      "status": "ok",
+      "score": 0.48218940052128584,
+      "text_score": 0.9643788010425717,
+      "image_score": 0.0
     },
     {
       "source_url": "https://www.fevercoach.us/post/child-low-temp-after-fever-tylenol",
@@ -3130,6 +3129,14 @@
       "status": "ok",
       "score": 0.4801477377654663,
       "text_score": 0.9602954755309326,
+      "image_score": 0.0
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/family-media-plan-kids-screen-time",
+      "target_url": "https://fevercoach-website.vercel.app/post/family-media-plan-kids-screen-time",
+      "status": "ok",
+      "score": 0.49169859514687103,
+      "text_score": 0.9833971902937421,
       "image_score": 0.0
     },
     {
@@ -10693,6 +10700,14 @@
       "image_score": 0.0
     },
     {
+      "source_url": "https://www.fevercoach.us/post/winter-dry-skin-babies-toddlers-care",
+      "target_url": "https://fevercoach-website.vercel.app/post/winter-dry-skin-babies-toddlers-care",
+      "status": "ok",
+      "score": 0.4914442162902122,
+      "text_score": 0.9828884325804244,
+      "image_score": 0.0
+    },
+    {
       "source_url": "https://www.fevercoach.us/post/winter-nosebleeds-kids-dry-air-first-aid",
       "target_url": "https://fevercoach-website.vercel.app/post/winter-nosebleeds-kids-dry-air-first-aid",
       "status": "ok",
@@ -10884,6 +10899,15 @@
       "error": "HTTPError"
     }
   ],
-  "score_sum": 641.1970897050649,
-  "percentage": 47.25107514407258
+  "score_sum": 642.6686732292214,
+  "percentage": 47.289821429670454,
+  "measurement_method": "server-html-text-and-image-bytes-v1",
+  "followup_recheck": {
+    "checked_at": "2026-11-18T03:15:16.690626+00:00",
+    "urls": [
+      "https://www.fevercoach.us/post/family-media-plan-kids-screen-time",
+      "https://www.fevercoach.us/post/winter-dry-skin-babies-toddlers-care"
+    ],
+    "note": "Only these two affected English URLs were rechecked after import; generated_at is the full scan completion time."
+  }
 }

@@ -1,0 +1,52 @@
+{
+  "run": {
+    "started": "2026-11-18T02:37:17.409395+00:00",
+    "finished": "2026-11-18T03:00:33.620233+00:00",
+    "inventory_stable": true,
+    "before": 1359,
+    "after": 1359,
+    "added": [],
+    "removed": [],
+    "requests": 8944,
+    "retries": 16
+  },
+  "full_scan_percentage": 47.25364051759195,
+  "full_scan_errors": 22,
+  "post_import_recheck": {
+    "baselineFullScanGeneratedAt": "2026-11-18T03:00:33.620233+00:00",
+    "postImportRecheckAt": "2026-11-18T03:15:16.690626+00:00",
+    "fullScanURLs": 1359,
+    "recheckedNewEnglishPosts": 2,
+    "formulaUnchanged": true,
+    "percentage": 47.289821429670454,
+    "remainingErrors": 21,
+    "changes": [
+      {
+        "source_url": "https://www.fevercoach.us/post/family-media-plan-kids-screen-time",
+        "before": 0.0,
+        "after": 0.49169859514687103
+      },
+      {
+        "source_url": "https://www.fevercoach.us/post/winter-dry-skin-babies-toddlers-care",
+        "before": 0.4914442162902122,
+        "after": 0.4914442162902122
+      }
+    ],
+    "scope": "full pre/during-import comparison with affected English URLs rechecked after import; not a new second full scan"
+  },
+  "comparison_script_sha256": "1f4a092ab079bcb4c53221487ed6d299d9ebfe8bf4003994fa27f7e25087458e",
+  "formula_changed": false,
+  "source_scope": {
+    "english_posts": 1330,
+    "other_urls": 29,
+    "spanish_korean_alternates": false
+  },
+  "actual_public_post_url_audit": {
+    "total": 3820,
+    "passed_after_recheck": 3820,
+    "first_attempt_passed": 3819,
+    "initial_cached_404": 1,
+    "evidence": "https://github.com/modocai/fevercoach-website/issues/19#issuecomment-6967953033",
+    "note": "Separate URL/canonical audit; not the content score denominator."
+  }
+}
