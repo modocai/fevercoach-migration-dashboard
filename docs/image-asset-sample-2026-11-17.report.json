@@ -1,0 +1,449 @@
+{
+  "status": "diagnostic_only",
+  "method": "verified-original-asset-diagnostic-v1",
+  "generated_at": "2026-11-18T03:52:41.749306+00:00",
+  "accepted_dashboard_metric": false,
+  "total_urls": 16,
+  "results": [
+    {
+      "source_url": "https://www.fevercoach.us/",
+      "target_url": "https://fevercoach-website.vercel.app/",
+      "status": "ok",
+      "text_score": 0.8802966101694916,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.0,
+      "legacy_combined_score": 0.4401483050847458,
+      "diagnostic_text_asset_score": 0.4401483050847458,
+      "source_image_slots": 93,
+      "target_image_slots": 571,
+      "source_unresolved_slots": 93,
+      "target_unresolved_slots": 23,
+      "verified_original_pairs": [],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/download",
+      "target_url": "https://fevercoach-website.vercel.app/download",
+      "status": "ok",
+      "text_score": 0.8802966101694916,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.0,
+      "legacy_combined_score": 0.4401483050847458,
+      "diagnostic_text_asset_score": 0.4401483050847458,
+      "source_image_slots": 93,
+      "target_image_slots": 571,
+      "source_unresolved_slots": 93,
+      "target_unresolved_slots": 23,
+      "verified_original_pairs": [],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/privacy-policy",
+      "target_url": "https://fevercoach-website.vercel.app/privacy-policy",
+      "status": "ok",
+      "text_score": 1.0,
+      "legacy_byte_image_score": 1.0,
+      "verified_original_asset_score": 1.0,
+      "legacy_combined_score": 1.0,
+      "diagnostic_text_asset_score": 1.0,
+      "source_image_slots": 0,
+      "target_image_slots": 0,
+      "source_unresolved_slots": 0,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/blog",
+      "target_url": "https://fevercoach-website.vercel.app/blog",
+      "status": "ok",
+      "text_score": 0.07021517553793885,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.0,
+      "legacy_combined_score": 0.035107587768969425,
+      "diagnostic_text_asset_score": 0.035107587768969425,
+      "source_image_slots": 22,
+      "target_image_slots": 24,
+      "source_unresolved_slots": 22,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/product-page/inp",
+      "target_url": "https://fevercoach-website.vercel.app/product-page/inp",
+      "status": "error",
+      "text_score": 0.0,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.0,
+      "legacy_combined_score": 0.0,
+      "diagnostic_text_asset_score": 0.0,
+      "error": "ValueError"
+    },
+    {
+      "source_url": "https://www.fevercoach.us/profile/admin/profile",
+      "target_url": "https://fevercoach-website.vercel.app/profile/admin/profile",
+      "status": "error",
+      "text_score": 0.0,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.0,
+      "legacy_combined_score": 0.0,
+      "diagnostic_text_asset_score": 0.0,
+      "error": "ValueError"
+    },
+    {
+      "source_url": "https://www.fevercoach.us/es/post/family-media-plan-kids-screen-time-es",
+      "target_url": "https://fevercoach-website.vercel.app/es/post/family-media-plan-kids-screen-time-es",
+      "status": "ok",
+      "text_score": 0.9856512141280354,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.4,
+      "legacy_combined_score": 0.4928256070640177,
+      "diagnostic_text_asset_score": 0.6928256070640177,
+      "source_image_slots": 4,
+      "target_image_slots": 1,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_1f70467b7f50405e9636c212b235df43~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-3e6ced035f01328ddb1932c8.png?prefix=media",
+          "original_sha256": "9050a15a0032da34effc2d2d2fd6411dd409bbda67e2a0954b707026ca90e6ea",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-3e6ced035f01328ddb1932c8-1200x675.png?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/es/post/winter-dry-skin-babies-toddlers-care-es",
+      "target_url": "https://fevercoach-website.vercel.app/es/post/winter-dry-skin-babies-toddlers-care-es",
+      "status": "ok",
+      "text_score": 0.9850388988629563,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.4,
+      "legacy_combined_score": 0.49251944943147813,
+      "diagnostic_text_asset_score": 0.6925194494314781,
+      "source_image_slots": 4,
+      "target_image_slots": 1,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_a0a4e2425fcc49e7b7cfa70135c55c96~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-e173edbafcb92a4590a0a25c.png?prefix=media",
+          "original_sha256": "2043ee5a62dba5b91f5b61ea514d1e9da6ad9fbd614c0e436246b83351e16ba6",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-e173edbafcb92a4590a0a25c-1200x675.png?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/ko/post/family-media-plan-kids-screen-time-ko",
+      "target_url": "https://fevercoach-website.vercel.app/ko/post/family-media-plan-kids-screen-time-ko",
+      "status": "ok",
+      "text_score": 0.9811320754716981,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.4,
+      "legacy_combined_score": 0.49056603773584906,
+      "diagnostic_text_asset_score": 0.6905660377358491,
+      "source_image_slots": 4,
+      "target_image_slots": 1,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_827444ebf8414adf9754db9a449a2dae~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-72f5be12c31be96e0a0706ae.png?prefix=media",
+          "original_sha256": "9175ab0cf7ebb7a2cff94a35f9873b6c12053c4e7f1731d8fe1b1f9055e0f9bb",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-72f5be12c31be96e0a0706ae-1200x675.png?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/ko/post/winter-dry-skin-babies-toddlers-care-ko",
+      "target_url": "https://fevercoach-website.vercel.app/ko/post/winter-dry-skin-babies-toddlers-care-ko",
+      "status": "ok",
+      "text_score": 0.9826224328593997,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.4,
+      "legacy_combined_score": 0.4913112164296998,
+      "diagnostic_text_asset_score": 0.6913112164296998,
+      "source_image_slots": 4,
+      "target_image_slots": 1,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_38815171beab4313ab9cca71b53cab56~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-af6098d6bd12e6362badac5c.png?prefix=media",
+          "original_sha256": "987ccecc20f5ae21b0795049e823007a67d873107cfe2e8d843fc0028d73fe10",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-af6098d6bd12e6362badac5c-1200x675.png?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/family-media-plan-kids-screen-time",
+      "target_url": "https://fevercoach-website.vercel.app/post/family-media-plan-kids-screen-time",
+      "status": "ok",
+      "text_score": 0.9833971902937421,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.4,
+      "legacy_combined_score": 0.49169859514687103,
+      "diagnostic_text_asset_score": 0.691698595146871,
+      "source_image_slots": 4,
+      "target_image_slots": 1,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_ebba72d47bf64c5693a6611825533a6e~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-7b057f6dc7a992e34f1b11e1.png?prefix=media",
+          "original_sha256": "831bada55e1d41f97c94a69ebffe9971d5e350c214ebc829b05c87cbda68026d",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-7b057f6dc7a992e34f1b11e1-1200x675.png?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/winter-dry-skin-babies-toddlers-care",
+      "target_url": "https://fevercoach-website.vercel.app/post/winter-dry-skin-babies-toddlers-care",
+      "status": "ok",
+      "text_score": 0.9828884325804244,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.4,
+      "legacy_combined_score": 0.4914442162902122,
+      "diagnostic_text_asset_score": 0.6914442162902121,
+      "source_image_slots": 4,
+      "target_image_slots": 1,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_d1e5c0adabc94de7af638f51b79dc3d5~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-ea275b4aede4c4993c02c286.png?prefix=media",
+          "original_sha256": "9cac1876a435b529b320b2f108bff0bae76558804846d0fbf414ddbe6194bd3d",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-ea275b4aede4c4993c02c286-1200x675.png?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/child-clutches-throat-while-eating",
+      "target_url": "https://fevercoach-website.vercel.app/post/child-clutches-throat-while-eating",
+      "status": "ok",
+      "text_score": 0.9764780673871583,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.7272727272727273,
+      "legacy_combined_score": 0.4882390336935791,
+      "diagnostic_text_asset_score": 0.8518753973299428,
+      "source_image_slots": 7,
+      "target_image_slots": 4,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_0a9134ac52f249ae9a84a816830406df~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media",
+          "original_sha256": "9f6bbfd488ed31feeae17255ace966bf4127dc9fad323cdfea7ce4e514eaee81",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_5edd46eb31564a7c8057ad012560b3e6~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media",
+          "original_sha256": "47e637c28919376cabf0eeb0a1f80edebb753a8ad673f848cd19d947c7a91caf",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_338d8b77313e47e395a0350673e5700b~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-e0c729b0f71fb10676c6b938.png?prefix=media",
+          "original_sha256": "4de3076acd8895e6b3b336b9db66d3ec5a0438c894919e73a2ba53bbcfdd24ee",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-e0c729b0f71fb10676c6b938-1200x896.jpg?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_3b7ae46a982a4927b6f509fcb174852f~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-df77156d31e01cd67b9bfe32.png?prefix=media",
+          "original_sha256": "6f43a34d1db248a65b54890cfb8e1a76bd9447a8b9fd90a7fccb09a6fa0a09b8",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-df77156d31e01cd67b9bfe32-1200x896.jpg?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/es/post/dosis-dexibuprofeno-bebe-peso",
+      "target_url": "https://fevercoach-website.vercel.app/es/post/dosis-dexibuprofeno-bebe-peso",
+      "status": "ok",
+      "text_score": 0.9752212389380531,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.7272727272727273,
+      "legacy_combined_score": 0.48761061946902656,
+      "diagnostic_text_asset_score": 0.8512469831053902,
+      "source_image_slots": 7,
+      "target_image_slots": 4,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_0a9134ac52f249ae9a84a816830406df~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media",
+          "original_sha256": "9f6bbfd488ed31feeae17255ace966bf4127dc9fad323cdfea7ce4e514eaee81",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_5edd46eb31564a7c8057ad012560b3e6~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media",
+          "original_sha256": "47e637c28919376cabf0eeb0a1f80edebb753a8ad673f848cd19d947c7a91caf",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_3023b4ccce64482e81c5e0d09df0e1ab~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-a4ace768faffe17e5b4bf1ce.png?prefix=media",
+          "original_sha256": "f6631a98ec7212aa4c3741b241681f55fc1a067c19cac60ca7fe1a48a60e1447",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-a4ace768faffe17e5b4bf1ce-1200x896.jpg?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_91072dcb9e0d442199c45f029c1eb83b~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-dcbe95bbfe796d01c9cb8616.png?prefix=media",
+          "original_sha256": "79a51dee84dba2d8c0c63f97f30d9789e86a744106b9b8d934794dea86261c12",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-dcbe95bbfe796d01c9cb8616-1200x896.jpg?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/ko/post/q-28%EA%B0%9C%EC%9B%94-%EC%95%84%EA%B8%B0-%EC%95%84%EC%84%B8%ED%8A%B8%EC%95%84%EB%AF%B8%EB%85%B8%ED%8E%9C-%ED%95%98%EB%A3%A8-%ED%97%88%EC%9A%A9%EC%B9%98%EB%A5%BC-%EC%B4%88%EA%B3%BC%ED%95%B4%EC%84%9C-%EB%A8%B9%EC%98%80%EB%8A%94%EB%8D%B0-%EA%B4%9C%EC%B0%AE%EC%9D%84%EA%B9%8C%EC%9A%94",
+      "target_url": "https://fevercoach-website.vercel.app/ko/post/q-28%EA%B0%9C%EC%9B%94-%EC%95%84%EA%B8%B0-%EC%95%84%EC%84%B8%ED%8A%B8%EC%95%84%EB%AF%B8%EB%85%B8%ED%8E%9C-%ED%95%98%EB%A3%A8-%ED%97%88%EC%9A%A9%EC%B9%98%EB%A5%BC-%EC%B4%88%EA%B3%BC%ED%95%B4%EC%84%9C-%EB%A8%B9%EC%98%80%EB%8A%94%EB%8D%B0-%EA%B4%9C%EC%B0%AE%EC%9D%84%EA%B9%8C%EC%9A%94",
+      "status": "ok",
+      "text_score": 0.9761526232114467,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.7272727272727273,
+      "legacy_combined_score": 0.48807631160572335,
+      "diagnostic_text_asset_score": 0.8517126752420869,
+      "source_image_slots": 7,
+      "target_image_slots": 4,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_0a9134ac52f249ae9a84a816830406df~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media",
+          "original_sha256": "9f6bbfd488ed31feeae17255ace966bf4127dc9fad323cdfea7ce4e514eaee81",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_5edd46eb31564a7c8057ad012560b3e6~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media",
+          "original_sha256": "47e637c28919376cabf0eeb0a1f80edebb753a8ad673f848cd19d947c7a91caf",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_30165c43ebc14edda7db054c670d6748~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-04c05c88ee7e1f18d631e158.png?prefix=media",
+          "original_sha256": "d5ff2c75208d125457c8f36531ceab952f6e5cb87ebbd19b7df60e7e003a8f64",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-04c05c88ee7e1f18d631e158-1200x896.jpg?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_c3118d97443647a69fdc4a6109eaa24a~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-908c40fd3b0aee9218f463e2.png?prefix=media",
+          "original_sha256": "b6ca8dfffff5198f53d20b21499a18272274149875c2bc5a7417cf4c284d4b52",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-908c40fd3b0aee9218f463e2-1200x896.jpg?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/1-year-old-keeps-vomiting-er",
+      "target_url": "https://fevercoach-website.vercel.app/post/1-year-old-keeps-vomiting-er",
+      "status": "ok",
+      "text_score": 0.968094804010939,
+      "legacy_byte_image_score": 0.0,
+      "verified_original_asset_score": 0.7272727272727273,
+      "legacy_combined_score": 0.4840474020054695,
+      "diagnostic_text_asset_score": 0.8476837656418331,
+      "source_image_slots": 7,
+      "target_image_slots": 4,
+      "source_unresolved_slots": 3,
+      "target_unresolved_slots": 0,
+      "verified_original_pairs": [
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_0a9134ac52f249ae9a84a816830406df~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media",
+          "original_sha256": "9f6bbfd488ed31feeae17255ace966bf4127dc9fad323cdfea7ce4e514eaee81",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-d7c5982791b26df660f6a4bc.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/4dc375_5edd46eb31564a7c8057ad012560b3e6~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media",
+          "original_sha256": "47e637c28919376cabf0eeb0a1f80edebb753a8ad673f848cd19d947c7a91caf",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-493c97980af5460d7630b197.png?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_751a2ae6bd664055825c7a17d292f7ec~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-b5a01d2a9d35d764ba3feb0b.png?prefix=media",
+          "original_sha256": "ea42f5525cd7fd840157aba0d8d301bde3ca6fff2186a819d8d0a750414334d5",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-b5a01d2a9d35d764ba3feb0b-1200x896.jpg?prefix=media"
+          ]
+        },
+        {
+          "wix_original_url": "https://static.wixstatic.com/media/5a6d44_8444ed9ec712405192edb9a485e809ab~mv2.png",
+          "cms_original_url": "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-1734ba040d62dfc1c007b1bd.png?prefix=media",
+          "original_sha256": "1b4037797df98c1d82b6ac8965e7d737410e5c14ab614dcc0e87ef4515dd7451",
+          "target_display_urls": [
+            "https://fevercoach-cms-staging-891309230443.us-east1.run.app/api/media/file/wix-1734ba040d62dfc1c007b1bd-1200x896.jpg?prefix=media"
+          ]
+        }
+      ],
+      "media_errors": []
+    }
+  ],
+  "legacy_percentage": 42.58589179256491,
+  "diagnostic_text_asset_percentage": 59.176800883474016,
+  "limitation": "Original bytes and live image responses verified; derivative pixels, placement and layout are NOT compared. Explicit input URLs only; not a full-site result.",
+  "transport": {
+    "requests": 780,
+    "bytes_received": 224578304,
+    "per_request_total_timeout_seconds": 30
+  }
+}
