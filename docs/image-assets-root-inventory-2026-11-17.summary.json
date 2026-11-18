@@ -1,0 +1,155 @@
+{
+  "status": "diagnostic_only",
+  "method": "verified-original-asset-diagnostic-v1",
+  "generated_at": "2026-11-18T05:58:11.044268+00:00",
+  "accepted_dashboard_metric": false,
+  "total_urls": 1359,
+  "legacy_percentage": 47.1885003457058,
+  "diagnostic_text_asset_percentage": 81.11430453089187,
+  "limitation": "Full root-sitemap diagnostic only; alternate language inventories, derivative pixels, placement and layout are not compared. Not an accepted dashboard metric.",
+  "inventory": {
+    "started": "2026-11-18T05:19:59.438517+00:00",
+    "finished": "2026-11-18T05:58:11.044268+00:00",
+    "scope": "all URLs in root sitemap; excludes alternate-language inventories not listed there",
+    "before": 1359,
+    "after": 1359,
+    "stable": true,
+    "added": [],
+    "removed": []
+  },
+  "transport": {
+    "resumed_stage_requests": 10472,
+    "resumed_stage_bytes_received": 11994370440,
+    "initial_page_workers": 4,
+    "resumed_page_workers": 8,
+    "per_request_total_timeout_seconds": 30,
+    "resumed_at": "2026-11-18T05:33:12.254722+00:00",
+    "completed_rows_retained": 368,
+    "previous_progress": {
+      "completed": 360,
+      "total": 1359,
+      "page_errors": 8,
+      "requests": 5760,
+      "received_MiB": 4869.3,
+      "missing_cms_records": 0
+    },
+    "note": "First stage was stopped after retaining completed rows. Initial progress counters are a lower bound, not a complete transport total."
+  },
+  "script_sha256": "4d411588a0839b476726eca62bae9821cf0f082287977e33ba4667f9b3154155",
+  "page_errors": 24,
+  "media_errors": {
+    "source_original_unavailable": 6,
+    "cms_original_missing_or_hash_mismatch": 1
+  },
+  "verified_unique_originals": 2370,
+  "pages_with_verified_originals": 1321,
+  "missing_cms_records_count": 0,
+  "report_sha256": "3e7884b68ffec3698e24c495bde6dc49925f4e14ab6a38655e5be753ef5a9651",
+  "input_inventory_sha256": "c36c3bae1fff9913ca6abd640141650cd85ec3c87c3f38f2e8aa0593618c3fe0",
+  "scope_counts": {
+    "root_blog_urls": 1330,
+    "root_other_urls": 29
+  },
+  "blog_pages_with_verified_originals": 1321,
+  "page_error_urls": [
+    "https://www.fevercoach.us/blank-1",
+    "https://www.fevercoach.us/category/all-products",
+    "https://www.fevercoach.us/copy-of-fevercoach-download-v1-9",
+    "https://www.fevercoach.us/copy-of-fevercoach-download-v2-1",
+    "https://www.fevercoach.us/fevercoach-download-v2-0",
+    "https://www.fevercoach.us/home",
+    "https://www.fevercoach.us/inquiry-services-page",
+    "https://www.fevercoach.us/landing",
+    "https://www.fevercoach.us/post/preschool-vision-screening-amblyopia-ages-3-to-5",
+    "https://www.fevercoach.us/pre-order",
+    "https://www.fevercoach.us/product-page/inp",
+    "https://www.fevercoach.us/profile/0316shmin90795/profile",
+    "https://www.fevercoach.us/profile/31157443-ac22-41f7-8426-9fec74c088f757443/profile",
+    "https://www.fevercoach.us/profile/admin/profile",
+    "https://www.fevercoach.us/profile/an0108644702062882/profile",
+    "https://www.fevercoach.us/profile/ckwak731890/profile",
+    "https://www.fevercoach.us/profile/geumbyeol72102/profile",
+    "https://www.fevercoach.us/profile/hkwon6636852/profile",
+    "https://www.fevercoach.us/profile/john/profile",
+    "https://www.fevercoach.us/profile/kjh2009956722791/profile",
+    "https://www.fevercoach.us/profile/myeongchan/profile",
+    "https://www.fevercoach.us/profile/sam-ahn48413/profile",
+    "https://www.fevercoach.us/profile/sbae5658306/profile",
+    "https://www.fevercoach.us/profile/shcho155143614/profile"
+  ],
+  "media_error_pages": [
+    {
+      "source_url": "https://www.fevercoach.us/post/pneumonia-before-adenoid-surgery-child",
+      "errors": [
+        "source_original_unavailable"
+      ]
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/pneumonia-incubation-period-sibling-risk",
+      "errors": [
+        "source_original_unavailable"
+      ]
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/pneumonia-without-cough-teens",
+      "errors": [
+        "source_original_unavailable"
+      ]
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/positive-h-influenzae-pcr-pneumonia-child",
+      "errors": [
+        "source_original_unavailable"
+      ]
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/post-nasal-drip-daytime-cough-child",
+      "errors": [
+        "source_original_unavailable"
+      ]
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/post-vaccination-fever-in-babies-why-it-happens-and-what-parents-should-do",
+      "errors": [
+        "cms_original_missing_or_hash_mismatch"
+      ]
+    },
+    {
+      "source_url": "https://www.fevercoach.us/post/q-my-toddler-is-obsessed-with-our-real-boiler-and-kettle-and-won-t-play-with-toys-what-can-i-do",
+      "errors": [
+        "source_original_unavailable"
+      ]
+    }
+  ],
+  "validation": {
+    "inventory_rows_complete_unique": true,
+    "failed_rows_zero": true,
+    "all_scores_bounded_finite": true,
+    "percentages_recomputed": true,
+    "original_sha256_consistent_across_rows": true
+  },
+  "followup_only": {
+    "does_not_replace_initial_rows_or_scores": true,
+    "rechecked_media_error_pages": 6,
+    "media_rechecks_successful": 6,
+    "blog_page_recheck_successful": true,
+    "blog_page_recheck_url": "https://www.fevercoach.us/post/preschool-vision-screening-amblyopia-ages-3-to-5",
+    "early_media_recheck_report_sha256": "541a1d926d02ac50eaf3b9be0e359ce11f8efac28a816a6868b13208796c9321",
+    "blog_page_recheck_report_sha256": "3649bda94033d3f44e9eb4614d2a23fa804826f9afc01fd140122557c874dcf8",
+    "remaining_source_candidate": {
+      "url": "https://static.wixstatic.com/media/undefined",
+      "head_status": 403,
+      "cms_records": 0,
+      "verified": false,
+      "retained_without_credit": true
+    },
+    "late_media_recheck_report_sha256": "ebc052d3c46c0665f2b75f8e4d586be3ce81f48df581d39b3940f3bc14bfc4e2"
+  },
+  "official_metric_changed": false,
+  "baseline_inventory": {
+    "pr": 14,
+    "commit": "0b30e8127addc2cb7c291485bb65b9c6e19724bc",
+    "file": "data/content-comparison.json",
+    "source_urls_identical": true
+  }
+}
