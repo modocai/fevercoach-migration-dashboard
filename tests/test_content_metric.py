@@ -52,3 +52,41 @@ class MetricTests(unittest.TestCase):
     def test_escape_report_metadata(self):
         self.report['target_base_url'] = '<script>alert(1)</script>'
         self.assertNotIn('<script>', render_content(self.report))
+
+    def test_breakdown_retains_failed_urls_in_average_and_original_score(self):
+        for row, text, image in zip(self.report['results'], [1, .8, 0], [1, .2, 0]):
+            row.update(text_score=text, image_score=image)
+        self.report['results'][0]['source_url'] = 'https://old.test/es/post/title'
+        before = copy.deepcopy(self.report)
+        html = render_content(self.report)
+        self.assertEqual(before, self.report)
+        self.assertIn('50.0<small>%', html)
+        self.assertIn('60.0%', html)
+        self.assertIn('40.0%', html)
+        self.assertIn('블로그 1개', html)
+        self.assertIn('기타 페이지·프로필 2개', html)
+        self.assertIn('자동 갱신과 콘텐츠 재측정은 별도', html)
+
+    def test_missing_components_are_not_reported_as_zero(self):
+        html = render_content(self.report)
+        self.assertNotIn('본문 텍스트 일치</h3>', html)
+        self.assertNotIn('이미지 파일 일치</h3>', html)
+
+    def test_failure_links_escape_text_and_reject_unsafe_schemes(self):
+        self.report['results'][2].update(source_url='https://old.test/<script>',
+                                        target_url='javascript:alert(1)', error='<img src=x>')
+        html = render_content(self.report)
+        self.assertIn('&lt;script&gt;', html)
+        self.assertIn('&lt;img src=x&gt;', html)
+        self.assertNotIn('href="javascript:', html)
+        self.assertNotIn('<img src=x>', html)
+
+    def test_invalid_components_cannot_be_presented_as_progress(self):
+        for value in [float('nan'), 2, -1, True]:
+            report = copy.deepcopy(self.report)
+            report['results'][0]['text_score'] = value
+            with self.assertRaises(ValueError):
+                render_content(report)
+        self.report['results'][2]['image_score'] = 1
+        with self.assertRaises(ValueError):
+            render_content(self.report)
