@@ -1,5 +1,6 @@
 """Validate and render the full-inventory content completion metric."""
 import math
+from datetime import datetime, timezone
 from html import escape
 from urllib.parse import urlsplit
 from dashboard_data import safe_url
@@ -68,6 +69,48 @@ def render_breakdown(report):
                    '<p class="note">아래는 기존 측정 당시의 오류입니다. 삭제 승인 여부·접속 상태·본문 추출 결과를 확인하세요. '
                    '최대 20개를 표시하며 전체 목록은 아래 JSON에서 확인할 수 있습니다.</p><ul>' + ''.join(links) + '</ul></details>')
     return result
+
+
+def render_asset_diagnostic(report):
+    """Display the reviewed root-sitemap audit independently of the current v1 score."""
+    if (report['status'] != 'diagnostic_only' or report['accepted_dashboard_metric'] is not False
+            or report['method'] != 'verified-original-asset-diagnostic-v1'):
+        raise ValueError('Expected a separate verified-original diagnostic')
+    labels = {'home': '홈', 'articles': '블로그 글', 'other': '기타 페이지·프로필'}
+    groups = report['by_page_type']
+    if set(groups) != set(labels):
+        raise ValueError('Unexpected diagnostic page groups')
+    cards = []
+    for kind, label in labels.items():
+        group = groups[kind]
+        count, errors, score = group['urls'], group['errors'], group['score_sum']
+        if (type(count) is not int or type(errors) is not int or not 0 <= errors <= count
+                or type(score) not in (int, float) or not 0 <= score <= count - errors):
+            raise ValueError('Invalid diagnostic group')
+        value = f'{100 * score / count:.2f}%' if count else '미측정'
+        cards.append(f'<div class="source-item"><strong>{label} · {value}</strong>'
+                     f'<span>URL {count:,}개 · 오류 {errors:,}개</span></div>')
+    total, errors = report['total_urls'], report['page_errors']
+    percentage = report['diagnostic_text_asset_percentage']
+    if (not total or sum(g['urls'] for g in groups.values()) != total
+            or sum(g['errors'] for g in groups.values()) != errors
+            or not math.isclose(100 * sum(g['score_sum'] for g in groups.values()) / total, percentage)):
+        raise ValueError('Diagnostic totals do not match the first-pass groups')
+    measured = datetime.fromisoformat(report['generated_at'])
+    if measured.tzinfo is None:
+        raise ValueError('Diagnostic measurement needs a time zone')
+    date = measured.astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+    details = ('https://github.com/modocai/fevercoach-migration-dashboard/blob/main/docs/'
+               'image-assets-root-inventory-2026-11-17.md')
+    return ('<section class="panel" id="asset-diagnostic" aria-labelledby="asset-diagnostic-title">'
+            '<h2 id="asset-diagnostic-title">본문·원본 이미지 보존 진단</h2>'
+            f'<p><strong>{percentage:.2f}%</strong> · 영어 중심 루트 사이트맵 {total:,}개 URL. '
+            f'최초 검사에서 오류가 난 {errors:,}개도 0점으로 포함했습니다.</p>'
+            '<div class="source-grid">' + ''.join(cards) + '</div>'
+            f'<p class="note">원본 파일 {report["verified_unique_originals"]:,}개의 SHA-256이 Wix와 CMS에서 일치했고, '
+            '새 페이지가 해당 미디어를 참조하는지 확인했습니다. 점수에는 본문 일치도도 포함됩니다.</p>'
+            f'<p class="note">측정 {date} · 다른 언어의 대체 URL과 데스크톱·모바일 화면 유사도는 '
+            f'별도 검수 대상입니다. <a href="{details}">진단 근거 ↗</a></p></section>')
 
 
 def render_content(report):

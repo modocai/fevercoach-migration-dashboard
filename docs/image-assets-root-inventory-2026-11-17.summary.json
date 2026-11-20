@@ -151,5 +151,22 @@
     "commit": "0b30e8127addc2cb7c291485bb65b9c6e19724bc",
     "file": "data/content-comparison.json",
     "source_urls_identical": true
+  },
+  "by_page_type": {
+    "home": {
+      "urls": 1,
+      "errors": 0,
+      "score_sum": 0.4401483050847458
+    },
+    "articles": {
+      "urls": 1330,
+      "errors": 1,
+      "score_sum": 1099.5476977667126
+    },
+    "other": {
+      "urls": 28,
+      "errors": 23,
+      "score_sum": 2.355552503023207
+    }
   }
 }
