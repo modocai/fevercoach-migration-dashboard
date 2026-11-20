@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from urllib.parse import urlencode
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from audit_image_assets import AssetAuditor, SafeFetcher, intersection_score, make_report, wix_original
+from audit_image_assets import AssetAuditor, SafeFetcher, intersection_score, make_report, summarize_page_types, wix_original
 from compare_content import Comparator
 from content_metric import validate_report
 
@@ -25,6 +25,16 @@ def html(images):
 
 
 class ImageAssetTests(unittest.TestCase):
+    def test_source_page_groups_include_root_and_localized_failures(self):
+        inputs = [('https://old.test', 1, 'ok'), ('https://old.test/ko/', 0, 'error'),
+                  ('https://old.test/es/post/uno', 0.5, 'ok'), ('https://old.test/blog', 0, 'error'),
+                  ('https://old.test/profile/a/profile', 0, 'error')]
+        groups = summarize_page_types([{'source_url': url, 'status': status, 'diagnostic_text_asset_score': score}
+                                      for url, score, status in inputs])
+        self.assertEqual(groups, {'home': {'urls': 2, 'errors': 1, 'score_sum': 1},
+                                  'articles': {'urls': 1, 'errors': 0, 'score_sum': 0.5},
+                                  'other': {'urls': 2, 'errors': 2, 'score_sum': 0}})
+
     def fixture(self, source_images=None, target_images=None, original_bytes=b'original', copied_bytes=b'original',
                 display_bytes=b'large-jpeg', docs=None):
         source_images = [SMALL] if source_images is None else source_images

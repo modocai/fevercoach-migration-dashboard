@@ -254,12 +254,34 @@ class AssetAuditor:
         return row
 
 
+def summarize_page_types(rows):
+    """Group the original rows without dropping errors or regrouping redirects by destination."""
+    groups = {kind: {'urls': 0, 'errors': 0, 'score_sum': 0.0}
+              for kind in ('home', 'articles', 'other')}
+    for row in rows:
+        parts = urlsplit(row['source_url']).path.strip('/').split('/')
+        if parts[0] in ('en', 'es', 'ko', 'fr', 'vi', 'zh'):
+            parts = parts[1:]
+        if not any(parts):
+            kind = 'home'
+        elif len(parts) >= 2 and parts[0] == 'post':
+            kind = 'articles'
+        else:
+            kind = 'other'
+        group = groups[kind]
+        group['urls'] += 1
+        group['errors'] += row['status'] == 'error'
+        group['score_sum'] += row['diagnostic_text_asset_score']
+    return groups
+
+
 def make_report(rows):
     if not rows or len({r['source_url'] for r in rows}) != len(rows):
         raise ValueError('nonempty_unique_inventory_required')
     return dict(status='diagnostic_only', method=METHOD,
                 generated_at=datetime.now(timezone.utc).isoformat(),
                 accepted_dashboard_metric=False, total_urls=len(rows), results=rows,
+                by_page_type=summarize_page_types(rows),
                 legacy_percentage=100 * sum(r['legacy_combined_score'] for r in rows) / len(rows),
                 diagnostic_text_asset_percentage=100 * sum(r['diagnostic_text_asset_score'] for r in rows) / len(rows),
                 limitation='Original bytes and live image responses verified; derivative pixels, placement and layout are NOT compared. Explicit input URLs only; not a full-site result.')

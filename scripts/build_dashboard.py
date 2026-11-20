@@ -3,7 +3,7 @@
 import argparse
 from collections import Counter
 from html import escape
-from content_metric import render_content
+from content_metric import render_asset_diagnostic, render_content
 
 from dashboard_data import (ROOT, gate_state, read_json, safe_url, task_states,
                             validate_baselines, validate_plan, validate_snapshot)
@@ -205,7 +205,9 @@ def render(plan, snapshot, baselines, content_report=None):
               + '<a class="btn" href="#export">추출 현황</a><a class="btn" href="#baselines">기준값·분석</a></nav></header>')
     filters = ''.join(f'<button class="filter" data-filter="{state}" aria-pressed="{str(state == "open").lower()}">{label}</button>'
                       for state, label in [("open", "미완료"), ("all", "전체"), *LABELS.items()])
-    content = (header + render_content(content_report or {"status": "unmeasured"}) + render_summary(plan, rows, snapshot) + render_wix(snapshot["wix"]) + render_baselines(baselines)
+    diagnostic = read_json(ROOT / "docs/image-assets-root-inventory-2026-11-17.summary.json")
+    content = (header + render_content(content_report or {"status": "unmeasured"}) + render_summary(plan, rows, snapshot)
+               + render_asset_diagnostic(diagnostic) + render_wix(snapshot["wix"]) + render_baselines(baselines)
                + '<div class="toolbar"><div><h2>단계별 작업</h2><p class="note">콘텐츠·기능·분석의 이전 근거를 각 단계에서 확인합니다.</p></div>'
                f'<div class="filters" aria-label="작업 상태 필터">{filters}</div></div>'
                f'<p class="note">{e(plan["gate_policy"])}</p><p id="filter-result" class="note" role="status" aria-live="polite">{len(rows)}개 작업 표시</p>'

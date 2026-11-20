@@ -4,10 +4,26 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from content_metric import render_content, validate_report
+from content_metric import render_asset_diagnostic, render_content, validate_report
+from dashboard_data import ROOT, read_json
 
 
 class MetricTests(unittest.TestCase):
+    def test_diagnostic_displays_reviewed_groups_and_keeps_errors_in_denominator(self):
+        summary = read_json(ROOT / 'docs/image-assets-root-inventory-2026-11-17.summary.json')
+        html = render_asset_diagnostic(summary)
+        for label in ('81.11%', '홈 · 44.01%', '블로그 글 · 82.67%', '기타 페이지·프로필 · 8.41%',
+                      'URL 28개 · 오류 23개', '다른 언어의 대체 URL', '화면 유사도'):
+            self.assertIn(label, html)
+        self.assertNotIn('class="big content-score"', html)
+        with self.assertRaises(ValueError):
+            validate_report(summary)
+        group = summary['by_page_type']['other']
+        group['urls'] -= group['errors']
+        group['errors'] = 0
+        with self.assertRaises(ValueError):
+            render_asset_diagnostic(summary)
+
     def setUp(self):
         self.report = dict(status='measured', generated_at='2026-10-24T00:00:00Z',
                            target_base_url='https://example.vercel.app', total_urls=3,
